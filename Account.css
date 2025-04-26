@@ -250,7 +250,7 @@ form input[type="text"],
 form input[type="email"],
 form input[type="number"],
 form input[type="password"] {
-  width: 100%; 
+  width: 250px; 
   height: 31px;
   padding: 5px;
   font-size: 1.1rem;
@@ -273,7 +273,7 @@ form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="number"]:focus,
 form input[type="password"]:focus {
-  border-color: purple ;
+  border-color: #8054ad ;
   outline: none;
 }
 
@@ -297,7 +297,24 @@ p{
 
 .Fname{
     margin-top: 25px;
+    display: flex;
 }
+
+.Lname{
+    display: flex;
+}
+
+/* COUNTER */
+
+.remainingFN, .remainingLN{
+    font-family: Candy;
+    font-size: 13px;
+    color: #2e222f;
+    
+    margin-top: 7px;
+    margin-left: 5px;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
@@ -346,11 +363,11 @@ button:active{
     margin-top: -5px;
     height: 12px;
     font-family: Candy;
-    color: #ff0040;
+    color: #ff0e6e;
     font-size: 10px;
 }
 
 .input-error {
-    border: 2px solid #ff0040 !important;
+    border: 2px solid #ff0e6e !important;
     font-size: 10px;
 }

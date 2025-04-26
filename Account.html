@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="Account.css" />
-    
+
   </head>
   <body>
     <div class="Main-Container" id="Main">
@@ -27,13 +27,15 @@
                     <span><a href="#" onclick="showLogin()">Login</a></span>
                 </p>
                 <div class="Fname">
-                    <input type="text" id="Fname"name="Fname" placeholder="First Name" />
+                    <input type="text" id="Fname"name="Fname" placeholder="First Name" maxlength="50"/>
+                    <span class="remainingFN" id="remainingFN">50</span>
                 </div>
 
                 <span id="errorFname" class="error-message"></span> 
 
                 <div class="Lname">
-                    <input type="text" id="Lname" name="Lname" placeholder="Last Name"  />
+                    <input type="text" id="Lname" name="Lname" placeholder="Last Name" maxlength="50"/>
+                    <span class="remainingLN" id="remainingLN">50</span>
                 </div>
 
                 <span id="errorLname" class="error-message"></span> 
@@ -45,9 +47,8 @@
                 <span id="erroremail" class="error-message"></span> 
 
                 <div class="PhoneNum">
-                    <input type="number" id="Phone" name="PhoneNum" placeholder="Phone #" oninput="this.value=this.value.slice(0,11)"
-                        />
-                </div>
+                    <input type="number" id="Phone" name="PhoneNum" placeholder="Phone #" oninput="this.value=this.value.slice(0,11)"/>
+                  </div>
 
                 <span id="errorPhone" class="error-message"></span> 
 

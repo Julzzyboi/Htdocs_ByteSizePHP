@@ -98,3 +98,32 @@ function validateForm(event) {
       });
     });
   });
+
+  // COUNTER
+
+  const inputFirstName = document.getElementById("Fname") 
+    const remainingFirstName = document.getElementById("remainingFN")
+    const inputLastName = document.getElementById("Lname") 
+    const remainingLastName = document.getElementById("remainingLN")
+
+    const FN = () => {
+        updateCounterFN()
+    }
+
+    inputFirstName.addEventListener("keyup", FN)
+    updateCounterFN()
+
+    function updateCounterFN(){
+        remainingFirstName.innerText = inputFirstName.getAttribute("maxlength") - inputFirstName.value.length
+    }
+
+    const LN = () => {
+        updateCounterLN()
+    }
+
+    inputLastName.addEventListener("keyup", LN)
+    updateCounterLN()
+
+    function updateCounterLN(){
+        remainingLastName.innerText = inputLastName.getAttribute("maxlength") - inputLastName.value.length
+    }
