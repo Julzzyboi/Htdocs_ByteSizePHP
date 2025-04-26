@@ -253,7 +253,7 @@ form input[type="email"],
 form input[type="number"],
 form input[type="password"] {
   width: 100%;
-  height: 30px;
+  height: 32px;
   padding: 5px;
   font-size: 1.1rem;
   border-radius: 10px;
@@ -312,7 +312,7 @@ input[type=number]::-webkit-inner-spin-button {
     font-family: Candy;
     color:#2e222f;
     width: 100%;
-    margin-top: 20px;
+
 }
 
 button[type="submit"]{
@@ -342,7 +342,13 @@ button:active{
 
 .error-message{
     margin-top: -5px;
-    height: 10px;
+    height: 12px;
     font-family: Candy;
-    font-size: 1px;
+    color: #ff0040;
+    font-size: 10px;
+}
+
+.input-error {
+    border: 2px solid #ff0040 !important;
+    font-size: 10px;
 }
