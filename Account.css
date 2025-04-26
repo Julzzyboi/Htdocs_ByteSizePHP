@@ -34,7 +34,7 @@ body{
     display: flex ;
     justify-content: space-between;
     box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
-    overflow: visible;  /*pancheck lang*/
+    overflow: hidden;  /*pancheck lang*/
 }
 .Logo-Container{
     background-color:#FFD5DC ;
