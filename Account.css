@@ -27,7 +27,7 @@ body{
 .Main-Container{
     /* background-color:#FFD5DC ; */
     background-color:#FFF8E9 ;
-    border: 3px solid black;
+    border: 3px solid #2e222f;
     position: relative;
     width:800px;
     height: 500px;
@@ -169,7 +169,7 @@ body{
     animation: logoRight 0.5s ease-in-out forwards;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
-    border-left: 3px solid black;
+    border-left: 3px solid #2e222f;
   
 }
 
@@ -178,7 +178,7 @@ body{
     animation: logoLeft 0.5s ease-in-out forwards;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
-    border-right: 3px solid black;
+    border-right: 3px solid #2e222f;
    
 }
 
@@ -254,15 +254,16 @@ form input[type="email"],
 form input[type="number"],
 form input[type="password"] {
   width: 100%;
+  height: 30px;
   padding: 5px;
   font-size: 1.1rem;
-  border-radius: 12px;
-  border: 2px solid black;
+  border-radius: 10px;
+  border: 2px solid #2e222f;
   background-color: white;
 }
 input::placeholder{
     font-family: Candy;
-    color:black
+    color:#817f81
 }
 input[type="text"],input[type="email"],
 input[type="number"],input[type="password"]
