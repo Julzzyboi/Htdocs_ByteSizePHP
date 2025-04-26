@@ -27,27 +27,27 @@
                     <span><a href="#" onclick="showLogin()">Login</a></span>
                 </p>
                 <div class="Fname">
-                    <input type="text" id="Fname"name="Fname" placeholder="First Name" maxlength="50"/>
+                    <input type="text" class="inputFN" id="Fname" name="Fname" placeholder="First Name (ex. Juan)" maxlength="50"/>
                     <span class="remainingFN" id="remainingFN">50</span>
                 </div>
 
                 <span id="errorFname" class="error-message"></span> 
 
                 <div class="Lname">
-                    <input type="text" id="Lname" name="Lname" placeholder="Last Name" maxlength="50"/>
+                    <input type="text" class="inputLN" id="Lname" name="Lname" placeholder="Last Name (ex. Dela Cruz)" maxlength="50"/>
                     <span class="remainingLN" id="remainingLN">50</span>
                 </div>
 
                 <span id="errorLname" class="error-message"></span> 
 
                 <div class="Email">
-                    <input type="email" id="email" name="Email" placeholder="Email"  />
+                    <input type="email" class="inputEmailSignUp" id="email" name="Email" placeholder="Email (ex. juandelacruz@gmail.com)"  />
                 </div>
 
                 <span id="erroremail" class="error-message"></span> 
 
                 <div class="PhoneNum">
-                    <input type="number" id="Phone" name="PhoneNum" placeholder="Phone #" oninput="this.value=this.value.slice(0,11)"/>
+                    <input type="number" class="inputPhoneNum" id="Phone" name="PhoneNum" placeholder="Phone Number (09991234567)" oninput="this.value=this.value.slice(0,11)"/>
                   </div>
 
                 <span id="errorPhone" class="error-message"></span> 
@@ -62,12 +62,12 @@
                 <span id="errorGender" class="error-message"></span> 
 
                 <div class="Password">
-                    <input type="password" id="password" name="Password" placeholder="Password"  />
+                    <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password"  />
                 </div>
                 <span id="errorpassword" class="error-message"></span> 
 
                 <div class="ConfirmPass">
-                    <input type="password" id="Cpass" name="ConfirmPass" placeholder="Confirm Password"  />
+                    <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass" placeholder="Confirm Password"  />
                 </div>
                 <span id="errorCpass" class="error-message"></span> 
     
@@ -83,11 +83,13 @@
                     Don't have an account yet?
                     <span><a href="#" onclick="showSignUp()">Sign Up</a></span>
                 </p>
+                <div class="loginInputs">
                 <div class="LogEmail">
-                    <input type="email" id="LogEmail" name="Email" placeholder="Email"  />
+                    <input type="email" class="inputEmailLogIn" id="LogEmail" name="Email" placeholder="Email"  />
                 </div>
                 <div class="LogPass">
-                    <input type="password" id="LogPass" name="Password" placeholder="Password"  />
+                    <input type="password" class="inputPassLogIn" id="LogPass" name="Password" placeholder="Password"  />
+                </div>
                 </div>
     
                 <button type="submit">Login</button>

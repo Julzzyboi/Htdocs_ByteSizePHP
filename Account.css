@@ -213,7 +213,7 @@ body{
     /* margin-right: 20px; */
     /* padding-left: 40px;
     padding-right: 40px; */
-    width: 100%;
+    width: 300px;
     height: 100%;
 }
 .Login > form{
@@ -227,6 +227,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 form{
@@ -235,6 +236,7 @@ form{
    
     align-items: center;
 }
+
 form .Title{
     font-family: Back;
     color: #FF9FC2;
@@ -246,14 +248,11 @@ form .Title{
 }
 
 /* input design */
-form input[type="text"],
-form input[type="email"],
-form input[type="number"],
-form input[type="password"] {
+.inputFN, .inputLN, .inputEmailSignUp, .inputPhoneNum, .inputSignUpPass, .inputSignUpCPass{
   width: 250px; 
   height: 31px;
   padding: 5px;
-  font-size: 1.1rem;
+  font-size: 14px;
   border-radius: 10px;
   border: 2px solid #2e222f;
   background-color: white;
@@ -262,13 +261,25 @@ input::placeholder{
     font-family: Candy;
     color:#817f81
 }
-input[type="text"],input[type="email"],
-input[type="number"],input[type="password"]
-{
+
+.loginInputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputEmailLogIn, .inputPassLogIn{
     font-family: Candy;
     font-weight: none;
-
+    
+    width: 250px; 
+    height: 31px;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 2px solid #2e222f;
+    background-color: white;
 }
+
 form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="number"]:focus,
