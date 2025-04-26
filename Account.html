@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="Account.css" />
+    <style>
+      .input-error {
+    border: 2px solid red !important;
+    font-size: 10px;
+  }
+
+  .error-message {
+    color: rgb(0, 201, 10);
+    font-size: 0.85rem;
+    border: 1px solid black;
+  }
+    </style>
+  </head>
+  <body>
+    <div class="Main-Container" id="Main">
+      <!-- Logo -->
+      <div class="Logo-Container">
+        <div class="Account-Logo">
+          <img src="AccountPage/StickerLogo.png" />
+        </div>
+      </div>
+
+    <div class="Form-Container">
+        <!-- Sign Up -->
+        <div class="SignUp">
+            <form action="Account.php" method="POST" onsubmit="validateForm(event)">
+                <p class="Title Form1">Sign Up</p>
+                <p>
+                    Already have an account?
+                    <span><a href="#" onclick="showLogin()">Login</a></span>
+                </p>
+                <div class="Fname">
+                    <input type="text" id="Fname"name="Fname" placeholder="First Name" />
+                </div>
+
+                <span id="errorFname" class="error-message"></span> 
+
+                <div class="Lname">
+                    <input type="text" id="Lname" name="Lname" placeholder="Last Name"  />
+                </div>
+
+                <span id="errorLname" class="error-message"></span> 
+
+                <div class="Email">
+                    <input type="email" id="email" name="Email" placeholder="Email"  />
+                </div>
+
+                <span id="erroremail" class="error-message"></span> 
+
+                <div class="PhoneNum">
+                    <input type="number" id="Phone" name="PhoneNum" placeholder="Phone #" oninput="this.value=this.value.slice(0,11)"
+                        />
+                </div>
+
+                <span id="errorPhone" class="error-message"></span> 
+
+                <div class="Gender">
+                    <label for="Gender">Gender:</label>
+                    <input type="radio" id="Male" name="Gender" value="Male"  />
+                    <label for="Male">Male</label>
+                    <input type="radio" id="Female" name="Gender" value="Female"  />
+                    <label for="Female">Female</label>
+                </div>
+                <span id="errorGender" class="error-message"></span> 
+
+                <div class="Password">
+                    <input type="password" id="password" name="Password" placeholder="Password"  />
+                </div>
+                <span id="errorpassword" class="error-message"></span> 
+
+                <div class="ConfirmPass">
+                    <input type="password" id="Cpass" name="ConfirmPass" placeholder="Confirm Password"  />
+                </div>
+                <span id="errorCpass" class="error-message"></span> 
+    
+                <button type="submit" id="SignUp-Button">Register</button>
+            </form>
+        </div>
+    
+        <!-- Login -->
+        <div class="Login">
+            <form action="Account.php" method="POST">
+                <p class="Title Form2">Login</p>
+                <p>
+                    Don't have an account yet?
+                    <span><a href="#" onclick="showSignUp()">Sign Up</a></span>
+                </p>
+                <div class="LogEmail">
+                    <input type="email" id="LogEmail" name="Email" placeholder="Email"  />
+                </div>
+                <div class="LogPass">
+                    <input type="password" id="LogPass" name="Password" placeholder="Password"  />
+                </div>
+    
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    <script src="Account.js"></script>
+    <script>
+      // for  sliding animation
+      const Mcontainer = document.getElementById("Main");
+
+      function showLogin() {
+        Mcontainer.classList.add("Login-mode");
+      }
+
+      function showSignUp() {
+        Mcontainer.classList.remove("Login-mode");
+      }
+
+    </script>
+  </body>
+</html>
