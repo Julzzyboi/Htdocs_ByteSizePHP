@@ -1,28 +1,29 @@
-/* FONTS */
-@font-face {
+ /* FONTS */
+ @font-face {
     font-family: Back;
-    src: url(fonts/Backso.ttf);
-  }
-  
-  @font-face {
+    src: url('fonts/Backso.ttf');
+}
+
+@font-face {
     font-family: Candy;
-    src: url(fonts/CandyBeans.ttf);
-  }
-  
-  body{
+    src: url('fonts/CandyBeans.ttf');
+}
+
+/* UNIVERSAL */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     background: linear-gradient(#fff7c6 50%, #ffc0cb 100%);
     min-height: 100vh;
     font-family: 'Candy', sans-serif;
     display: flex;
     flex-direction: column;
 }
-  /* UNIVERSAL */
-  *{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
+
   /* NAVIGATION BAR */
   
   .navigationBar{
@@ -103,81 +104,166 @@
     margin-top: 30px;
     padding-top: 30px;
   }
-  
-  .container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0px;
-    width: 100%;
-    margin-top: 12060;
-  }
-  
-  .ourfaq p{
-    font-family: back;
-    font-size: 45px;
-    color: #91DB69;
-    text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
-    justify-self: center;
-    margin-bottom: 50px;
-    letter-spacing: 1px;
-    text-align: center;
-  }
-  
-  .faq-container {
+
+/* MAIN CONTENT */
+main {
+    display: flex;
+    padding: 20px 40px;
+    flex: 1;
+}
+
+/* Left Side*/
+.sidebar {
+    width: 60px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    padding: 0 20px;
-  }
-  
-  .faq-item {
-    background-color: #ffd6e0;
-    border-radius: 30px;
+    gap: 15px;
+    margin-right: 20px;
+}
+
+.sidebar-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     overflow: hidden;
-    font-family: Candy;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  }
-  
-  .faq-question {
-    padding: 20px;
-    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Middle*/
+.product-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Product Banner */
+.product-banner {
+    background-color: #000;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.banner-text {
+    background-color: #fff;
+    padding: 8px 20px;
+    font-family: 'Back', sans-serif;
     font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+}
+
+.product-card {
+    background-color: #FFC773;
+    height: 120px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ff9dcf;
+    padding: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #333;
-    font-family: Candy;
-    font-size: 18px;
-  }
-  
-  .faq-question::after {
-    content: "▼";
+}
+
+.product-qty {
+    font-family: 'Back', sans-serif;
     font-size: 12px;
-    transition: transform 0.3s;
-  }
-  
-  .faq-question.active::after {
-    transform: rotate(180deg);
-  }
-  
-  .faq-answer {
-    padding: 0 15px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    background-color: #ffedf1;
-    font-family: Candy;
-    color: #444;
-  }
-  
-  .faq-answer.active {
-    padding: 20px;
-    max-height: 200px;
-    border-top: 1px solid #ffc2d4;
-  }
-  
-  /* for footer */
-  footer{
+    font-weight: bold;
+}
+
+.product-cart {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 3px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.limited-offer {
+    position: absolute;
+    left: 0;
+    bottom: -60px;
+    width: 80px;
+}
+
+/* Right */
+.cart-container {
+    width: 200px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-left: 20px;
+    padding: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-title {
+    font-family: 'Back', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cart-item {
+    height: 20px;
+    background-color: #ccc;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.checkout-btn {
+    margin-top: auto;
+    background-color: #FBECA1;
+    border: 1px solid #ccc;
+    padding: 8px 0;
+    border-radius: 20px;
+    font-weight: bold;
+    font-family: 'Back', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    width: 170px;
+}
+
+/* for footer */
+footer{
     position: relative;
     bottom: 0;
     width: 100%;
