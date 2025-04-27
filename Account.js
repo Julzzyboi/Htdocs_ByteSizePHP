@@ -43,7 +43,7 @@ function validateForm(event) {
     if (email.value.trim() === "") {
       showError(email, "Email is required.");
     } else {
-      clearError(email);
+      clearError(email); 
     }
   
     if (phone.value.trim() === "") {
