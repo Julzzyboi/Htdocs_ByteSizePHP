@@ -1,3 +1,111 @@
+<?php
+session_start();
+
+include 'Db_connection.php'; // Include your correct DB connection
+
+// Handle Sign Up
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['firstName'])) {
+
+    $firstName = $conn->real_escape_string($_POST['firstName']);
+    $lastName = $conn->real_escape_string($_POST['lastName']);
+    $email = $conn->real_escape_string($_POST['emailAddress']);
+    $phone = $conn->real_escape_string($_POST['phoneNumber']);
+    $gender = isset($_POST['Gender']) ? $conn->real_escape_string($_POST['Gender']) : '';
+    $passwordRaw = $_POST['Password'];
+    $confirmPasswordRaw = $_POST['ConfirmPass'];
+
+    // Passwords Match?
+    if ($passwordRaw !== $confirmPasswordRaw) {
+        $_SESSION['signup_error'] = "Passwords do not match.";
+        header("Location: Account.php");
+        exit();
+    }
+
+    $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
+
+    // Check if email exists in admin
+    $checkAdminQuery = "SELECT * FROM admin WHERE LOWER(adminEmail) = LOWER('$email')";
+    $adminResult = $conn->query($checkAdminQuery);
+
+    $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer';
+
+    // Insert new user
+    $sql = "INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, password, role, dateCreated, dateUpdated)
+            VALUES ('$firstName', '$lastName', '$email', '$phone', '$gender', '$password', '$role', NOW(), NOW())";
+
+    if ($conn->query($sql) === TRUE) {
+        $_SESSION['signup_success'] = "Account created successfully!";
+        header("Location: Account.php");
+        exit();
+    } else {
+        $_SESSION['signup_error'] = "Error: " . $conn->error;
+        header("Location: Account.php");
+        exit();
+    }
+}
+
+// Handle Login
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['LogEmail'])) {
+    $email = $conn->real_escape_string($_POST['LogEmail']);
+    $passwordInput = $_POST['LogPassword'];
+
+    $sql = "SELECT * FROM user WHERE emailAddress = '$email'";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($passwordInput, $user['password'])) {
+            // Password correct -> set session
+            $_SESSION['user_id'] = $user['userID'];
+            $_SESSION['user_email'] = $user['emailAddress'];
+            $_SESSION['user_role'] = $user['role'];
+
+            // Track login activity
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $insertLogin = "INSERT INTO login_activity (userID, login_ip) VALUES ('{$user['userID']}', '$ipAddress')";
+            $conn->query($insertLogin);
+
+            // Redirect
+            if ($user['role'] === 'admin') {
+                header("Location: admin.php");
+            } else {
+                header("Location: customer_home.php");
+            }
+            exit();
+        } else {
+            // Wrong password
+            $_SESSION['login_error'] = "Invalid email or password.";
+            header("Location: Account.php");
+            exit();
+        }
+    } else {
+        // No user found
+        $_SESSION['login_error'] = "Invalid email or password.";
+        header("Location: Account.php");
+        exit();
+    }
+}
+
+// Show signup or login error messages
+function showErrorMessage() {
+    if (isset($_SESSION['signup_error'])) {
+        echo '<p class="error-message">' . $_SESSION['signup_error'] . '</p>';
+        unset($_SESSION['signup_error']);
+    }
+    if (isset($_SESSION['signup_success'])) {
+        echo '<p class="success-message">' . $_SESSION['signup_success'] . '</p>';
+        unset($_SESSION['signup_success']);
+    }
+    if (isset($_SESSION['login_error'])) {
+        echo '<p class="error-message">' . $_SESSION['login_error'] . '</p>';
+        unset($_SESSION['login_error']);
+    }
+}
+
+$conn->close();
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,10 +193,10 @@
                 </p>
                 <div class="loginInputs">
                 <div class="LogEmail">
-                    <input type="email" class="inputEmailLogIn" id="LogEmail" name="Email" placeholder="Email"  />
+                    <input type="email" class="inputEmailLogIn" id="LogEmail" name="LogEmail" placeholder="Email"  />
                 </div>
                 <div class="LogPass">
-                    <input type="password" class="inputPassLogIn" id="LogPass" name="Password" placeholder="Password"  />
+                    <input type="password" class="inputPassLogIn" id="LogPass" name="LogPassword" placeholder="Password"  />
                 </div>
                 </div>
     

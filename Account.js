@@ -43,7 +43,7 @@ function validateForm(event) {
     if (email.value.trim() === "") {
       showError(email, "Email is required.");
     } else {
-      clearError(email); 
+      clearError(email);
     }
   
     if (phone.value.trim() === "") {
@@ -127,3 +127,61 @@ function validateForm(event) {
     function updateCounterLN(){
         remainingLastName.innerText = inputLastName.getAttribute("maxlength") - inputLastName.value.length
     }
+
+    // for login
+    function validateLogin(event) {
+      event.preventDefault();
+  
+      const form = event.target;
+  
+      const email = document.getElementById("LogEmail");
+      const password = document.getElementById("LogPass");
+  
+      let isValid = true;
+  
+      function showError(input, message) {
+          input.classList.add("input-error");
+          const errorSpan = document.getElementById("error" + input.id);
+          if (errorSpan) errorSpan.textContent = message;
+          isValid = false;
+      }
+  
+      function clearError(input) {
+          input.classList.remove("input-error");
+          const errorSpan = document.getElementById("error" + input.id);
+          if (errorSpan) errorSpan.textContent = "";
+      }
+  
+      // Validate email
+      if (email.value.trim() === "") {
+          showError(email, "Email is required.");
+      } else {
+          clearError(email);
+      }
+  
+      // Validate password
+      if (password.value.trim() === "") {
+          showError(password, "Password is required.");
+      } else {
+          clearError(password);
+      }
+  
+      if (isValid) form.submit();
+  }
+  
+  // Remove red borders and error messages on typing (login inputs)
+  document.addEventListener("DOMContentLoaded", () => {
+      const loginInputs = ["LogEmail", "LogPass"];
+  
+      loginInputs.forEach(id => {
+          const input = document.getElementById(id);
+          input.addEventListener("input", () => {
+              if (input.value.trim() !== "") {
+                  input.classList.remove("input-error");
+                  const errorSpan = document.getElementById("error" + id);
+                  if (errorSpan) errorSpan.textContent = "";
+              }
+          });
+      });
+  });
+  
