@@ -214,3 +214,51 @@ input:checked ~ .sideBar{
 /* input:checked ~ .topNav p{
     transform: translateX(160px);
 } */
+
+/* OVERVIEW */
+
+.mainContent{
+    margin-left: 200px;
+}
+
+.summaryOverview{
+
+    height: px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+
+    justify-content: space-evenly;
+    align-items: center;
+
+    /* border: 2px solid red; */
+    margin-left: 100px;
+    margin-right: 100px;
+    
+}
+
+.customerOverview, .orderOverview, .inventoryOverview, .salesOverview{
+    height: 150px;
+    width: 250px;
+
+    margin-top: 100px;
+
+    border: 4px solid #2E222F;
+    border-radius: 30px;
+}
+
+.customerOverview{
+    background-color: #FEE5EB;
+}
+
+.orderOverview{
+    background-color: #FFB3C7;
+}
+
+.inventoryOverview{
+    background-color: #FE8FAA;
+}
+
+.salesOverview{
+    background-color: #FB6F92;
+}
