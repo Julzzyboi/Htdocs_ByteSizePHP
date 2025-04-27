@@ -134,6 +134,8 @@ $conn->close();
                     Already have an account?
                     <span><a href="#" onclick="showLogin()">Login</a></span>
                 </p>
+
+                <div class="signUpInputs">
                 <div class="Fname">
                     <input type="text" class="inputFN" id="Fname" name="firstName" placeholder="First Name (ex. Juan)" maxlength="50"/>
                     <span class="remainingFN" id="remainingFN">50</span>
@@ -178,6 +180,7 @@ $conn->close();
                     <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass" placeholder="Confirm Password"  />
                 </div>
                 <span id="errorCpass" class="error-message"></span> 
+              </div>
     
                 <button type="submit" id="SignUp-Button" onclick="validateForm(event)" >Register</button>
             </form>

@@ -242,7 +242,7 @@ form .Title{
     color: #FF9FC2;
     font-size: 40px;
     text-shadow: rgb(46, 34, 47) 3px 0px 0px, rgb(46, 34, 47) 2.83487px 0.981584px 0px, rgb(46, 34, 47) 2.35766px 1.85511px 0px, rgb(46, 34, 47) 1.62091px 2.52441px 0px, rgb(46, 34, 47) 0.705713px 2.91581px 0px, rgb(46, 34, 47) -0.287171px 2.98622px 0px, rgb(46, 34, 47) -1.24844px 2.72789px 0px, rgb(46, 34, 47) -2.07227px 2.16926px 0px, rgb(46, 34, 47) -2.66798px 1.37182px 0px, rgb(46, 34, 47) -2.96998px 0.42336px 0px, rgb(46, 34, 47) -2.94502px -0.571704px 0px, rgb(46, 34, 47) -2.59586px -1.50383px 0px, rgb(46, 34, 47) -1.96093px -2.27041px 0px, rgb(46, 34, 47) -1.11013px -2.78704px 0px, rgb(46, 34, 47) -0.137119px -2.99686px 0px, rgb(46, 34, 47) 0.850987px -2.87677px 0px, rgb(46, 34, 47) 1.74541px -2.43999px 0px, rgb(46, 34, 47) 2.44769px -1.73459px 0px, rgb(46, 34, 47) 2.88051px -0.838247px 0px;
-    margin-top: 10px;
+    margin-top: 25px;
     display: flex;
     justify-self: flex-start;
 }
@@ -307,12 +307,19 @@ p{
 }
 
 .Fname{
-    margin-top: 25px;
+    margin-top: 20px;
     display: flex;
 }
 
 .Lname{
     display: flex;
+}
+
+.signUpInputs{
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid magenta; */
+    margin-left: 20px;
 }
 
 /* COUNTER */
@@ -343,6 +350,7 @@ input[type=number]::-webkit-inner-spin-button {
     color:#2e222f;
     width: 100%;
 
+    margin-left: 5px;
 }
 
 button[type="submit"]{
@@ -375,7 +383,12 @@ button:active{
     height: 12px;
     font-family: Candy;
     color: #ff0e6e;
-    font-size: 10px;
+    font-size: 8px;
+    margin-left: 10px;
+
+    /* border: 2px solid orange; */
+    width: 245px;
+    height: 10px;
 }
 
 .input-error {

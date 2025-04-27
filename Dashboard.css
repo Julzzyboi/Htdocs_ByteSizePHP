@@ -27,9 +27,8 @@ body{
     color: #91DB69;
     text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
 
-    text-align: right;
     padding: 10px 0;
-    padding-right: 50px;
+    padding-left: 20px;
     padding-top: 16px;
     pointer-events: none;
 }
@@ -40,7 +39,8 @@ body{
     position: absolute;
     background-color: #FFC0CB;
     transition: 0.5s ease;
-    transform: translateX(-200px);
+    border-right: 2px solid #2E222F;
+    /* transform: translateX(-200px); */
     
     display: flex;
     flex-direction: column;
@@ -126,7 +126,7 @@ input{
     visibility: hidden;
 }
 
-.toggle{
+/* .toggle{
     position: absolute;
     height: 30px;
     width: 30px;
@@ -135,8 +135,6 @@ input{
     z-index: 1;
     cursor: pointer;
     border-radius: 2px;
-
-    /* border:2px solid red; */
 }
 
 .toggle .common{
@@ -188,7 +186,7 @@ input:checked ~ .toggle .bottomLine{
 input:checked ~ .sideBar{
     transform: translateX(0);
     border-right: 2px solid #2E222F;
-}
+} */
 
 /* TOP NAV */
 
@@ -209,10 +207,58 @@ input:checked ~ .sideBar{
     text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
 
     margin-top: 17px;
-    margin-left: 60px;
+    margin-left: 220px;
     transition: 0.3s ease;
 }
 
-input:checked ~ .topNav p{
+/* input:checked ~ .topNav p{
     transform: translateX(160px);
+} */
+
+/* OVERVIEW */
+
+.mainContent{
+    margin-left: 200px;
+}
+
+.summaryOverview{
+
+    height: px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+
+    justify-content: space-evenly;
+    align-items: center;
+
+    /* border: 2px solid red; */
+    margin-left: 100px;
+    margin-right: 100px;
+    
+}
+
+.customerOverview, .orderOverview, .inventoryOverview, .salesOverview{
+    height: 150px;
+    width: 250px;
+
+    margin-top: 100px;
+
+    border: 4px solid #2E222F;
+    border-radius: 30px;
+}
+
+.customerOverview{
+    background-color: #FEE5EB;
+}
+
+.orderOverview{
+    background-color: #FFB3C7;
+}
+
+.inventoryOverview{
+    background-color: #FE8FAA;
+}
+
+.salesOverview{
+    background-color: #FB6F92;
 }

@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result && $result->num_rows === 1) {
         $user = $result->fetch_assoc();
-        
+
         // Step 2: Verify password
         if (password_verify($password, $user['password'])) {
             // Password matches
@@ -49,4 +49,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-?>
