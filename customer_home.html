@@ -26,7 +26,7 @@ session_start()
                     <h1>|</h1>
                     <li><a href="#">Products</a></li>
                     <h1>|</h1>
-                    <li><a href="#Faqs.html" class="activeNav";</a>FAQs</a></li>
+                    <li><a href="#Faqs.html" class="activeNav";>FAQs</a></li>
                     <h1>|</h1>
                 </ul>
             </div>

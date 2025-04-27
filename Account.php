@@ -32,59 +32,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['firstName'])) {
     // Insert new user
     $sql = "INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, password, role, dateCreated, dateUpdated)
             VALUES ('$firstName', '$lastName', '$email', '$phone', '$gender', '$password', '$role', NOW(), NOW())";
+          
 
     if ($conn->query($sql) === TRUE) {
-        $_SESSION['signup_success'] = "Account created successfully!";
-        header("Location: Account.php");
+        header("Location: customer_home.php");
         exit();
     } else {
-        $_SESSION['signup_error'] = "Error: " . $conn->error;
         header("Location: Account.php");
         exit();
     }
 }
 
-// Handle Login
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['LogEmail'])) {
-    $email = $conn->real_escape_string($_POST['LogEmail']);
-    $passwordInput = $_POST['LogPassword'];
 
-    $sql = "SELECT * FROM user WHERE emailAddress = '$email'";
-    $result = $conn->query($sql);
+//Handle Login
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'login') {
+  $email = $conn->real_escape_string($_POST['LogEmail']);
+  $passwordInput = $_POST['LogPassword'];
 
-    if ($result && $result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+  $sql = "SELECT * FROM user WHERE emailAddress = '$email'";
+  $result = $conn->query($sql);
 
-        if (password_verify($passwordInput, $user['password'])) {
-            // Password correct -> set session
-            $_SESSION['user_id'] = $user['userID'];
-            $_SESSION['user_email'] = $user['emailAddress'];
-            $_SESSION['user_role'] = $user['role'];
+  if ($result && $result->num_rows === 1) {
+      $user = $result->fetch_assoc();
 
-            // Track login activity
-            $ipAddress = $_SERVER['REMOTE_ADDR'];
-            $insertLogin = "INSERT INTO login_activity (userID, login_ip) VALUES ('{$user['userID']}', '$ipAddress')";
-            $conn->query($insertLogin);
+      if (password_verify($passwordInput, $user['password'])) {
+          // Password correct
+          $_SESSION['user_id'] = $user['user_ID'];
+          $_SESSION['user_Email'] = $user['emailAddress'];
+          $_SESSION['user_role'] = $user['role'];
 
-            // Redirect
-            if ($user['role'] === 'admin') {
-                header("Location: admin.php");
-            } else {
-                header("Location: customer_home.php");
-            }
-            exit();
-        } else {
-            // Wrong password
-            $_SESSION['login_error'] = "Invalid email or password.";
-            header("Location: Account.php");
-            exit();
-        }
-    } else {
-        // No user found
-        $_SESSION['login_error'] = "Invalid email or password.";
-        header("Location: Account.php");
-        exit();
-    }
+          // Correct login activity
+          $insertLogin = "INSERT INTO user_login (emailAddress, login_Time) VALUES ('$email', NOW())";
+          $conn->query($insertLogin);
+
+          if ($user['role'] == 'admin') {
+              header("Location: admin.php");
+          } else {
+              header("Location: customer_home.php");
+          }
+          exit();
+      } else {
+          // Wrong password
+          $_SESSION['login_error'] = "Incorrect Password.";
+          header("Location: Account.php");
+          exit();
+      }
+  } else {
+      // Email not found
+      $_SESSION['login_error'] = "Email not found.";
+      header("Location: Account.php");
+      exit();
+  }
 }
 
 // Show signup or login error messages
@@ -128,7 +126,8 @@ $conn->close();
     <div class="Form-Container">
         <!-- Sign Up -->
         <div class="SignUp">
-            <form action="Account.php" method="POST" onsubmit="validateForm(event)">
+            <form action="Account.php" method="POST">
+              <input type="hidden" name="action" value="signup">
                 <p class="Title Form1">Sign Up</p>
                 <p>
                     Already have an account?
@@ -182,28 +181,35 @@ $conn->close();
                 <span id="errorCpass" class="error-message"></span> 
               </div>
     
-                <button type="submit" id="SignUp-Button">Register</button>
+                <button type="submit" id="SignUp-Button" onclick="validateForm(event)" >Register</button>
             </form>
         </div>
     
         <!-- Login -->
         <div class="Login">
             <form action="Account.php" method="POST">
+            <input type="hidden" name="action" value="login">
                 <p class="Title Form2">Login</p>
                 <p>
                     Don't have an account yet?
                     <span><a href="#" onclick="showSignUp()">Sign Up</a></span>
                 </p>
                 <div class="loginInputs">
+
                 <div class="LogEmail">
                     <input type="email" class="inputEmailLogIn" id="LogEmail" name="LogEmail" placeholder="Email"  />
                 </div>
+                <span id="errorLogEmail" class="error-message"></span> 
+
                 <div class="LogPass">
                     <input type="password" class="inputPassLogIn" id="LogPass" name="LogPassword" placeholder="Password"  />
                 </div>
+                <span id="errorLogPass" class="error-message"></span> 
+                <?php showErrorMessage(); ?>
+
                 </div>
     
-                <button type="submit">Login</button>
+                <button type="submit" id="Login-Button" onclick="validateLogin(event)" >Login</button>
             </form>
         </div>
     </div>

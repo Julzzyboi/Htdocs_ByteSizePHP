@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: Account.php");
+    header("Location: customer_home.php");
     exit();
 }
 else{
