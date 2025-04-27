@@ -1,0 +1,77 @@
+/* FONTS */
+@font-face {
+    font-family: Back;
+    src: url(fonts/Backso.ttf);
+  }
+  
+  @font-face {
+    font-family: Candy;
+    src: url(fonts/CandyBeans.ttf);
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: white;
+}
+
+/* Side Navigation Bar */
+
+.sideBar{
+    height: 100%;
+    width: 400px;
+    position: absolute;
+    background-color: #FFC0CB;
+    transition: 0.5s ease;
+}
+
+ul li{
+    list-style: none;
+
+}
+
+ul li a{
+    font-family: Candy;
+    font-size: 17px;
+    color: #fc90b8;
+    text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
+
+    padding: 5px 0;
+    display: block;
+    text-decoration: none;
+    transition: 0.2s ease-out;
+}
+
+.activeNav a{
+    color: #FF4287;
+}
+
+.dashboardNav, .ordersNav, .inventoryNav, .accountNav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dashboardNav svg{
+    height: 25px;
+    width: 35px;
+}
+
+.ordersNav svg{
+    height: 20px;
+    width: 35px;
+}
+
+.inventoryNav svg{
+    height: 35px;
+    width: 35px;
+}
+
+.accountNav svg{
+    height: 27px;
+    width: 35px;
+}
