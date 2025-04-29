@@ -208,12 +208,16 @@ $conn->close();
 
     <div id="modal" class="Modal-Wrap">
       <div class="modal">
+        <div class="CloseModal-Button"><a onclick="closeModal()"><img src="AccountPage/close.svg" alt=""></a></div>
+      <div class="Error-Cookie"><img src="AccountPage/Crunch Confused.png" alt=""></div>
+      <div class="Error-Graham"><img src="AccountPage/Grahan Confused.png" alt=""></div>
+        <div class="Error-Pastillas"><img src="AccountPage/Pasty Confused.png" alt=""></div>
           <div class="modalContainer">
             <p class="Error-Title">Error:</p>
             <p class="modalMess" id="modalMessage"></p>
             <button class="Error-Button" onclick="closeModal()">OK</button>
           </div>
-        </div>
+      </div>
     </div>
         <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
       background:rgba(0,0,0,0.5); z-index:999;">
