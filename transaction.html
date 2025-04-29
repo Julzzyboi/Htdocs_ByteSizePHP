@@ -3,78 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transactions</title>
-    <link rel="stylesheet" href="Transaction.css" />
+    <title>Checkout</title>
+    <link rel="stylesheet" href="transaction.css" />
 </head>
 <body>
-    <!-- Navigation bar -->
-    <nav>
-        <div class="navigationBar">
-            <div class="navigationLogo">
-                <img src="images/navigationBarLogo.png" alt="Small ByteSize Logo">
-            </div>
-            <div class="navButton">
-                <ul class="navigationContents">
-                    <h1>|</h1>
-                    <li><a href="#customer_home.html" class="activeNav";>Home</a></li>
-                    <h1>|</h1>
-                    <li><a href="#">Products</a></li>
-                    <h1>|</h1>
-                    <li><a href="#">FAQs</a></li>
-                    <h1>|</h1>
-                </ul>
-            </div>
-            <div class="userAccountNavigationSection">
-                <img src="images/userIcon.png" alt="User Icon">
-            </div>
-        </div>
-    </nav>
-<!--Receipt-->
-    <div class="Receipt">
+        <!-- Navigation bar -->
+        <nav>
+          <div class="navigationBar">
+              <div class="navigationLogo">
+                  <img src="images/navigationBarLogo.png" alt="Small ByteSize Logo">
+              </div>
+              <div class="navButton">
+                  <ul class="navigationContents">
+                      <h1>|</h1>
+                      <li><a href="#customer_home.html" class="activeNav";>Home</a></li>
+                      <h1>|</h1>
+                      <li><a href="#">Products</a></li>
+                      <h1>|</h1>
+                      <li><a href="#Faqs.html" class="activeNav";>FAQs</a></li>
+                      <h1>|</h1>
+                  </ul>
+              </div>
+              <div class="userAccountNavigationSection">
+                  <img src="images/userIcon.png" alt="User Icon">
+              </div>
+          </div>
+      </nav>
+  
+    <!-- Checkout Section -->
+    <section class="checkoutContainer">
         <h1>CHECKOUT</h1>
-        <p> Order No. 12345ABCDE678</p>
-        <p> Order Details: </p>
-        <div class="orders">
-            <div class="cookies">
-                <img src="HomePage/Cookie Mascot.png">
-            </div>
-            <div class="pastillas">
-                <img src="HomePage/Pastillias Mascot.png">
-            </div>
-            <div class="graham">
-                <img src="HomePage/GrahamBall Mascot.png">
-            </div>
-        <p> Total Amount to Pay </p>
-        <div class="price"></div>
-        <div class="payment">
-          <p> Payment Methods </p>
-            <button class="paymentd">Choose payment method</button>
-            <a href="#">Card payment</a>
-            <a href="#">Cash payment</a>
-        </div>
-        <div class="mode">
-          <p> Mode of Delivery </p>
-            <button class="moded">Choose delivery method</button>
-            <a href="#">Pick-up</a>
-            <a href="#">Delivery</a>
-        </div>
-        <p>Delivery Address </p>
-        <div class="address"></div>
-        </div>
-    </div>
+        <p>Order No. 12345ABCD678</p>
 
+        <h3>Order Details:</h3>
+        <div class="orderMascots">
+            <img src="HomePage/Cookie Mascot.png" alt="Cookie" />
+            <img src="HomePage/Pastillias Mascot.png" alt="Pastillas" />
+            <img src="HomePage/GrahamBall Mascot.png" alt="Graham Ball" />
+        </div>
 
-<!--Footer-->
+        <div class="amount">
+            <p>Total Amount to Pay:</p>
+            <input type="text" id="amount" placeholder=""/>
+        </div>
+
+        <div class="paymentBoxGroup">
+            <label for="payment">Payment Methods</label>
+            <select id="payment">
+                <option>Card Payment</option>
+                <option>Cash Payment</option>
+            </select>
+        </div>
+
+        <div class="paymentBoxGroup">
+            <label for="delivery">Mode of Delivery</label>
+            <select id="delivery">
+                <option>Pick-up</option>
+                <option>Delivery</option>
+            </select>
+        </div>
+
+        <div class="paymentBoxGroup">
+            <label for="address">Delivery Address</label>
+            <input type="text" id="address" placeholder="UST"/>
+        </div>
+
+        <button class="confirmButton">Confirm</button>
+    </section>
+
+    <!--Footer-->
    <footer>
-      <svg class="wave" id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 260" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(255, 192, 203, 1)" offset="0%"></stop><stop stop-color="rgba(255, 192, 203, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,26L10.9,56.3C21.8,87,44,147,65,143C87.3,139,109,69,131,52C152.7,35,175,69,196,108.3C218.2,147,240,191,262,182C283.6,173,305,113,327,82.3C349.1,52,371,52,393,47.7C414.5,43,436,35,458,60.7C480,87,502,147,524,182C545.5,217,567,225,589,203.7C610.9,182,633,130,655,121.3C676.4,113,698,147,720,147.3C741.8,147,764,113,785,108.3C807.3,104,829,130,851,138.7C872.7,147,895,139,916,147.3C938.2,156,960,182,982,199.3C1003.6,217,1025,225,1047,190.7C1069.1,156,1091,78,1113,60.7C1134.5,43,1156,87,1178,91C1200,95,1222,61,1244,60.7C1265.5,61,1287,95,1309,130C1330.9,165,1353,199,1375,195C1396.4,191,1418,147,1440,125.7C1461.8,104,1484,104,1505,108.3C1527.3,113,1549,121,1560,125.7L1570.9,130L1570.9,260L1560,260C1549.1,260,1527,260,1505,260C1483.6,260,1462,260,1440,260C1418.2,260,1396,260,1375,260C1352.7,260,1331,260,1309,260C1287.3,260,1265,260,1244,260C1221.8,260,1200,260,1178,260C1156.4,260,1135,260,1113,260C1090.9,260,1069,260,1047,260C1025.5,260,1004,260,982,260C960,260,938,260,916,260C894.5,260,873,260,851,260C829.1,260,807,260,785,260C763.6,260,742,260,720,260C698.2,260,676,260,655,260C632.7,260,611,260,589,260C567.3,260,545,260,524,260C501.8,260,480,260,458,260C436.4,260,415,260,393,260C370.9,260,349,260,327,260C305.5,260,284,260,262,260C240,260,218,260,196,260C174.5,260,153,260,131,260C109.1,260,87,260,65,260C43.6,260,22,260,11,260L0,260Z"></path></svg>
+    <svg class="wave" id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 260" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(255, 192, 203, 1)" offset="0%"></stop><stop stop-color="rgba(255, 192, 203, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,26L10.9,56.3C21.8,87,44,147,65,143C87.3,139,109,69,131,52C152.7,35,175,69,196,108.3C218.2,147,240,191,262,182C283.6,173,305,113,327,82.3C349.1,52,371,52,393,47.7C414.5,43,436,35,458,60.7C480,87,502,147,524,182C545.5,217,567,225,589,203.7C610.9,182,633,130,655,121.3C676.4,113,698,147,720,147.3C741.8,147,764,113,785,108.3C807.3,104,829,130,851,138.7C872.7,147,895,139,916,147.3C938.2,156,960,182,982,199.3C1003.6,217,1025,225,1047,190.7C1069.1,156,1091,78,1113,60.7C1134.5,43,1156,87,1178,91C1200,95,1222,61,1244,60.7C1265.5,61,1287,95,1309,130C1330.9,165,1353,199,1375,195C1396.4,191,1418,147,1440,125.7C1461.8,104,1484,104,1505,108.3C1527.3,113,1549,121,1560,125.7L1570.9,130L1570.9,260L1560,260C1549.1,260,1527,260,1505,260C1483.6,260,1462,260,1440,260C1418.2,260,1396,260,1375,260C1352.7,260,1331,260,1309,260C1287.3,260,1265,260,1244,260C1221.8,260,1200,260,1178,260C1156.4,260,1135,260,1113,260C1090.9,260,1069,260,1047,260C1025.5,260,1004,260,982,260C960,260,938,260,916,260C894.5,260,873,260,851,260C829.1,260,807,260,785,260C763.6,260,742,260,720,260C698.2,260,676,260,655,260C632.7,260,611,260,589,260C567.3,260,545,260,524,260C501.8,260,480,260,458,260C436.4,260,415,260,393,260C370.9,260,349,260,327,260C305.5,260,284,260,262,260C240,260,218,260,196,260C174.5,260,153,260,131,260C109.1,260,87,260,65,260C43.6,260,22,260,11,260L0,260Z"></path></svg>
 
+
+    <footer>
+      <svg class="wave" id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 260" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(255, 192, 203, 1)" offset="0%"></stop><stop stop-color="rgba(255, 192, 203, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,26L10.9,56.3C21.8,87,44,147,65,143C87.3,139,109,69,131,52C152.7,35,175,69,196,108.3C218.2,147,240,191,262,182C283.6,173,305,113,327,82.3C349.1,52,371,52,393,47.7C414.5,43,436,35,458,60.7C480,87,502,147,524,182C545.5,217,567,225,589,203.7C610.9,182,633,130,655,121.3C676.4,113,698,147,720,147.3C741.8,147,764,113,785,108.3C807.3,104,829,130,851,138.7C872.7,147,895,139,916,147.3C938.2,156,960,182,982,199.3C1003.6,217,1025,225,1047,190.7C1069.1,156,1091,78,1113,60.7C1134.5,43,1156,87,1178,91C1200,95,1222,61,1244,60.7C1265.5,61,1287,95,1309,130C1330.9,165,1353,199,1375,195C1396.4,191,1418,147,1440,125.7C1461.8,104,1484,104,1505,108.3C1527.3,113,1549,121,1560,125.7L1570.9,130L1570.9,260L1560,260C1549.1,260,1527,260,1505,260C1483.6,260,1462,260,1440,260C1418.2,260,1396,260,1375,260C1352.7,260,1331,260,1309,260C1287.3,260,1265,260,1244,260C1221.8,260,1200,260,1178,260C1156.4,260,1135,260,1113,260C1090.9,260,1069,260,1047,260C1025.5,260,1004,260,982,260C960,260,938,260,916,260C894.5,260,873,260,851,260C829.1,260,807,260,785,260C763.6,260,742,260,720,260C698.2,260,676,260,655,260C632.7,260,611,260,589,260C567.3,260,545,260,524,260C501.8,260,480,260,458,260C436.4,260,415,260,393,260C370.9,260,349,260,327,260C305.5,260,284,260,262,260C240,260,218,260,196,260C174.5,260,153,260,131,260C109.1,260,87,260,65,260C43.6,260,22,260,11,260L0,260Z"></path></svg>
 
     <div class="Footer-Content">
       <div class="F-logo">
         <img src="HomePage/FooterLogo.png" alt="">
       </div>
       <div class="F-Details">
-        <div class="Detail D1">
+        <div class="Detail 1">
           <a href="">Home</a>
           <ul>
             <li>Our Products</li>
@@ -83,21 +93,23 @@
             <li>Vision</li>
           </ul>
         </div>
-       
-        <div class="Detail D2">
+        
+        <div class="Detail 2">
           <a href="">Products</a>
           <ul>
-            <li>Services</li>
-            <li>Supports</li>
-            <li>Terms & Condition</li>
-            <li>Privacy Policy</li>
+            <li>Our Products</li>
+            <li>ByteSize Story</li>
+            <li>Mission</li>
+            <li>Vision</li>
           </ul>
         </div>
-        <div class="Detail D3">
+        <div class="Detail 3">
           <a href="">Services</a>
           <ul>
-            <li>Menu</li>
-            <li>Order</li>
+            <li>Our Products</li>
+            <li>ByteSize Story</li>
+            <li>Mission</li>
+            <li>Vision</li>
           </ul>
           </div>
       </div>
@@ -121,9 +133,9 @@
               <a href="https://www.instagram.com/bytesize.delights?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><img src="Footer/instagram.svg"></a>
               <p>@bytesizedelights</p>
             </div>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-</body>
-</html>
+    </footer>
+  </body>
+  </html>
