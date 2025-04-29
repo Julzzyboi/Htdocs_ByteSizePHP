@@ -1,178 +1,95 @@
 <?php
 session_start();
+include 'Db_connection.php'; // DB connection
 
-include 'Db_connection.php'; // Include your correct DB connection
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-// Handle Sign Up
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['firstName'])) {
+    // SIGN UP
+    if (isset($_POST['firstName'])) {
+        $firstName = trim($_POST['firstName']);
+        $lastName = trim($_POST['lastName']);
+        $email = trim(strtolower($_POST['emailAddress']));
+        $phone = trim($_POST['phoneNumber']);
+        $gender = isset($_POST['Gender']) ? trim($_POST['Gender']) : '';
+        $passwordRaw = $_POST['Password'];
+        $confirmPasswordRaw = $_POST['ConfirmPass'];
 
-  $firstName = $conn->real_escape_string($_POST['firstName']);
-  $lastName = $conn->real_escape_string($_POST['lastName']);
-  $email = $conn->real_escape_string($_POST['emailAddress']);
-  $phone = $conn->real_escape_string($_POST['phoneNumber']);
-  $gender = isset($_POST['Gender']) ? $conn->real_escape_string($_POST['Gender']) : '';
-  $passwordRaw = $_POST['Password'];
-  $confirmPasswordRaw = $_POST['ConfirmPass'];
+        if ($passwordRaw !== $confirmPasswordRaw) {
+            $_SESSION['signup_error'] = "Passwords do not match.";
+            header("Location: Account.php");
+            exit();
+        }
 
-  // Passwords Match?
-  if ($passwordRaw !== $confirmPasswordRaw) {
-    $_SESSION['signup_error'] = "Passwords do not match.";
-    header("Location: Account.php");
-    exit();
-  }
+        // $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
 
-  $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
+        // Check if Admin
+        $stmt = $conn->prepare("SELECT * FROM admin WHERE LOWER(adminEmail) = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $adminResult = $stmt->get_result();
+        $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer';
 
-  // Check if email exists in admin
-  $checkAdminQuery = "SELECT * FROM admin WHERE LOWER(adminEmail) = LOWER('$email')";
-  $adminResult = $conn->query($checkAdminQuery);
+        // Insert user
+        $stmt = $conn->prepare("INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, password, role, dateCreated, dateUpdated)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
+        $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $passwordRaw, $role);
 
-  $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer';
-
-  // Insert new user
-  $sql = "INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, password, role, dateCreated, dateUpdated)
-            VALUES ('$firstName', '$lastName', '$email', '$phone', '$gender', '$password', '$role', NOW(), NOW())";
-
-
-  if ($conn->query($sql) === TRUE) {
-    header("Location: customer_home.php");
-    exit();
-  } else {
-    header("Location: Account.php");
-    exit();
-  }
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $email = trim($_POST['LogEmail']);
-  $passwordInput = trim($_POST['LogPassword']);
-
-  header('Content-Type: application/json'); // Tell browser it's JSON
-
-  if (empty($email)) {
-    echo json_encode([
-      'success' => false,
-      'errorType' => 'email',
-      'errorMessage' => 'Email is required.'
-    ]);
-    exit();
-  }
-
-  if (empty($passwordInput)) {
-    echo json_encode([
-      'success' => false,
-      'errorType' => 'password',
-      'errorMessage' => 'Password is required.'
-    ]);
-    exit();
-  }
-
-  $email = $conn->real_escape_string($email);
-  $sql = "SELECT * FROM user WHERE emailAddress = '$email'";
-  $result = $conn->query($sql);
-
-  if ($result && $result->num_rows === 1) {
-    $user = $result->fetch_assoc();
-
-    if (password_verify($passwordInput, $user['password'])) {
-      // Correct password
-      $_SESSION['user_id'] = $user['user_ID'];
-      $_SESSION['user_Email'] = $user['emailAddress'];
-      $_SESSION['user_role'] = $user['role'];
-
-      // Record login
-      $insertLogin = "INSERT INTO user_login (emailAddress, login_Time) VALUES ('$email', NOW())";
-      $conn->query($insertLogin);
-
-      echo json_encode([
-        'success' => true,
-        'role' => $user['role']
-      ]);
-      exit();
-    } else {
-      // Wrong password
-      echo json_encode([
-        'success' => false,
-        'errorType' => 'password',
-        'errorMessage' => 'Incorrect password.'
-      ]);
-      exit();
+        if ($stmt->execute()) {
+            header("Location: customer_home.php");
+            exit();
+        } else {
+            $_SESSION['signup_error'] = "Failed to register user.";
+            header("Location: Account.php");
+            exit();
+        }
     }
-  } else {
-    // Email not found
-    echo json_encode([
-      'success' => false,
-      'errorType' => 'email',
-      'errorMessage' => 'Email not found.'
-    ]);
-    exit();
+
+    // LOGIN
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'login') {
+      header('Content-Type: application/json');
+  
+      $email = trim(strtolower($_POST['LogEmail']));
+      $passwordInput = $_POST['LogPassword'];
+  
+      // Use prepared statement
+      $stmt = $conn->prepare("SELECT * FROM user WHERE LOWER(emailAddress) = ?");
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $result = $stmt->get_result();
+  
+      if ($result && $result->num_rows === 1) {
+          $user = $result->fetch_assoc();
+          $DbPass = $user['password'];
+          // $hashedPassword = password_hash($DbPass, PASSWORD_DEFAULT);
+
+          if($passwordInput && $DbPass) {
+              // Password correct
+              $_SESSION['user_id'] = $user['user_ID'];
+              $_SESSION['user_Email'] = $user['emailAddress'];
+              $_SESSION['user_role'] = $user['role'];
+  
+              // Insert into user_login
+              $loginStmt = $conn->prepare("INSERT INTO user_login (firstName, lastName, emailAddress, login_Time) VALUES (?, ?, ?, NOW())");
+              $loginStmt->bind_param("sss", $user['firstName'], $user['lastName'], $user['emailAddress']);
+              $loginStmt->execute();
+  
+              echo json_encode(["success" => true, "role" => $user['role']]);
+              exit();
+          } else {
+              echo json_encode(["success" => false, "message" => "Incorrect password."]);
+              exit();
+          }
+      } else {
+          echo json_encode(["success" => false, "message" => "Email not found."]);
+          exit();
+      }
   }
+  
 }
 
 $conn->close();
-//Handle Login
-// Handle Login
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'login') {
-//   $email = trim($_POST['LogEmail']);
-//   $passwordInput = trim($_POST['LogPassword']);
-
-//   // Basic validation (empty fields)
-//   if (empty($email)) {
-//       $_SESSION['login_error_type'] = "email";
-//       $_SESSION['login_error_message'] = "Email is required.";
-//       header("Location: Account.php");
-//       exit();
-//   }
-
-//   if (empty($passwordInput)) {
-//       $_SESSION['login_error_type'] = "password";
-//       $_SESSION['login_error_message'] = "Password is required.";
-//       header("Location: Account.php");
-//       exit();
-//   }
-
-//   // Check database for email
-//   $email = $conn->real_escape_string($email);
-//   $sql = "SELECT * FROM user WHERE emailAddress = '$email'";
-//   $result = $conn->query($sql);
-
-//   if ($result && $result->num_rows === 1) {
-//       $user = $result->fetch_assoc();
-
-//       if (password_verify($passwordInput, $user['password'])) {
-//           // Correct password
-//           $_SESSION['user_id'] = $user['user_ID'];
-//           $_SESSION['user_Email'] = $user['emailAddress'];
-//           $_SESSION['user_role'] = $user['role'];
-
-//           // Record login
-//           $insertLogin = "INSERT INTO user_login (emailAddress, login_Time) VALUES ('$email', NOW())";
-//           $conn->query($insertLogin);
-
-//           if ($user['role'] == 'admin') {
-//               header("Location: admin.php");
-//           } else {
-//               header("Location: customer_home.php");
-//           }
-//           exit();
-//       } else {
-//           // Password incorrect
-//           $_SESSION['login_error_type'] = "password";
-//           $_SESSION['login_error_message'] = "Incorrect Password.";
-//           header("Location: Account.php");
-//           exit();
-//       }
-//   } else {
-//       // Email not found
-//       $_SESSION['login_error_type'] = "email";
-//       $_SESSION['login_error_message'] = "Email not found.";
-//       header("Location: Account.php");
-//       exit();
-//   }
-// }
-
-// Show signup or login error messages
 ?>
+
 
 
 <!DOCTYPE html>
@@ -263,7 +180,7 @@ $conn->close();
 
       <!-- Login -->
       <div class="Login">
-        <form action="Account.php" method="POST">
+        <form action="Account.php" method="POST" id="loginForm" onsubmit="validateLogin(event)">
           <input type="hidden" name="action" value="login">
           <p class="Title Form2">Login</p>
           <p>
@@ -275,43 +192,32 @@ $conn->close();
             <div class="LogEmail">
               <input type="email" class="inputEmailLogIn" id="LogEmail" name="LogEmail" placeholder="Email" />
             </div>
-            <span id="errorLogEmail" class="error-message">
-              <?php
-              if (isset($_SESSION['login_error_type']) && $_SESSION['login_error_type'] === 'email') {
-                echo $_SESSION['login_error_message'];
-                unset($_SESSION['login_error_type']);
-                unset($_SESSION['login_error_message']);
-              }
-              ?>
-            </span>
+            <span id="errorLogEmail" class="error-message"></span> 
 
             <div class="LogPass">
               <input type="password" class="inputPassLogIn" id="LogPass" name="LogPassword" placeholder="Password" />
             </div>
-            <span id="errorLogPass" class="error-message">
-              <?php
-              if (isset($_SESSION['login_error_type']) && $_SESSION['login_error_type'] === 'password') {
-                echo $_SESSION['login_error_message'];
-                unset($_SESSION['login_error_type']);
-                unset($_SESSION['login_error_message']);
-              }
-              ?>
-            </span>
+            <span id="errorLogPass" class="error-message"></span>
 
           </div>
 
           <button type="submit" id="Login-Button" name="login_user">Login</button>
         </form>
-        <div id="modal" style="display:none; position:fixed; top:20%; left:50%; transform:translate(-50%, -50%);
-        background:white; padding:20px; border:1px solid black; box-shadow:0 0 10px rgba(0,0,0,0.5); z-index:1000;">
-          <p id="modalMessage"></p>
-          <button onclick="closeModal()">OK</button>
-        </div>
-        <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-      background:rgba(0,0,0,0.5); z-index:999;"></div>
-
       </div>
     </div>
+
+    <div id="modal" class="Modal-Wrap">
+      <div class="modal">
+          <div class="modalContainer">
+            <p class="Error-Title">Error:</p>
+            <p class="modalMess" id="modalMessage"></p>
+            <button class="Error-Button" onclick="closeModal()">OK</button>
+          </div>
+        </div>
+    </div>
+        <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.5); z-index:999;">
+        </div>
   </div>
   <script src="Account.js"></script>
   <script>

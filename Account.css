@@ -395,3 +395,76 @@ button:active{
     border: 2px solid #ff0e6e !important;
     font-size: 10px;
 }
+
+/* Login Modal Error */
+.Modal-Wrap{
+    display: block;
+    background-color: #ffc0cb;
+    width: 600px;
+    height: 400px;
+    border: 5px solid black;
+    border-radius: 50px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    transform:translate(-50%, -50%);
+}
+
+.modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.modalContainer{
+    /* position: relative; */
+    border: 2px solid green;
+    width: 500px;
+    height: 350px;
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    
+}
+.Error-Title{
+    font-size: 2rem;
+    font-family: back;
+    color: red;
+    width: auto;
+    height: auto;
+}
+
+.modalMess{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff7c6;
+    border: 1px solid red;
+    font-family: candy;
+    font-size: 1.7rem;
+    width: 70%;
+    height: 20%;
+    text-align: center;
+    /* margin-top: 60px; */
+}
+
+
+
+.Error-Button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffff;
+    border: 2px solid black;
+    border-radius: 30px;
+    width: 120px;
+    height: 50px;
+    font-family: back;
+    font-size: 1.2rem;
+}

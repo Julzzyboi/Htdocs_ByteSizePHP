@@ -128,89 +128,54 @@ function validateForm(event) {
         remainingLastName.innerText = inputLastName.getAttribute("maxlength") - inputLastName.value.length
     }
 
-    // for login
+
+    //LOGIN
     function validateLogin(event) {
-      event.preventDefault(); // Stop form from submitting normally
-    
-      const email = document.getElementById("LogEmail").value.trim();
-      const password = document.getElementById("LogPass").value.trim();
-      const errorEmail = document.getElementById("errorLogEmail");
-      const errorPassword = document.getElementById("errorLogPass");
-    
-      // Clear previous error messages
-      errorEmail.textContent = "";
-      errorPassword.textContent = "";
-    
-      let isValid = true;
-    
-      if (email === "") {
-        errorEmail.textContent = "Email is required.";
-        isValid = false;
+      event.preventDefault();
+  
+      const email = document.getElementById('LogEmail').value.trim();
+      const password = document.getElementById('LogPass').value.trim();
+  
+      if (!email || !password) {
+          showModal("Please fill in all fields.");
+          return;
       }
-      if (password === "") {
-        errorPassword.textContent = "Password is required.";
-        isValid = false;
-      }
-    
-      if (!isValid) {
-        return; // Don't proceed if frontend validation failed
-      }
-    
-      // AJAX: send to PHP
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "login_handler.php", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          
-          if (response.success) {
-            showModal("Login successful! Redirecting...");
-            setTimeout(function() {
-              if (response.role === "admin") {
-                window.location.href = "admin.php";
+  
+      fetch('Account.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `action=login&LogEmail=${encodeURIComponent(email)}&LogPassword=${encodeURIComponent(password)}`
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              // Successful login
+              if (data.role === 'admin') {
+                  window.location.href = 'admin_home.php'; // Replace with your admin home
               } else {
-                window.location.href = "customer_home.php";
+                  window.location.href = 'customer_home.php'; // Replace with your customer home
               }
-            }, 1500); // wait 1.5s to show success before redirect
           } else {
-            showModal(response.errorMessage);
+              // Show error
+              showModal(data.message);
           }
-        }
-      };
-      
-    
-      const data = `LogEmail=${encodeURIComponent(email)}&LogPassword=${encodeURIComponent(password)}`;
-      xhr.send(data);
-    }
-    
-    function showModal(message) {
-      document.getElementById("modalMessage").textContent = message;
-      document.getElementById("modal").style.display = "block";
-      document.getElementById("overlay").style.display = "block";
-    }
-    
-    function closeModal() {
-      document.getElementById("modal").style.display = "none";
-      document.getElementById("overlay").style.display = "none";
-    }
-    
-  // For login form validation
-// document.querySelector('.Login form').addEventListener('submit', function(event) {
-//   const email = document.getElementById('LogEmail').value.trim();
-//   const password = document.getElementById('LogPass').value.trim();
-
-//   if (email === '' || password === '') {
-//     event.preventDefault(); // Prevent the form from submitting
-//     if (email === '') {
-//       document.getElementById('errorLogEmail').textContent = "Email is required.";
-//     }
-//     if (password === '') {
-//       document.getElementById('errorLogPass').textContent = "Password is required.";
-//     }
-//   }
-// });
-
-// For signup form (since you already use onsubmit="validateForm(event)" there)
-// make sure validateForm(event) also calls event.preventDefault() if fields are empty.
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          showModal("Something went wrong. Try again.");
+      });
+  }
+  
+  function showModal(message) {
+      document.getElementById('modalMessage').textContent = message;
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('modal').style.display = 'block';
+  }
+  
+  function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+  }
+  
