@@ -398,7 +398,7 @@ button:active{
 
 /* Login Modal Error */
 .Modal-Wrap{
-    display: block;
+    display: none;
     background-color: #FFF8E9;
     /* background-color: #FF9FC2; */
     width: 600px;

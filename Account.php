@@ -20,29 +20,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
+        $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
 
-        // Check if Admin
-        $stmt = $conn->prepare("SELECT * FROM admin WHERE LOWER(adminEmail) = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $adminResult = $stmt->get_result();
-        $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer';
+        
+        
+    //     // Check if Admin
+    //     $stmt = $conn->prepare("SELECT * FROM admin WHERE LOWER(adminEmail) = ?");
+    //     $stmt->bind_param("s", $email);
+    //     $stmt->execute();
+    //     $adminResult = $stmt->get_result();
+    //     $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer';
 
-        // Insert user
-        $stmt = $conn->prepare("INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, password, role, dateCreated, dateUpdated)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
-        $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $passwordRaw, $role);
+    //     // Insert user
+    //     $stmt = $conn->prepare("INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, UserPassword, UserRole, dateCreated, dateUpdated)
+    //                             VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
+    //     $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $password, $role);
 
-        if ($stmt->execute()) {
-            header("Location: customer_home.php");
-            exit();
-        } else {
-            $_SESSION['signup_error'] = "Failed to register user.";
-            header("Location: Account.php");
-            exit();
-        }
-    }
+    //     if ($stmt->execute()) {
+    //         header("Location: customer_home.php");
+    //         exit();
+    //     } else {
+    //         $_SESSION['signup_error'] = "Failed to register user.";
+    //         header("Location: Account.php");
+    //         exit();
+    //     }
+    // }
+      }
+    
 
     // LOGIN
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'login') {
@@ -59,14 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
       if ($result && $result->num_rows === 1) {
           $user = $result->fetch_assoc();
-          $DbPass = $user['password'];
+          $DbPass = $user['UserPassword'];
+        echo var_dump($DbPass);
           // $hashedPassword = password_hash($DbPass, PASSWORD_DEFAULT);
 
-          if($passwordInput && $DbPass) {
+          if(password_verify($passwordInput && $DbPass)) {
               // Password correct
               $_SESSION['user_id'] = $user['user_ID'];
               $_SESSION['user_Email'] = $user['emailAddress'];
-              $_SESSION['user_role'] = $user['role'];
+              $_SESSION['user_role'] = $user['UserRole'];
   
               // Insert into user_login
               $loginStmt = $conn->prepare("INSERT INTO user_login (firstName, lastName, emailAddress, login_Time) VALUES (?, ?, ?, NOW())");
