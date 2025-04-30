@@ -4,48 +4,47 @@ include 'Db_connection.php'; // DB connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // SIGN UP
-    if (isset($_POST['firstName'])) {
-        $firstName = trim($_POST['firstName']);
-        $lastName = trim($_POST['lastName']);
-        $email = trim(strtolower($_POST['emailAddress']));
-        $phone = trim($_POST['phoneNumber']);
-        $gender = isset($_POST['Gender']) ? trim($_POST['Gender']) : '';
-        $passwordRaw = $_POST['Password'];
-        $confirmPasswordRaw = $_POST['ConfirmPass'];
+  // SIGN UP
+  if (isset($_POST['firstName'])) {
+      $firstName = trim($_POST['firstName']);
+      $lastName = trim($_POST['lastName']);
+      $email = trim(strtolower($_POST['emailAddress']));
+      $phone = trim($_POST['phoneNumber']);
+      $gender = isset($_POST['Gender']) ? trim($_POST['Gender']) : '';
+      $passwordRaw = $_POST['Password'];
+      $confirmPasswordRaw = $_POST['ConfirmPass'];
 
-        if ($passwordRaw !== $confirmPasswordRaw) {
-            $_SESSION['signup_error'] = "Passwords do not match.";
-            header("Location: Account.php");
-            exit();
-        }
-
-        $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
-
-        
-        
-    //     // Check if Admin
-    //     $stmt = $conn->prepare("SELECT * FROM admin WHERE LOWER(adminEmail) = ?");
-    //     $stmt->bind_param("s", $email);
-    //     $stmt->execute();
-    //     $adminResult = $stmt->get_result();
-    //     $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer';
-
-    //     // Insert user
-    //     $stmt = $conn->prepare("INSERT INTO user (firstName, lastName, emailAddress, contactNumber, gender, UserPassword, UserRole, dateCreated, dateUpdated)
-    //                             VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
-    //     $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $password, $role);
-
-    //     if ($stmt->execute()) {
-    //         header("Location: customer_home.php");
-    //         exit();
-    //     } else {
-    //         $_SESSION['signup_error'] = "Failed to register user.";
-    //         header("Location: Account.php");
-    //         exit();
-    //     }
-    // }
+      if ($passwordRaw !== $confirmPasswordRaw) {
+          $_SESSION['signup_error'] = "Passwords do not match.";
+          header("Location: Account.php");
+          exit();
       }
+
+      // $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
+
+      // Check if Admin
+      $stmt = $conn->prepare("SELECT * FROM tbl_admin_id WHERE user_ID = ?");
+      $stmt->bind_param("s", $email); // You may need to change this depending on how admin is identified
+      $stmt->execute();
+      $adminResult = $stmt->get_result();
+      $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer'; 
+
+      // Insert user (omit user_ID, dateCreated, dateUpdated — they auto-fill)
+      $stmt = $conn->prepare("INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole)
+                              VALUES (?, ?, ?, ?, ?, ?, ?)");
+      $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $passwordRaw, $role);
+
+      if ($stmt->execute()) {
+          header("Location: customer_home.php");
+          exit();
+      } else {
+          $_SESSION['signup_error'] = "Failed to register user.";
+          header("Location: Account.php");
+          exit();
+      }
+  }
+
+      
     
 
     // LOGIN
@@ -55,47 +54,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $email = trim(strtolower($_POST['LogEmail']));
       $passwordInput = $_POST['LogPassword'];
   
-      // Use prepared statement
-      $stmt = $conn->prepare("SELECT * FROM user WHERE LOWER(emailAddress) = ?");
+      // Use correct table name and column names
+      $stmt = $conn->prepare("SELECT * FROM tbl_user_id WHERE LOWER(emailAddress) = ?");
       $stmt->bind_param("s", $email);
       $stmt->execute();
       $result = $stmt->get_result();
   
       if ($result && $result->num_rows === 1) {
           $user = $result->fetch_assoc();
-          $DbPass = $user['UserPassword'];
-        echo var_dump($DbPass);
-          // $hashedPassword = password_hash($DbPass, PASSWORD_DEFAULT);
-
-          if(password_verify($passwordInput && $DbPass)) {
+          $hashedPassword = $user['password_Hash'];
+  
+          // Correct usage of password_verify
+          if (password_verify($passwordInput, $hashedPassword)) {
               // Password correct
               $_SESSION['user_id'] = $user['user_ID'];
               $_SESSION['user_Email'] = $user['emailAddress'];
-              $_SESSION['user_role'] = $user['UserRole'];
+              $_SESSION['user_role'] = $user['userRole'];
   
               // Insert into user_login
-              $loginStmt = $conn->prepare("INSERT INTO user_login (firstName, lastName, emailAddress, login_Time) VALUES (?, ?, ?, NOW())");
+              $loginStmt = $conn->prepare("INSERT INTO user_login (firstName, lastName, emailAddress, login_Time) VALUES (?, ?, ?, ?)");
               $loginStmt->bind_param("sss", $user['firstName'], $user['lastName'], $user['emailAddress']);
               $loginStmt->execute();
   
-              echo json_encode(["success" => true, "role" => $user['role']]);
+              echo json_encode(["success" => true, "role" => $user['userRole']]);
               exit();
           } else {
-              echo json_encode(["success" => false, "message" => "Incorrect password."]);
-              exit();
+              // echo json_encode(["success" => false, "message" => "Incorrect password."]);
+              // exit();
+              echo json_encode([
+                "success" => false,
+                "error" => "Incorrect password debug.",
+                "input" => $passwordInput,
+                "hash" => $hashedPassword,
+                "verify" => password_verify($passwordInput, $hashedPassword) // should be true
+            ]);
           }
       } else {
           echo json_encode(["success" => false, "message" => "Email not found."]);
           exit();
       }
   }
-  
-}
-
-$conn->close();
+  $conn->close();
+}  
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">

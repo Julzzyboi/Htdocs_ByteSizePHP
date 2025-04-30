@@ -2,7 +2,7 @@
 $servername = "localhost"; // or your server name
 $username = "root";
 $password = "";
-$dbname = "testdata";
+$dbname = "htdocs_bytesizephp";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -164,7 +164,7 @@ function validateForm(event) {
       })
       .catch(error => {
           console.error('Error:', error);
-          showModal("Something went wrong. Try again.");
+          // showModal("Something went wrong. Try again.");
       });
   }
   
