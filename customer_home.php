@@ -1,6 +1,7 @@
-<?php
+<!-- <?php
 session_start()
-?>
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,13 +119,13 @@ session_start()
           </div>
       </div>
 
-      <div class="triviaSection animated">
+      <div class="triviaSection">
         <p class="triviaTitleHeader">The ByteSize Story</p>
         <p class="triviaDescriptionHeader">From our kitchen to your home — your love for our treats made this dream possible! Every pastillas, graham ball, and cookie we've made has been shaped by your cravings!</p>
 
         <div class="allFacts">
         <div class="factOneContainer">
-          <img src="images/cookieTwo.png" alt="Cookie Mascot 2" class="factOneMascot">
+          <img src="images/cookieTwo.png" alt="Cookie Mascot 2" class="factOneMascot bounceElement">
           <div class="factOne">
             <img src="images/factOnePicture.png" alt="Files">
             <p class="triviaTitle">From Syntax to Snacks</p>
@@ -142,7 +143,7 @@ session_start()
         </div>
 
         <div class="factThreeContainer">
-          <img src="images/grahamThree.png" alt="Graham Mascot 3" class="factThreeMascot">
+          <img src="images/grahamThree.png" alt="Graham Mascot 3" class="factThreeMascot bounceElement">
           <div class="factThree">
             <img src="images/factThreePicture.png" alt="Packages">
             <p class="triviaTitle">100 packs, 100 smiles</p>
@@ -163,7 +164,7 @@ session_start()
       </div>
       </div>
 
-      <div class="missionSection animated">
+      <div class="missionSection">
         <div class="missionLeft">
           <p class="missionHeader">Mission</p>
           <div class="missionDescriptionMascots">
@@ -182,7 +183,7 @@ session_start()
         </div>
       </div>
 
-      <div class="visionSection animated">
+      <div class="visionSection">
         <img src="images/visionPicture.jpg" alt="Customer Picture" class="visionPicture">
         <div class="visionRight">
           <p class="visionHeader">Vision</p>
@@ -340,6 +341,22 @@ session_start()
 
     // Active Currest state niya
     updateDescription(getActiveIndex());
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = document.querySelectorAll('.bounceElement');
+      
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        }, {
+          threshold: 0.5 // Adjust this if needed
+        });
+      
+        elements.forEach(el => observer.observe(el));
+      });
 
 </script>
 
