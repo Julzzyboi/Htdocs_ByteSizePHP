@@ -134,13 +134,45 @@
       </div>
        </footer>
        <script>
-        window.addEventListener("hashchange", highlightActiveButton);
-        window.addEventListener("DOMContentLoaded", highlightActiveButton);
+        // window.addEventListener("hashchange", highlightActiveButton);
+        // window.addEventListener("DOMContentLoaded", highlightActiveButton);
       
-        function highlightActiveButton() {
+        // function highlightActiveButton() {
+        //   const hash = window.location.hash;
+        //   const buttons = document.querySelectorAll('.SecButton');
+      
+        //   buttons.forEach(btn => {
+        //     if (btn.getAttribute('href') === hash) {
+        //       btn.classList.add('active-sec-button');
+        //     } else {
+        //       btn.classList.remove('active-sec-button');
+        //     }
+        //   });
+        // }
+      
+        window.addEventListener("hashchange", updateSection);
+        window.addEventListener("DOMContentLoaded", updateSection);
+
+        function updateSection() {
           const hash = window.location.hash;
+          const sections = document.querySelectorAll('section');
+
+          sections.forEach(section => {
+            section.classList.remove('active-section');
+          });
+
+          if (hash) {
+            const target = document.querySelector(hash);
+            if (target) {
+              target.classList.add('active-section');
+            }
+          } else {
+            // Default section (first)
+            document.querySelector('#first').classList.add('active-section');
+          }
+
+          // Highlight button
           const buttons = document.querySelectorAll('.SecButton');
-      
           buttons.forEach(btn => {
             if (btn.getAttribute('href') === hash) {
               btn.classList.add('active-sec-button');
