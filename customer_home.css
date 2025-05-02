@@ -756,6 +756,28 @@ main{
   animation-duration: 1.2s;
 }
 
+.bounce-element {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.bounceElement.active{
+  animation: slideInFromLeft 1s ease forwards, bounce 1s ease infinite;
+  animation-delay: 0s, 1s;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%); /* Start way left */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0); /* Back to normal */
+    opacity: 1;
+  }
+}
+
 @keyframes bounce{
   20%, 50%, 80%, to{
     transform: translateY(0);
@@ -945,7 +967,7 @@ main{
   height: 175px;
   z-index: 1;
   margin-top: -90px;
-  margin-left: 340px;
+  margin-left: 330px;
 
   animation-name: bounce;
   animation-delay: 3s;
@@ -963,6 +985,15 @@ main{
   to{
     opacity: 1;
     scale:1;
+  }
+}
+
+@keyframes mascotsEntry{
+  from{
+    transform: translateX(-200px);
+  }
+  top{
+    transform: translateX(0);
   }
 }
 
