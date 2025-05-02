@@ -243,11 +243,11 @@ session_start()
             <p>bytesizedelights@Gmail.com</p>
           </div>
             <div class="SocialIcons Facebook">
-              <a href="https://www.facebook.com/profile.php?id=61555877165065"><img src="Footer/facebook.svg"></a>
+              <a href="https://www.facebook.com/profile.php?id=61555877165065" target="_blank"><img src="Footer/facebook.svg"></a>
               <p>ByteSize Delights</p>
             </div>
             <div class="SocialIcons Instagram">
-              <a href="https://www.instagram.com/bytesize.delights?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><img src="Footer/instagram.svg"></a>
+              <a href="https://www.instagram.com/bytesize.delights?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><img src="Footer/instagram.svg"></a>
               <p>@bytesizedelights</p>
             </div>
         </div> 

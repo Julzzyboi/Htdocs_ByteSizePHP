@@ -40,10 +40,10 @@
           <div class="product-section">
             <div class="MenuWrap">
               <div class="nav-products">
-                <a href="#first" class="SecButton Section-Cookie"><img src="HomePage/Cookie Mascot.png" alt=""></a>
-                <a href="#second" class="SecButton Section-Pastillas"><img src="HomePage/Pastillias Mascot.png" alt=""></a>
-                <a href="#third" class="SecButton Section-Graham"><img src="HomePage/GrahamBall Mascot.png" alt=""></a>
-                <a href="#fourth" class="SecButton Section-Limited"><img src="HomePage/limited.png" alt=""></a>
+                <a href="#first" class="SecButton Section-Cookie"><img src="HomePage/Cookie Mascot.png"></a>
+                <a href="#second" class="SecButton Section-Pastillas"><img src="HomePage/Pastillias Mascot.png"></a>
+                <a href="#third" class="SecButton Section-Graham"><img src="HomePage/GrahamBall Mascot.png"></a>
+                <a href="#fourth" class="SecButton Section-Limited"><img src="HomePage/limited.png"></a>
               </div>
 
               <div class="Section-container">
@@ -134,53 +134,36 @@
       </div>
        </footer>
        <script>
-        // window.addEventListener("hashchange", highlightActiveButton);
-        // window.addEventListener("DOMContentLoaded", highlightActiveButton);
-      
-        // function highlightActiveButton() {
-        //   const hash = window.location.hash;
-        //   const buttons = document.querySelectorAll('.SecButton');
-      
-        //   buttons.forEach(btn => {
-        //     if (btn.getAttribute('href') === hash) {
-        //       btn.classList.add('active-sec-button');
-        //     } else {
-        //       btn.classList.remove('active-sec-button');
-        //     }
-        //   });
-        // }
-      
         window.addEventListener("hashchange", updateSection);
         window.addEventListener("DOMContentLoaded", updateSection);
 
         function updateSection() {
-          const hash = window.location.hash;
-          const sections = document.querySelectorAll('section');
+  const hash = window.location.hash;
+  const sections = document.querySelectorAll('section');
+  const buttons = document.querySelectorAll('.SecButton');
 
-          sections.forEach(section => {
-            section.classList.remove('active-section');
-          });
+  sections.forEach(section => {
+    section.classList.remove('active-section');
+  });
 
-          if (hash) {
-            const target = document.querySelector(hash);
-            if (target) {
-              target.classList.add('active-section');
-            }
-          } else {
-            // Default section (first)
-            document.querySelector('#first').classList.add('active-section');
-          }
+  buttons.forEach(btn => {
+    btn.classList.remove('active-sec-button');
+  });
 
-          // Highlight button
-          const buttons = document.querySelectorAll('.SecButton');
-          buttons.forEach(btn => {
-            if (btn.getAttribute('href') === hash) {
-              btn.classList.add('active-sec-button');
-            } else {
-              btn.classList.remove('active-sec-button');
-            }
-          });
-        }
+  if (hash) {
+    const target = document.querySelector(hash);
+    const activeBtn = document.querySelector(`.SecButton[href="${hash}"]`);
+    if (target) target.classList.add('active-section');
+    if (activeBtn) activeBtn.classList.add('active-sec-button');
+  } else {
+    // Default section and button
+    const defaultSection = document.querySelector('#first');
+    const defaultButton = document.querySelector(`.SecButton[href="#first"]`);
+    if (defaultSection) defaultSection.classList.add('active-section');
+    if (defaultButton) defaultButton.classList.add('active-sec-button');
+  }
+}
+
       </script>
 </body>
 </html>

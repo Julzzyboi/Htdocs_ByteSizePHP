@@ -148,23 +148,24 @@ function validateForm(event) {
           },
           body: `action=login&LogEmail=${encodeURIComponent(email)}&LogPassword=${encodeURIComponent(password)}`
       })
-      .then(response => response.json())
+      .then(response => {
+          if (!response.ok) {
+              throw new Error("Server error");
+          }
+          return response.json();
+      })
       .then(data => {
           if (data.success) {
               // Successful login
-              if (data.role === 'admin') {
-                  window.location.href = 'admin_home.php'; // Replace with your admin home
-              } else {
-                  window.location.href = 'customer_home.php'; // Replace with your customer home
-              }
+              window.location.href = data.role === 'admin' ? 'admin_home.php' : 'customer_home.php';
           } else {
-              // Show error
-              showModal(data.message);
+              // Show error message
+              showModal(data.message || "Login failed.");
           }
       })
       .catch(error => {
-          console.error('Error:', error);
-          // showModal("Something went wrong. Try again.");
+          console.error('Login error:', error);
+          showModal("An unexpected error occurred. Try again.");
       });
   }
   
@@ -178,4 +179,5 @@ function validateForm(event) {
       document.getElementById('modal').style.display = 'none';
       document.getElementById('overlay').style.display = 'none';
   }
+  
   
