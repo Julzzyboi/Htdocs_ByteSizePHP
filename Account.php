@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $insertLogin->bind_param("issss", $newUserId, $email, $password, $role, $loginTime);
       
           if ($insertLogin->execute()) {
-              // Redirect to customer page after both inserts succeed
+              // Redirect to customer page
               header("Location: customer_home.php");
               exit();
           } else {
