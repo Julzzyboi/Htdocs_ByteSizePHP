@@ -1,67 +1,42 @@
 <?php
-    include("DBConn.php");
-    try{
-        if($_SERVER["REQUEST_METHOD"]==="POST"){
-            $obj = json_decode($_POST["myJson"]);
-            $action = $obj ->action;
-            if (isset($action)) {
-                switch ($action) {
-                    case 'addNewRecord':
-                        $id = $obj ->user_id;
-                        $fName = $obj ->user_fName;
-                        $lName = $obj ->user_lName;
-                        $address = $obj ->user_address;
-                        $sql = "INSERT INTO basicform_tbl(id, fName, lName, userAddress)  VALUES ('$id', '$fName', '$lName', '$address')";
-                        if ($conn->query($sql)===TRUE){
-                            echo "NEW RECORD!!";
-                        }
-                        else{
-                            echo "Error";
-                        }
-                    break;
-                    case 'updateRecord':
-                        $id = $obj ->user_id;
-                        $fName = $obj ->user_fName;
-                        $lName = $obj ->user_lName;
-                        $address = $obj ->user_address;
-                        $sql = "UPDATE basicform_tbl  SET fName = '$fName', lName = '$lName', userAddress = '$address' where id = '$id'";
-                        // $sql = "INSERT INTO basicform_tbl(id, fName, lName, userAddress)  VALUES ('1234567841', '$fName', 'Santos' , 'address ko')";
-                        if ($conn->query($sql)===TRUE){
-                            echo "NEW RECORD!!";
-                        }
-                        else{
-                            echo "Error";
-                        }
-                    break;
-                    case 'delRecord':
-                        $id = $obj ->user_id;
+if (isset($_POST['action']) && $_POST['action'] === 'login') {
+        header('Content-Type: application/json');
 
-                        $sql = "DELETE FROM basicform_tbl where id = '$id'";
-                        // $sql = "INSERT INTO basicform_tbl(id, fName, lName, userAddress)  VALUES ('1234567841', '$fName', 'Santos' , 'address ko')";
-                        if ($conn->query($sql)===TRUE){
-                            echo "DELETED!!";
-                        }
-                        else{
-                            echo "Error";
-                        }
-                    break;
-                    case 'showRecords':
-                        $sql = "SELECT * FROM basicform_tbl";
-                        $result = $conn->query($sql);
+        $email = trim(strtolower($_POST['LogEmail']));
+        $passwordInput = $_POST['LogPassword'];
 
-                            if ($result->num_rows > 0) {
-                            // output data of each row
-                            while($row = $result->fetch_assoc()) {
-                                echo "id: " . $row["id"]. " - Name: " . $row["fName"]. " " . $row["lName"]. "<br>";
-                            }
-                            } else {
-                            echo "0 results";
-                            }
-                        break;
-                }
+        $stmt = $conn->prepare("SELECT * FROM tbl_user_id WHERE LOWER(emailAddress) = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            $hashedPassword = $user['password_Hash'];
+            
+
+            if ( password_verify($passwordInput, $hashedPassword)) {
+                // Password correct
+                // $_SESSION['user_id'] = $user['user_ID'];
+                // $_SESSION['user_Email'] = $user['emailAddress'];
+                // $_SESSION['user_role'] = $user['userRole'];
+
+                // Insert login record into user_login
+                $loginTime = date('Y-m-d H:i:s');
+                $insertLogin = $conn->prepare("INSERT INTO user_login (user_ID, email, loginTime) VALUES (?, ?, ?)");
+                $insertLogin->bind_param("iss", $user['user_ID'], $user['emailAddress'], $loginTime);
+                $insertLogin->execute();
+                echo var_dump($insertLogin);
+
+                echo json_encode(["success" => true]);
+                exit();
+            } else {
+                echo json_encode(["success" => false, "message" => "Incorrect password."]);
+                exit();
             }
+        } else {
+            echo json_encode(["success" => false, "message" => "Email not found."]);
+            exit();
         }
-    }catch(Exception $e){
-        http_response_code(404);
     }
 ?>

@@ -4,99 +4,96 @@ include 'Db_connection.php'; // DB connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  // SIGN UP
-  if (isset($_POST['firstName'])) {
-      $firstName = trim($_POST['firstName']);
-      $lastName = trim($_POST['lastName']);
-      $email = trim(strtolower($_POST['emailAddress']));
-      $phone = trim($_POST['phoneNumber']);
-      $gender = isset($_POST['Gender']) ? trim($_POST['Gender']) : '';
-      $passwordRaw = $_POST['Password'];
-      $confirmPasswordRaw = $_POST['ConfirmPass'];
+    // === SIGN UP ===
+    if (isset($_POST['firstName'])) {
+        $firstName = trim($_POST['firstName']);
+        $lastName = trim($_POST['lastName']);
+        $email = trim(strtolower($_POST['emailAddress']));
+        $phone = trim($_POST['phoneNumber']);
+        $gender = isset($_POST['Gender']) ? trim($_POST['Gender']) : '';
+        $passwordRaw = $_POST['Password'];
+        $confirmPasswordRaw = $_POST['ConfirmPass'];
 
-      if ($passwordRaw !== $confirmPasswordRaw) {
-          $_SESSION['signup_error'] = "Passwords do not match.";
-          header("Location: Account.php");
-          exit();
-      }
+        if ($passwordRaw !== $confirmPasswordRaw) {
+            $_SESSION['signup_error'] = "Passwords do not match.";
+            header("Location: Account.php");
+            exit();
+        }
 
-      // $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
+        $password = password_hash($passwordRaw, PASSWORD_BCRYPT);
 
-      // Check if Admin
-      $stmt = $conn->prepare("SELECT * FROM tbl_admin_id WHERE user_ID = ?");
-      $stmt->bind_param("s", $email); // You may need to change this depending on how admin is identified
-      $stmt->execute();
-      $adminResult = $stmt->get_result();
-      $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer'; 
+        // Check if Admin
+        $stmt = $conn->prepare("SELECT * FROM tbl_admin_id WHERE user_ID = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $adminResult = $stmt->get_result();
+        $role = ($adminResult->num_rows > 0) ? 'admin' : 'customer'; 
 
-      // Insert user (omit user_ID, dateCreated, dateUpdated — they auto-fill)
-      $stmt = $conn->prepare("INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole)
-                              VALUES (?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $passwordRaw, $role);
+        // Insert user
+        $stmt = $conn->prepare("INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole)
+                                VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phone, $gender, $password, $role);
 
-      if ($stmt->execute()) {
-          header("Location: customer_home.php");
-          exit();
-      } else {
-          $_SESSION['signup_error'] = "Failed to register user.";
-          header("Location: Account.php");
-          exit();
-      }
-  }
-
+        if ($stmt->execute()) {
+          // Get the newly inserted user_ID
+          $newUserId = $stmt->insert_id;
+          $loginTime = date('Y-m-d H:i:s');
       
-    
-
-    // LOGIN
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'login') {
-      header('Content-Type: application/json');
-  
-      $email = trim(strtolower($_POST['LogEmail']));
-      $passwordInput = $_POST['LogPassword'];
-  
-      // Use correct table name and column names
-      $stmt = $conn->prepare("SELECT * FROM tbl_user_id WHERE LOWER(emailAddress) = ?");
-      $stmt->bind_param("s", $email);
-      $stmt->execute();
-      $result = $stmt->get_result();
-  
-      if ($result && $result->num_rows === 1) {
-          $user = $result->fetch_assoc();
-          $hashedPassword = $user['password_Hash'];
-  
-          // Correct usage of password_verify
-          if (password_verify($passwordInput, $hashedPassword)) {
-              // Password correct
-              $_SESSION['user_id'] = $user['user_ID'];
-              $_SESSION['user_Email'] = $user['emailAddress'];
-              $_SESSION['user_role'] = $user['userRole'];
-  
-              // Insert into user_login
-              $loginStmt = $conn->prepare("INSERT INTO user_login (firstName, lastName, emailAddress, login_Time) VALUES (?, ?, ?, ?)");
-              $loginStmt->bind_param("sss", $user['firstName'], $user['lastName'], $user['emailAddress']);
-              $loginStmt->execute();
-  
-              echo json_encode(["success" => true, "role" => $user['userRole']]);
+          // Insert into login table
+          $insertLogin = $conn->prepare("INSERT INTO tbl_login_id (user_ID, emailAddress, password_Hash, userRole, loginTime) VALUES (?, ?, ?, ?, ?)");
+          $insertLogin->bind_param("issss", $newUserId, $email, $password, $role, $loginTime);
+      
+          if ($insertLogin->execute()) {
+              // Redirect to customer page
+              header("Location: customer_home.php");
               exit();
           } else {
-              // echo json_encode(["success" => false, "message" => "Incorrect password."]);
-              // exit();
-              echo json_encode([
-                "success" => false,
-                "error" => "Incorrect password debug.",
-                "input" => $passwordInput,
-                "hash" => $hashedPassword,
-                "verify" => password_verify($passwordInput, $hashedPassword) // should be true
-            ]);
+              $_SESSION['signup_error'] = "Registration succeeded but login logging failed.";
+              header("Location: Account.php");
+              exit();
           }
-      } else {
-          echo json_encode(["success" => false, "message" => "Email not found."]);
-          exit();
       }
-  }
-  $conn->close();
-}  
+    }      
+
+    // === LOGIN ===
+    if (isset($_POST['action']) && $_POST['action'] === 'login') {
+        header('Content-Type: application/json');
+
+        $email = trim(strtolower($_POST['LogEmail']));
+        $passwordInput = $_POST['LogPassword'];
+
+        $stmt = $conn->prepare("SELECT * FROM tbl_user_id WHERE LOWER(emailAddress) = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            $hashedPassword = $user['password_Hash'];
+
+            if (password_verify($passwordInput, $hashedPassword)) {
+                // Log login attempt
+                $loginTime = date('Y-m-d H:i:s');
+                $insertLogin = $conn->prepare("INSERT INTO tbl_login_id (user_ID, emailAddress, password_Hash, userRole, loginTime) VALUES (?, ?, ?, ?, ?)");
+                $insertLogin->bind_param("issss", $user['user_ID'], $user['emailAddress'], $hashedPassword, $user['userRole'], $loginTime);
+                $insertLogin->execute();
+
+                echo json_encode(["success" => true, "role" => $user['userRole']]);
+                exit();
+            } else {
+                echo json_encode(["success" => false, "message" => "Incorrect password."]);
+                exit();
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Email not found."]);
+            exit();
+        }
+    }
+
+    $conn->close();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -186,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <!-- Login -->
       <div class="Login">
-        <form action="Account.php" method="POST" id="loginForm" onsubmit="validateLogin(event)">
+        <form method="POST" id="loginForm" onsubmit="validateLogin(event)">
           <input type="hidden" name="action" value="login">
           <p class="Title Form2">Login</p>
           <p>
