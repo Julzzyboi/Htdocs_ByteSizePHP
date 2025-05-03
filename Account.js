@@ -131,7 +131,7 @@ function validateForm(event) {
 
     //LOGIN
     function validateLogin(event) {
-      event.preventDefault();
+      event.preventDefault(); // Prevent normal form submission
   
       const email = document.getElementById('LogEmail').value.trim();
       const password = document.getElementById('LogPass').value.trim();
@@ -156,10 +156,9 @@ function validateForm(event) {
       })
       .then(data => {
           if (data.success) {
-              // Successful login
+              // Redirect to appropriate page
               window.location.href = data.role === 'admin' ? 'admin_home.php' : 'customer_home.php';
           } else {
-              // Show error message
               showModal(data.message || "Login failed.");
           }
       })
