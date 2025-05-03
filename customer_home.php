@@ -382,6 +382,12 @@ session_start()
     }
   });
 
+  userIcon.addEventListener("click", () => {
+  accountDropDown.classList.toggle("visible");
+});
+
+
+
 </script>
 
 </html>
