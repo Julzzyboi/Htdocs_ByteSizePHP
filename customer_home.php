@@ -1,6 +1,6 @@
-<!-- <?php
+<?php
 session_start()
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,10 +32,22 @@ session_start()
                 </ul>
             </div>
             <div class="userAccountNavigationSection">
-                <img src="images/userIcon.png" alt="User Icon">
+                <img src="images/userIcon.png" id="userPopUp" alt="User Icon">
             </div>
         </div>
     </nav>
+
+    <div class="accountDropDown">
+      <p class="welcomeUser">Welcome!</p>
+      <div class="logOutSection">
+        <a href="#">Log Out</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="logout">
+          <path fill="#ff69a0" fill-rule="evenodd" d="M3 13H15V11H3V13Z" clip-rule="evenodd" class="color90caea svgShape"></path>
+          <path fill="#ff69a0" fill-rule="evenodd" d="M5.79282 7.79291L2.29282 11.2929C1.90229 11.6834 1.90229 12.3166 2.29282 12.7071L5.79282 16.2071L7.20703 14.7929L4.41414 12L7.20703 9.20712L5.79282 7.79291Z" clip-rule="evenodd" class="color90caea svgShape"></path>
+          <path fill="#2e222f" fill-rule="evenodd" d="M8 4C8 3.44772 8.44772 3 9 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H9C8.44772 21 8 20.5523 8 20V17H10V19H20V5H10V7H8V4Z" clip-rule="evenodd" class="color3747d6 svgShape"></path>
+        </svg>
+      </div>
+    </div>
 
     <main>
       <!-- Banner -->
@@ -357,6 +369,24 @@ session_start()
       
         elements.forEach(el => observer.observe(el));
       });
+
+    // log out drop down
+  const userIcon = document.getElementById("userPopUp");
+  const accountDropDown = document.querySelector(".accountDropDown");
+
+  userIcon.addEventListener("click", () => {
+    if (accountDropDown.style.visibility === "visible") {
+      accountDropDown.style.visibility = "hidden";
+    } else {
+      accountDropDown.style.visibility = "visible";
+    }
+  });
+
+  userIcon.addEventListener("click", () => {
+  accountDropDown.classList.toggle("visible");
+});
+
+
 
 </script>
 
