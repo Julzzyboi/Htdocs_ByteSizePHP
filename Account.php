@@ -14,11 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $passwordRaw = $_POST['Password'];
         $confirmPasswordRaw = $_POST['ConfirmPass'];
 
-        if ($passwordRaw !== $confirmPasswordRaw) {
-            $_SESSION['signup_error'] = "Passwords do not match.";
-            header("Location: Account.php");
-            exit();
-        }
+        // if ($passwordRaw !== $confirmPasswordRaw) {
+        //     $_SESSION['signup_error'] = "Passwords do not match.";
+        //     header("Location: Account.php");
+        //     exit();
+        // }
 
         $password = password_hash($passwordRaw, PASSWORD_BCRYPT);
 
@@ -89,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     }
-
     $conn->close();
 }
 ?>
