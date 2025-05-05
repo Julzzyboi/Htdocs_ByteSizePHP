@@ -1,5 +1,8 @@
 <?php
 session_start();
+// if(!isset($_SESSION["emailAddress"])){
+//     header("Location: Account.php");
+// }
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header("Location: customer_home.php");
     exit();

@@ -257,6 +257,7 @@ form .Title{
   border: 2px solid #2e222f;
   background-color: white;
 }
+
 input::placeholder{
     font-family: Candy;
     color:#817f81
@@ -322,6 +323,30 @@ p{
     margin-left: 20px;
 }
 
+.Password, .ConfirmPass{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Password svg, .ConfirmPass svg{
+    height: 20px;
+}
+ 
+.visiblePassword, .invisiblePassword, .visibleConfirmPassword, .invisibleConfirmPassword {
+    cursor: pointer;
+}
+
+.invisiblePassword, .invisibleConfirmPassword {
+    display: none;
+}
+
+.visiblePassword, .visibleConfirmPassword {
+    display: visible;
+}
+
+
+
 /* COUNTER */
 
 .remainingFN, .remainingLN{
@@ -357,10 +382,12 @@ button[type="submit"]{
     margin-top: 15px;
     width: 50%;
     height: 2.3rem;
-    font-family: Back;
+    font-family: Candy;
+    font-size: 17px;
     color:#2e222f;
+    border-width: 4px;
     text-align: center;
-    background-color: white;
+    background-color: #91DB69;
     border-radius: 10px;
     transition: all 0.3s ease;
 }
@@ -371,6 +398,7 @@ button:active{
     transform: scale(0.95);
     background-color: #FF9FC2;
 }
+
 
 .LogEmail, .LogPass{
     width:100%;

@@ -1,5 +1,12 @@
 <?php
-session_start()
+session_start();
+
+// if (!isset($_SESSION['user_id'])) {
+//   header("Location: Account.php");
+//   exit();
+// }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +47,7 @@ session_start()
     <div class="accountDropDown">
       <p class="welcomeUser">Welcome!</p>
       <div class="logOutSection">
-        <a href="#">Log Out</a>
+        <a href="logout.php?logout">Log Out</a>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="logout">
           <path fill="#ff69a0" fill-rule="evenodd" d="M3 13H15V11H3V13Z" clip-rule="evenodd" class="color90caea svgShape"></path>
           <path fill="#ff69a0" fill-rule="evenodd" d="M5.79282 7.79291L2.29282 11.2929C1.90229 11.6834 1.90229 12.3166 2.29282 12.7071L5.79282 16.2071L7.20703 14.7929L4.41414 12L7.20703 9.20712L5.79282 7.79291Z" clip-rule="evenodd" class="color90caea svgShape"></path>

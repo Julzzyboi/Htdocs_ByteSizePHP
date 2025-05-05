@@ -155,10 +155,16 @@ function validateForm(event) {
           return response.json();
       })
       .then(data => {
+        console.log("Server response:", data); // Debug line
           if (data.success) {
               // Redirect to appropriate page
-              window.location.href = data.role === 'admin' ? 'admin_home.php' : 'customer_home.php';
-          } else {
+              if (data.role === 'admin') {
+                window.location.href = 'admin.php';
+              } else {
+                window.location.href = 'customer_home.php';
+          }
+        }
+           else {
               showModal(data.message || "Login failed.");
           }
       })
