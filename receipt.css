@@ -115,6 +115,11 @@
   .receiptCard {
     background-color: #FFC0CB;
   }
+
+  .DownloadIcon {
+    width: 60px;
+    margin-bottom: 5px;
+  }
   
   .successIcon {
     width: 60px;
