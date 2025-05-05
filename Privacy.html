@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Privacy.css">
+</head>
+<body>
+    <div class="banner">
+        <div class="pic"> <img src="bannerLogo.png" alt="Byte Sized Delights Logo"></div>
+            <div class="content">
+                <div class="content_title">  Data Privacy Act</div>
+                <div class="content_text"> By using our website, it may store or retrieve information from your browser. The data stored or retrieved is for your benefit and for us to provide you with contents according to your preferences. This is to ensure each user has their own personalized web experience. Information such as name, address, and payment detailes may be asked of you. Your data is encrypted and will onyl be used to processed orders and website experience. We do not sell, share, or expose personal information to third parties without permission. By clicking accept, you consent to our Privacy Policy and Terms & Conditions.
+                </div> 
+        </div>
+        <div class="button-container">
+            <button class="decline-btn">Decline</button>
+            <button class="accept-btn">Accept</button>            
+        </div>
+    </div>
+
+    <script>
+        const acceptBtn = document.querySelector('.accept-btn');
+        const declineBtn = document.querySelector('.decline-btn');
+        const popup = document.querySelector('.privacy-popup');
+
+
+        acceptBtn.addEventListener('click', () => {
+        popup.style.display = 'none'; 
+        });
+
+        declineBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+        });
+
+    </script>
+</body>
+</html>
