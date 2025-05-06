@@ -278,6 +278,7 @@ body {
 }
 
 .confirmButton{
+  text-decoration: none;
   background-color: #91DB69;
   color: black;
   padding: 15px 40px;
@@ -291,6 +292,7 @@ body {
 }
 
 .backtoCartbtn{
+  text-decoration: none;
   background-color: #91DB69;
   color: black;
   padding: 15px 30px;
