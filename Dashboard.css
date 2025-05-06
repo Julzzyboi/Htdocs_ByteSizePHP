@@ -19,6 +19,13 @@ body{
     background-color: #FFFEDE;
 }
 
+section{
+    width: 86vw;
+    height: 100vh;
+
+    border: 3px solid grey;
+}
+
 /* Side Navigation Bar */
 
 .sideBar p{
