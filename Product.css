@@ -1,4 +1,4 @@
-/* FONTS */
+ /* FONTS */
 @font-face {
   font-family: Back;
   src: url(fonts/Backso.ttf);
@@ -135,6 +135,54 @@ text-decoration: none;
 }
 .MenuWrap{
   display: flex;
+}
+
+.cart-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 15px;
+}
+.cart-container h2 {
+  font-family: 'Back', sans-serif;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.cart-item {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+/* Checkout button */
+.checkout-button {
+  background-color: #92D472;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-family: 'Back', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+}
+
+/* Section buttons styling */
+.SecButton {
+  filter: grayscale(100%);
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+.SecButton:hover,
+.active-sec-button {
+  transform: scale(1.1);
+  filter: grayscale(0%);
 }
 
 .nav-products{
@@ -385,7 +433,7 @@ section.active-section {
 }
 
 /* Checkout button */
-.checkout-button {
+.Checkout-btn {
   background-color: #92D472;
   color: #333;
   border: 2px solid #333;
@@ -445,13 +493,13 @@ section.active-section {
 }
 
 .cart-container{
-  grid-row: 3/ 6;
-  grid-column: 5 ;
- 
-   background-color: antiquewhite;
-   border: 2px solid black;
- }
- 
+ grid-row: 3/ 6;
+ grid-column: 5 ;
+
+  background-color: antiquewhite;
+  border: 2px solid black;
+}
+
 /* for footer */
 footer{
     position: relative;
