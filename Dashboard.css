@@ -19,11 +19,11 @@ body{
     background-color: #FFFEDE;
 }
 
-section{
-    width: 86vw;
-    height: 100vh;
-
-    border: 3px solid grey;
+html, body{
+width: 100%;
+height: auto;
+scroll-behavior: smooth;
+scroll-padding-top: 60px;
 }
 
 /* Side Navigation Bar */
@@ -33,29 +33,33 @@ section{
     font-size: 30px;
     color: #91DB69;
     text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
-
     padding: 10px 0;
     padding-left: 20px;
     padding-top: 16px;
     pointer-events: none;
 }
-
+ 
 .sideBar{
-    height: 100%;
+    height: 100vh;
     width: 200px;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     background-color: #FFC0CB;
     transition: 0.5s ease;
     border-right: 2px solid #2E222F;
+    z-index: 20;
     /* transform: translateX(-200px); */
     
     display: flex;
     flex-direction: column;
 }
 
-ul li{
+.sideBar ul{
     list-style: none;
+  padding: 0;
 }
+
 
 ul li a{
     font-family: Candy;
@@ -66,18 +70,28 @@ ul li a{
     padding: 5px 0;
     display: block;
     text-decoration: none;
-    transition: 0.2s ease-out;
+    /* transition: 0.2s ease-out; */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ul li:hover a{
     color: #FF4287;
 }
 
-.activeNav a{
+ul li a.active {
+    height: 40px;
+    width: 140px;
+    background-color: #FFFEDE;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top:#2E222F 2px solid;
+    border-left:#2E222F 2px solid;
+    border-bottom:#2E222F 2px solid;;
     color: #FF4287;
+    /* box-shadow: inset 2px 0 0 #2E222F; */
 }
 
-.dashboardNav{
+/* .activeNav a{
     height: 40px;
     width: 140px;
     background-color: #FFFEDE;
@@ -86,36 +100,49 @@ ul li:hover a{
     border-top:#2E222F 2px solid;
     border-left:#2E222F 2px solid;
     border-bottom:#2E222F 2px solid;
+    color: #FF4287;
+
+} */
+
+/* .nav-link{
+    height: 40px;
+    width: 140px;
+    background-color: #FFFEDE;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top:#2E222F 2px solid;
+    border-left:#2E222F 2px solid;
+    border-bottom:#2E222F 2px solid;
+    display: none;
+} */
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    /* padding: 10px; */
+    transition: background 0.3s ease;
+    /* border: 1px solid yellow; */
+  }
+
+  
+.nav-link svg {
+     width: 24px;
+     height: 24px;
+     flex-shrink: 0;
 }
+.nav-link a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;   
+}
+  
 
 .dashboardNav, .ordersNav, .inventoryNav, .accountNav{
     display: flex;
-    flex-direction: row;
     align-items: center;
-
-    /* border: 2px solid red; */
     margin-left: 60px;
     margin-top: 10px;
-}
-
-.dashboardNav svg{
-    height: 25px;
-    width: 35px;
-}
-
-.ordersNav svg{
-    height: 20px;
-    width: 35px;
-}
-
-.inventoryNav svg{
-    height: 35px;
-    width: 35px;
-}
-
-.accountNav svg{
-    height: 27px;
-    width: 35px;
 }
 
 .logoSideNav{
@@ -198,13 +225,14 @@ input:checked ~ .sideBar{
 /* TOP NAV */
 
 .topNav{
-    position: absolute;
+    position: fixed;
+    top:0;
     background-color: #FBECA1;
     border-bottom: 2px solid #2E222F;
-
-    width: 100%;
+    /* margin-left: 15%; */
+    width: 100vw;
     height: 60px;
-    overflow-x: hidden;
+   z-index: 10;
 }
 
 .topNav p{
@@ -226,6 +254,11 @@ input:checked ~ .sideBar{
 
 .mainContent{
     margin-left: 200px;
+    margin-top: 60px;
+    /* flex: 1; */
+    overflow-y: auto;
+    /* border: 2px solid blue; */
+    height: 1000px;
 }
 
 .summaryOverview{
@@ -268,4 +301,53 @@ input:checked ~ .sideBar{
 
 .salesOverview{
     background-color: #FB6F92;
+}
+
+section{
+    /* border: 2px solid brown; */
+   width: 100%;
+    min-height: 100%;
+    display: none;
+ /* margin-top: 59.5px; */
+
+}
+
+section:target,
+section.active-section {
+  display: block;
+  pointer-events: auto;
+  animation: fadeIn 0.5s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes fadeIn{
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+#dashboardSection{
+    background-color: rgb(252, 100, 125);
+    overflow: hidden;
+}
+#orderSection{
+    background-color: rgb(247, 238, 119);
+    overflow: hidden;
+
+}
+#inventorySection{
+    background-color: rgb(148, 211, 240);
+    overflow: hidden;
+
+}
+#accountSection{
+    background-color: rgb(169, 247, 159);
+    overflow: hidden;
+
 }
