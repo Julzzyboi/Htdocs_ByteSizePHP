@@ -208,11 +208,6 @@ body {
   margin-bottom: 10px;
 }
 
-.checkoutContainer p {
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 30px;
-}
 
 .checkoutContainer h3 {
   font-size: 28px;
@@ -220,22 +215,6 @@ body {
   margin-bottom: 20px;
 }
 
-.orderMascots {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.orderMascots img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 20px;
-  background-color: #FFF4BD;
-  padding: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-}
 
 .amount {
   margin: 20px 0;
