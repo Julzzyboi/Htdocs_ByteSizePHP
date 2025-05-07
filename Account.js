@@ -159,7 +159,7 @@ function validateForm(event) {
           if (data.success) {
               // Redirect to appropriate page
               if (data.role === 'admin') {
-                window.location.href = 'admin.php';
+                window.location.href = 'adminDashboard.php';
               } else {
                 window.location.href = 'customer_home.php';
           }
