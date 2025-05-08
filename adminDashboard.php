@@ -1,6 +1,6 @@
 <?php
 session_start();
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +32,7 @@ session_start();
 
           <div>
             <ul>
-              <li class="dashboardNav nav-link activeNav">
+              <li class="dashboardNav nav-link">
                 <a href="#dashboardSection">
                   <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 32 32" viewBox="0 0 32 32" id="Dashboard">
                     <path fill="#f24584" d="M29,20v5H3v-5C3,12.83,8.83,7,16,7S29,12.83,29,20z" class="color45aaf2 svgShape"></path>
@@ -139,8 +139,6 @@ session_start();
 
         </div>
 
-
-
         <script>
           document.addEventListener('DOMContentLoaded', () => {
             const links = document.querySelectorAll('.sideBar ul li a');
@@ -151,6 +149,12 @@ session_start();
                 link.classList.add('active');
               });
             });
+          
+             // Set default hash if none is present
+            if (!window.location.hash) {
+              window.location.hash = "#dashboardSection";
+            }
+
         
             // Optional: highlight on load based on URL hash
             const currentHash = window.location.hash;
@@ -161,8 +165,6 @@ session_start();
           });
 
           const navLinks = document.querySelectorAll("ul li a");
-
-
 
         </script>
     </body>
