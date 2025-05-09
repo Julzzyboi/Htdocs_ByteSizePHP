@@ -49,8 +49,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_user->close();
     $conn->close();
 }
-?>
 
+    // for Login Activity 
+    $sql = "SELECT la.id, u.emailAddress, la.login_time, la.ip_address 
+            FROM tbl_login_activity la
+            JOIN tbl_user_id u ON la.user_id = u.user_id
+            ORDER BY la.login_time DESC";
+
+    $result = $conn->query($sql);
+
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    echo json_encode(["data" => $data]);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,6 +73,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="adminDashboard.css">
+        <!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     </head>
     
     <body>
@@ -230,7 +250,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </form>
             
 
-              <div class="table"></div>
+            <div class="tableAdmin">
+              <table id="adminTable" class="display">
+              
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Contact Number</th>
+                        <th>Gender</th>
+                        <th>User Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Include your DB connection
+                    include('Db_connection.php');
+                    $sql = "SELECT * FROM tbl_user_id WHERE userRole = 'admin'";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['user_ID']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['firstName']) . " " . htmlspecialchars($row['lastName']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['emailAddress']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['contactNumber']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['userRole']) . "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+              </tbody>
+           </table>
+        </div>
+<!-- Login Activity -->
+        <div class="LoginAct">
+           <h2>Login Activity</h2>
+            <table id="loginActivityTable" class="display">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Email</th>
+                  <th>Login Time</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+            </table>
+        </div>
             </div>
 
           </section>
@@ -266,9 +335,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       });
     });
   });
-          // for admin creation
+          // for admin creation DataTables
+          $(document).ready(function () {
+        $('#adminTable').DataTable();
+    });
 
-
+    // for login Activity DataTables
+$(document).ready(function () {
+  $('#loginActivityTable').DataTable({
+    "ajax": "adminDashboard.php",
+    "columns": [
+      { "data": "id" },
+      { "data": "emailAddress" },
+      { "data": "login_time" },
+      { "data": "ip_address" }
+    ]
+  });
+});
         </script>
     </body>
 </html>

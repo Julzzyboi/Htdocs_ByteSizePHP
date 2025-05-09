@@ -357,6 +357,7 @@ section.active-section {
     align-items: flex-start;
     justify-content: center;
     padding-top: 20px;
+    padding-bottom: 20px;
 
 
 }
@@ -366,7 +367,7 @@ section.active-section {
 
 .Account-Container {
     width: 100%;
-    height: 100vh;       
+    min-height: 100vh;       
     background-color: yellowgreen;
     border: 2px solid black;
     padding: 20px;
@@ -395,11 +396,11 @@ section.active-section {
     height: 300px;
     border: solid black;
 }
-/* .table{
-    width: 500px;
-    height: 500px;
-    background-color: red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
+
+
+/* DataTables */
+.tableAdmin{
+    background-color: white;
+    border: 2px solid black;
+    width: 70%;
+}

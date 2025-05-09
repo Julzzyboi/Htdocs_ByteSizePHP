@@ -34,7 +34,11 @@
     <main>
       <div class="Grid-Container">
     
-        <div class="Poster-Container"></div> <!--Poster here-->
+        <div class="Poster-Container">
+          <div class="testPoster">
+            
+          </div>
+        </div> <!--Poster here-->
           
         
           <div class="product-section">
@@ -270,7 +274,8 @@
   
     if (hash) {
       const target = document.querySelector(hash);
-      const activeBtn = document.querySelector('.SecButton[href="${hash}"]');
+      const activeBtn = document.querySelector(`.SecButton[href="${hash}"]`);
+
       if (target) target.classList.add('active-section');
       if (activeBtn) activeBtn.classList.add('active-sec-button');
     } else {
