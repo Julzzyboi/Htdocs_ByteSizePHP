@@ -1,6 +1,75 @@
 <?php
-session_start();
-?> 
+// Include database connection
+include('Db_connection.php'); 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data safely
+    $firstName = $_POST['firstName'] ?? '';
+    $lastName = $_POST['lastName'] ?? '';
+    $emailAddress = $_POST['emailAddress'] ?? '';
+    $phoneNumber = $_POST['phoneNumber'] ?? '';
+    $gender = $_POST['Gender'] ?? '';
+    $password = $_POST['Password'] ?? '';
+    $confirmPassword = $_POST['ConfirmPass'] ?? '';
+
+    // Validate required fields
+    if (empty($firstName) || empty($lastName) || empty($emailAddress) || empty($phoneNumber) || empty($gender) || empty($password) || empty($confirmPassword)) {
+        die("All fields are required.");
+    }
+
+    // Validate password match
+    if ($password !== $confirmPassword) {
+        die("Passwords do not match.");
+    }
+
+    // Hash the password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert into tbl_user_id
+    $stmt_user = $conn->prepare("INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole) VALUES (?, ?, ?, ?, ?, ?, 'admin')");
+    $stmt_user->bind_param("ssssss", $firstName, $lastName, $emailAddress, $phoneNumber, $gender, $hashedPassword);
+
+    if ($stmt_user->execute()) {
+        $user_id = $stmt_user->insert_id;
+
+        // Insert into tbl_admin_id
+        $stmt_admin = $conn->prepare("INSERT INTO tbl_admin_id (user_id, adminPassword_Hash) VALUES (?, ?)");
+        $stmt_admin->bind_param("is", $user_id, $hashedPassword);
+
+        if ($stmt_admin->execute()) {
+            echo "Admin account created successfully.";
+        } else {
+            echo "Error creating admin record: " . $stmt_admin->error;
+        }
+
+        $stmt_admin->close();
+    } else {
+        echo "Error creating user: " . $stmt_user->error;
+    }
+
+    $stmt_user->close();
+}
+
+// Fetch login activity
+// $sql_login = "
+// SELECT 
+//     l.login_ID AS ID, 
+//     l.user_ID, 
+//     u.firstName, 
+//     u.lastName, 
+//     u.emailAddress, 
+//     u.userRole, 
+//     l.loginTime 
+// FROM 
+//     tbl_login_id l
+// JOIN 
+//     tbl_user_id u ON l.user_ID = u.user_id
+// ORDER BY 
+//     l.loginTime DESC
+// ";
+// $result_login = $conn->query($sql_login);
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +78,12 @@ session_start();
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="adminDashboard.css">
+        <!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     </head>
     
     <body>
@@ -102,7 +177,7 @@ session_start();
 
         <!-- for main content checkerts and charts -->
         <div class="mainContent">
-          <section id="dashboardSection">
+          <section id="dashboardSection" class="Page-Section">
             <div class="summaryOverview">
                 <div class="customerOverview">
 
@@ -122,50 +197,190 @@ session_start();
             </div>
           </section>
 
-          <section id="orderSection">
+          <section id="orderSection" class="Page-Section">
             <h1>Tapusin</h1>
           </section>
           
-          <section id="inventorySection">
+          <section id="inventorySection" class="Page-Section">
 
-            <h1>Niyo na</h1>
+          <form action="admin_create_product.php" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Product Name" required>
+                <textarea name="description" placeholder="Description"></textarea>
+                <input type="number" step="0.01" name="price" placeholder="Price" required>
+                <input type="file" name="image" required>
+                <button type="submit">Create Product</button>
+              </form>
 
           </section>
 
-          <section id="accountSection">
-            <h1>Please</h1>
+          <section id="accountSection" class="Page-Section">
+            <div class="Account-Container">
+              <form id="AdminForm" method="POST" action="adminDashboard.php">
+                <div class="Fname-Container">
+                <input type="text" class="inputFN" id="Fname" name="firstName" placeholder="First Name (ex. Juan)"
+                maxlength="50" />
+                </div>
+                <div class="Lname-Container">
+                <input type="text" class="inputLN" id="Lname" name="lastName" placeholder="Last Name (ex. Dela Cruz)"
+                maxlength="50" />
+                </div>
 
+                <div class="emailAddress-Container">
+                <input type="email" class="inputEmailSignUp" id="email" name="emailAddress"
+                placeholder="Email (ex. juandelacruz@gmail.com)" />
+                </div>
+                <div class="phoneNum-Container">
+                <input type="number" class="inputPhoneNum" id="Phone" name="phoneNumber"
+                placeholder="Phone Number (09991234567)" oninput="this.value=this.value.slice(0,11)" />
+                </div>
+
+                <div class="Gender-Container">
+                  <label for="Gender">Gender:</label>
+                  <input type="radio" id="Male" name="Gender" value="Male" />
+                  <label for="Male">Male</label>
+                  <input type="radio" id="Female" name="Gender" value="Female" />
+                  <label for="Female">Female</label>
+                </div>
+
+                <div class="adminPassword-Container">
+                  <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password" />
+                </div>
+
+                <div class="confirmPass-Container">
+                <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass"
+                placeholder="Confirm Password" />
+                </div>
+                
+                <button type="submit">Create Admin</button>
+              </form>
+            
+
+            <div class="tableAdmin">
+              <table id="adminTable" class="display">
+              
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Contact Number</th>
+                        <th>Gender</th>
+                        <th>User Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Include your DB connection
+                    include('Db_connection.php');
+                    $sql = "SELECT * FROM tbl_user_id WHERE userRole = 'admin'";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['user_ID']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['firstName']) . " " . htmlspecialchars($row['lastName']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['emailAddress']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['contactNumber']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['userRole']) . "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+              </tbody>
+           </table>
+        </div>
+<!-- Login Activity -->
+        <div class="LoginAct">
+           <!-- <h2>Login Activity</h2> -->
+            <table id="loginTable" class="display">
+              <thead>
+                <tr>
+                  <th>login_ID</th>
+                  <th>user_ID</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Login Time</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
           </section>
 
         </div>
 
         <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.sideBar ul li a');
-        
-            links.forEach(link => {
-              link.addEventListener('click', () => {
-                links.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-              });
-            });
-          
-             // Set default hash if none is present
-            if (!window.location.hash) {
-              window.location.hash = "#dashboardSection";
+
+          document.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll(".nav-link a");
+    const sections = document.querySelectorAll("section");
+
+    // Hide all sections initially
+    sections.forEach(section => section.style.display = "none");
+
+    // Show dashboard by default
+    const defaultSection = document.querySelector("#dashboardSection");
+    if (defaultSection) defaultSection.style.display = "block";
+
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        // e.preventDefault();
+
+        // Hide all sections
+        sections.forEach(section => section.style.display = "none");
+
+        // Get the target section from href
+        const targetId = this.getAttribute("href").substring(1);
+        const targetSection = document.getElementById(targetId);
+
+        // Show the selected section
+        if (targetSection) targetSection.style.display = "block";
+      });
+    });
+  });
+          // for admin creation DataTables
+          $(document).ready(function () {
+        $('#adminTable').DataTable();
+    });
+
+
+    $(document).ready(function() {
+    var loginTable = $('#loginTable').DataTable({
+        ajax: 'fetch_Login.php',
+        columns: [
+            { data: 'login_ID' },
+            { data: 'user_ID' },
+            { data: 'emailAddress'},
+            { data: 'userRole' },
+            { data: 'loginTime' }
+        ]
+    });
+
+    // Optionally reload table after form submission
+    $('#adminForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'adminDashboard.php',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire('Success', response.message, 'success');
+                    loginTable.ajax.reload(); // 🔁 Refresh login data
+                    $('#adminForm')[0].reset(); // clear form
+                } else {
+                    Swal.fire('Error', response.message, 'error');
+                }
             }
-
-        
-            // Optional: highlight on load based on URL hash
-            const currentHash = window.location.hash;
-            if (currentHash) {
-              const targetLink = document.querySelector(`.sideBar ul li a[href="${currentHash}"]`);
-              if (targetLink) targetLink.classList.add('active');
-            }
-          });
-
-          const navLinks = document.querySelectorAll("ul li a");
-
+        });
+    });
+});
+    
         </script>
     </body>
 </html>
