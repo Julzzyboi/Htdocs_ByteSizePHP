@@ -122,6 +122,13 @@
     letter-spacing: 1px;
     text-align: center;
   }
+
+  .wrap-faq{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   
   .faq-container {
     display: flex;
@@ -312,4 +319,10 @@
   .Instagram img{
     width: 4rem;
     height: 100%;
+  }
+
+  /* Ipad view */
+  @media screen and (max-width: 1024px) {
+    
+
   }
