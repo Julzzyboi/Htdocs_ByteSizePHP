@@ -3,42 +3,43 @@
 include('Db_connection.php'); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect form data
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $emailAddress = $_POST['emailAddress'];
-    $phoneNumber = $_POST['phoneNumber'];
-    $gender = $_POST['Gender'];
-    $password = $_POST['Password'];
-    $confirmPassword = $_POST['ConfirmPass'];
+    // Collect form data safely
+    $firstName = $_POST['firstName'] ?? '';
+    $lastName = $_POST['lastName'] ?? '';
+    $emailAddress = $_POST['emailAddress'] ?? '';
+    $phoneNumber = $_POST['phoneNumber'] ?? '';
+    $gender = $_POST['Gender'] ?? '';
+    $password = $_POST['Password'] ?? '';
+    $confirmPassword = $_POST['ConfirmPass'] ?? '';
 
-    // Validate passwords match
+    // Validate required fields
+    if (empty($firstName) || empty($lastName) || empty($emailAddress) || empty($phoneNumber) || empty($gender) || empty($password) || empty($confirmPassword)) {
+        die("All fields are required.");
+    }
+
+    // Validate password match
     if ($password !== $confirmPassword) {
-        echo "Passwords do not match.";
-        exit;
+        die("Passwords do not match.");
     }
 
     // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert into tbl_user_id
-    $sql_user = "INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole) 
-                 VALUES (?, ?, ?, ?, ?, ?, 'admin')";
-    $stmt_user = $conn->prepare($sql_user);
+    $stmt_user = $conn->prepare("INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole) VALUES (?, ?, ?, ?, ?, ?, 'admin')");
     $stmt_user->bind_param("ssssss", $firstName, $lastName, $emailAddress, $phoneNumber, $gender, $hashedPassword);
 
     if ($stmt_user->execute()) {
         $user_id = $stmt_user->insert_id;
 
         // Insert into tbl_admin_id
-        $sql_admin = "INSERT INTO tbl_admin_id (user_id, adminPassword_Hash) VALUES (?, ?)";
-        $stmt_admin = $conn->prepare($sql_admin);
+        $stmt_admin = $conn->prepare("INSERT INTO tbl_admin_id (user_id, adminPassword_Hash) VALUES (?, ?)");
         $stmt_admin->bind_param("is", $user_id, $hashedPassword);
 
         if ($stmt_admin->execute()) {
             echo "Admin account created successfully.";
         } else {
-            echo "Error creating admin: " . $stmt_admin->error;
+            echo "Error creating admin record: " . $stmt_admin->error;
         }
 
         $stmt_admin->close();
@@ -47,24 +48,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt_user->close();
-    $conn->close();
 }
 
-    // for Login Activity 
-    $sql = "SELECT la.id, u.emailAddress, la.login_time, la.ip_address 
-            FROM tbl_login_activity la
-            JOIN tbl_user_id u ON la.user_id = u.user_id
-            ORDER BY la.login_time DESC";
-
-    $result = $conn->query($sql);
-
-    $data = [];
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-
-    echo json_encode(["data" => $data]);
+// Fetch login activity
+// $sql_login = "
+// SELECT 
+//     l.login_ID AS ID, 
+//     l.user_ID, 
+//     u.firstName, 
+//     u.lastName, 
+//     u.emailAddress, 
+//     u.userRole, 
+//     l.loginTime 
+// FROM 
+//     tbl_login_id l
+// JOIN 
+//     tbl_user_id u ON l.user_ID = u.user_id
+// ORDER BY 
+//     l.loginTime DESC
+// ";
+// $result_login = $conn->query($sql_login);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -288,20 +293,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 <!-- Login Activity -->
         <div class="LoginAct">
-           <h2>Login Activity</h2>
-            <table id="loginActivityTable" class="display">
+           <!-- <h2>Login Activity</h2> -->
+            <table id="loginTable" class="display">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>login_ID</th>
+                  <th>user_ID</th>
                   <th>Email</th>
-                  <th>Login Time</th>
                   <th>Role</th>
+                  <th>Login Time</th>
                 </tr>
               </thead>
+              <tbody></tbody>
             </table>
+          </div>
         </div>
-            </div>
-
           </section>
 
         </div>
@@ -340,18 +346,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $('#adminTable').DataTable();
     });
 
-    // for login Activity DataTables
-$(document).ready(function () {
-  $('#loginActivityTable').DataTable({
-    "ajax": "adminDashboard.php",
-    "columns": [
-      { "data": "id" },
-      { "data": "emailAddress" },
-      { "data": "login_time" },
-      { "data": "ip_address" }
-    ]
-  });
+
+    $(document).ready(function() {
+    var loginTable = $('#loginTable').DataTable({
+        ajax: 'fetch_Login.php',
+        columns: [
+            { data: 'login_ID' },
+            { data: 'user_ID' },
+            { data: 'emailAddress'},
+            { data: 'userRole' },
+            { data: 'loginTime' }
+        ]
+    });
+
+    // Optionally reload table after form submission
+    $('#adminForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'adminDashboard.php',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire('Success', response.message, 'success');
+                    loginTable.ajax.reload(); // 🔁 Refresh login data
+                    $('#adminForm')[0].reset(); // clear form
+                } else {
+                    Swal.fire('Error', response.message, 'error');
+                }
+            }
+        });
+    });
 });
+    
         </script>
     </body>
 </html>

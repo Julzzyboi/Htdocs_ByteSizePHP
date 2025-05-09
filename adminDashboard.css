@@ -404,3 +404,11 @@ section.active-section {
     border: 2px solid black;
     width: 70%;
 }
+.LoginAct{
+   background-color: white;
+    border: 2px solid black;
+
+}
+#loginTable{
+    border: 2px solid black;
+}
