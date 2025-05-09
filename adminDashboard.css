@@ -155,10 +155,10 @@ ul li a.active {
 
 /* EXPAND NAVIGATION */
 
-input{
+/* input{
     display: none;
     visibility: hidden;
-}
+} */
 
 /* .toggle{
     position: absolute;
@@ -232,7 +232,7 @@ input:checked ~ .sideBar{
     /* margin-left: 15%; */
     width: 100vw;
     height: 60px;
-   z-index: 10;
+   z-index: 15;
 }
 
 .topNav p{
@@ -254,11 +254,14 @@ input:checked ~ .sideBar{
 
 .mainContent{
     margin-left: 200px;
-    margin-top: 60px;
+    margin-top: 40px;
     /* flex: 1; */
     overflow-y: auto;
-    /* border: 2px solid blue; */
-    height: 1000px;
+    border: 2px solid blue;
+    height: 100vh;
+    /* display: flex;
+    flex-direction: column; */
+
 }
 
 .summaryOverview{
@@ -306,7 +309,7 @@ input:checked ~ .sideBar{
 section{
     /* border: 2px solid brown; */
    width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     display: none;
  /* margin-top: 59.5px; */
 
@@ -318,6 +321,7 @@ section.active-section {
   pointer-events: auto;
   animation: fadeIn 0.5s ease-out forwards;
   z-index: 10;
+  
 }
 
 @keyframes fadeIn{
@@ -349,5 +353,53 @@ section.active-section {
 #accountSection{
     background-color: rgb(169, 247, 159);
     overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 20px;
+
 
 }
+
+
+/* for accounts */
+
+.Account-Container {
+    width: 100%;
+    height: 100vh;       
+    background-color: yellowgreen;
+    border: 2px solid black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border-radius: 12px;                 
+    position: relative;
+}
+
+
+.Account-Container form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    width: 500px;
+    height: 500px;
+    background-color: yellow;
+}
+#AdminForm{
+    width:300px;
+    height: 300px;
+    border: solid black;
+}
+/* .table{
+    width: 500px;
+    height: 500px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */

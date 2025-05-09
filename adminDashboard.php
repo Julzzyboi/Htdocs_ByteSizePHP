@@ -1,6 +1,56 @@
 <?php
-session_start();
-?> 
+// Include database connection
+include('Db_connection.php'); 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $emailAddress = $_POST['emailAddress'];
+    $phoneNumber = $_POST['phoneNumber'];
+    $gender = $_POST['Gender'];
+    $password = $_POST['Password'];
+    $confirmPassword = $_POST['ConfirmPass'];
+
+    // Validate passwords match
+    if ($password !== $confirmPassword) {
+        echo "Passwords do not match.";
+        exit;
+    }
+
+    // Hash the password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert into tbl_user_id
+    $sql_user = "INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole) 
+                 VALUES (?, ?, ?, ?, ?, ?, 'admin')";
+    $stmt_user = $conn->prepare($sql_user);
+    $stmt_user->bind_param("ssssss", $firstName, $lastName, $emailAddress, $phoneNumber, $gender, $hashedPassword);
+
+    if ($stmt_user->execute()) {
+        $user_id = $stmt_user->insert_id;
+
+        // Insert into tbl_admin_id
+        $sql_admin = "INSERT INTO tbl_admin_id (user_id, adminPassword_Hash) VALUES (?, ?)";
+        $stmt_admin = $conn->prepare($sql_admin);
+        $stmt_admin->bind_param("is", $user_id, $hashedPassword);
+
+        if ($stmt_admin->execute()) {
+            echo "Admin account created successfully.";
+        } else {
+            echo "Error creating admin: " . $stmt_admin->error;
+        }
+
+        $stmt_admin->close();
+    } else {
+        echo "Error creating user: " . $stmt_user->error;
+    }
+
+    $stmt_user->close();
+    $conn->close();
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,7 +152,7 @@ session_start();
 
         <!-- for main content checkerts and charts -->
         <div class="mainContent">
-          <section id="dashboardSection">
+          <section id="dashboardSection" class="Page-Section">
             <div class="summaryOverview">
                 <div class="customerOverview">
 
@@ -122,49 +172,102 @@ session_start();
             </div>
           </section>
 
-          <section id="orderSection">
+          <section id="orderSection" class="Page-Section">
             <h1>Tapusin</h1>
           </section>
           
-          <section id="inventorySection">
+          <section id="inventorySection" class="Page-Section">
 
-            <h1>Niyo na</h1>
+          <form action="admin_create_product.php" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Product Name" required>
+                <textarea name="description" placeholder="Description"></textarea>
+                <input type="number" step="0.01" name="price" placeholder="Price" required>
+                <input type="file" name="image" required>
+                <button type="submit">Create Product</button>
+              </form>
 
           </section>
 
-          <section id="accountSection">
-            <h1>Please</h1>
+          <section id="accountSection" class="Page-Section">
+            <div class="Account-Container">
+              <form id="AdminForm" method="POST" action="adminDashboard.php">
+                <div class="Fname-Container">
+                <input type="text" class="inputFN" id="Fname" name="firstName" placeholder="First Name (ex. Juan)"
+                maxlength="50" />
+                </div>
+                <div class="Lname-Container">
+                <input type="text" class="inputLN" id="Lname" name="lastName" placeholder="Last Name (ex. Dela Cruz)"
+                maxlength="50" />
+                </div>
+
+                <div class="emailAddress-Container">
+                <input type="email" class="inputEmailSignUp" id="email" name="emailAddress"
+                placeholder="Email (ex. juandelacruz@gmail.com)" />
+                </div>
+                <div class="phoneNum-Container">
+                <input type="number" class="inputPhoneNum" id="Phone" name="phoneNumber"
+                placeholder="Phone Number (09991234567)" oninput="this.value=this.value.slice(0,11)" />
+                </div>
+
+                <div class="Gender-Container">
+                  <label for="Gender">Gender:</label>
+                  <input type="radio" id="Male" name="Gender" value="Male" />
+                  <label for="Male">Male</label>
+                  <input type="radio" id="Female" name="Gender" value="Female" />
+                  <label for="Female">Female</label>
+                </div>
+
+                <div class="adminPassword-Container">
+                  <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password" />
+                </div>
+
+                <div class="confirmPass-Container">
+                <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass"
+                placeholder="Confirm Password" />
+                </div>
+                
+                <button type="submit">Create Admin</button>
+              </form>
+            
+
+              <div class="table"></div>
+            </div>
 
           </section>
 
         </div>
 
         <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.sideBar ul li a');
-        
-            links.forEach(link => {
-              link.addEventListener('click', () => {
-                links.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-              });
-            });
-          
-             // Set default hash if none is present
-            if (!window.location.hash) {
-              window.location.hash = "#dashboardSection";
-            }
 
-        
-            // Optional: highlight on load based on URL hash
-            const currentHash = window.location.hash;
-            if (currentHash) {
-              const targetLink = document.querySelector(`.sideBar ul li a[href="${currentHash}"]`);
-              if (targetLink) targetLink.classList.add('active');
-            }
-          });
+          document.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll(".nav-link a");
+    const sections = document.querySelectorAll("section");
 
-          const navLinks = document.querySelectorAll("ul li a");
+    // Hide all sections initially
+    sections.forEach(section => section.style.display = "none");
+
+    // Show dashboard by default
+    const defaultSection = document.querySelector("#dashboardSection");
+    if (defaultSection) defaultSection.style.display = "block";
+
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        // e.preventDefault();
+
+        // Hide all sections
+        sections.forEach(section => section.style.display = "none");
+
+        // Get the target section from href
+        const targetId = this.getAttribute("href").substring(1);
+        const targetSection = document.getElementById(targetId);
+
+        // Show the selected section
+        if (targetSection) targetSection.style.display = "block";
+      });
+    });
+  });
+          // for admin creation
+
 
         </script>
     </body>
