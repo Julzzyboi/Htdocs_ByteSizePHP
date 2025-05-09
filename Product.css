@@ -1,4 +1,4 @@
- /* FONTS */
+/* FONTS */
 @font-face {
   font-family: Back;
   src: url(fonts/Backso.ttf);
@@ -115,14 +115,88 @@ text-decoration: none;
   /* border:  5px solid purple; */
   
 }
+/*POSTER*/
+/* .Poster-Wrap {
+  position: relative;
+  width: 100%;
+  display: wrap;
+} */
 
 .Poster-Container{
+  margin: auto; 
+  position: relative;
+  width: 100%;
+  height: auto;
   grid-row: 1 / 3;
   grid-column: 6/ 1;
-  background-color: #1f3f30;
+  background-color: #0b23ff;
   overflow: hidden;
+  display: flex;
+  border: 2px 2px 2px 2px solid black;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.Poster {
+  width: 100px;
+  height: 100px;
+}
+
+.Poster img {
+  width: 100%;
+  height: 100%;
+}
+.Poster-Wrap {
+  width: 100%;
+  height: 40%;
+  background-color: green;
+
+}
+.Slide1 .active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.Poster-One {
+  width: 100%;
+  height: 100%;
 }
  
+.carousel-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+.control-button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.control-button.active {
+  background-color: white;
+}
+.control-button:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
 /* Menu  */
 .product-section{
   grid-row: 3 / 6;
@@ -135,54 +209,6 @@ text-decoration: none;
 }
 .MenuWrap{
   display: flex;
-}
-
-.cart-container {
-  background-color: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 15px;
-}
-.cart-container h2 {
-  font-family: 'Back', sans-serif;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.cart-item {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 8px;
-}
-
-/* Checkout button */
-.checkout-button {
-  background-color: #92D472;
-  color: #333;
-  border: 2px solid #333;
-  border-radius: 20px;
-  padding: 8px 15px;
-  font-family: 'Back', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  display: block;
-  margin: 15px auto;
-  text-align: center;
-}
-
-/* Section buttons styling */
-.SecButton {
-  filter: grayscale(100%);
-  transition: all ease 0.3s;
-  cursor: pointer;
-}
-
-.SecButton:hover,
-.active-sec-button {
-  transform: scale(1.1);
-  filter: grayscale(0%);
 }
 
 .nav-products{
@@ -260,7 +286,7 @@ text-decoration: none;
 
 .product-info {
   border-top: 2.5px solid black;
-  position: absolute;
+  position: absolute;  
   bottom: 0;
   left: 0;
   right: 0;
@@ -377,64 +403,6 @@ section.active-section {
   z-index: 10;
 }
 
-.cart-container {
-  background-color: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 15px;
-}
-.cart-container h2 {
-  font-family: 'Back', sans-serif;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.cart-item {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 8px;
-}
-
-/* Checkout button */
-.cart-container {
-  background-color: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 15px;
-}
-.cart-container h2 {
-  font-family: 'Back', sans-serif;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.cart-item {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 8px;
-}
-
-/* Checkout button */
-.Checkout-btn {
-  text-decoration: none;
-  background-color: #92D472;
-  color: #333;
-  border: 2px solid #333;
-  border-radius: 20px;
-  padding: 8px 15px;
-  font-family: 'Back', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  display: block;
-  margin: 15px auto;
-  text-align: center;
-}
-
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -480,13 +448,13 @@ section.active-section {
 }
 
 .cart-container{
- grid-row: 3/ 6;
- grid-column: 5 ;
-
-  background-color: antiquewhite;
-  border: 2px solid black;
-}
-
+  grid-row: 3/ 6;
+  grid-column: 5 ;
+ 
+   background-color: antiquewhite;
+   border: 2px solid black;
+ }
+ 
 /* for footer */
 footer{
     position: relative;
