@@ -3,13 +3,7 @@ session_start();
 // if(!isset($_SESSION["emailAddress"])){
 //     header("Location: Account.php");
 // }
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: customer_home.php");
-    exit();
-}
-else{
-    echo "This is the ADMIN PAGE";
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +14,6 @@ else{
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Hello World</h1>
 </body>
 </html>

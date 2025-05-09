@@ -334,32 +334,32 @@
       </div>
        </footer>
        <script>
-      window.addEventListener("hashchange", updateSection);
-window.addEventListener("DOMContentLoaded", updateSection);
-
-function updateSection() {
-  const hash = window.location.hash;
-  const sections = document.querySelectorAll('section');
-  const buttons = document.querySelectorAll('.SecButton');
-
-  sections.forEach(section => section.classList.remove('active-section'));
-  buttons.forEach(btn => btn.classList.remove('active-sec-button'));
-
-  if (hash) {
-    const target = document.querySelector(hash);
-    const activeBtn = document.querySelector(`.SecButton[href="${hash}"]`);
-    if (target) target.classList.add('active-section');
-    if (activeBtn) activeBtn.classList.add('active-sec-button');
-  } else {
-    // Default section and button
-    const defaultSection = document.querySelector('#first');
-    const defaultButton = document.querySelector('.SecButton[href="#first"]');
-    if (defaultSection) defaultSection.classList.add('active-section');
-    if (defaultButton) defaultButton.classList.add('active-sec-button');
+        window.addEventListener("hashchange", updateSection);
+  window.addEventListener("DOMContentLoaded", updateSection);
+  
+  function updateSection() {
+    const hash = window.location.hash;
+    const sections = document.querySelectorAll('section');
+    const buttons = document.querySelectorAll('.SecButton');
+  
+    sections.forEach(section => section.classList.remove('active-section'));
+    buttons.forEach(btn => btn.classList.remove('active-sec-button'));
+  
+    if (hash) {
+      const target = document.querySelector(hash);
+      const activeBtn = document.querySelector('.SecButton[href="${hash}"]');
+      if (target) target.classList.add('active-section');
+      if (activeBtn) activeBtn.classList.add('active-sec-button');
+    } else {
+      // Default section and button
+      const defaultSection = document.querySelector('#first');
+      const defaultButton = document.querySelector('.SecButton[href="#first"]');
+      if (defaultSection) defaultSection.classList.add('active-section');
+      if (defaultButton) defaultButton.classList.add('active-sec-button');
+    }
   }
-}
-
-
-      </script>
+  
+  
+        </script>
 </body>
 </html>

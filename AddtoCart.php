@@ -14,8 +14,7 @@
 
 <div class="cart-sidebar">
   <h2>Your Cart</h2>
-  <ul id="cartItems">
-    </ul>
+  <ul id="cartItems"></ul>
   <p id="cartTotal">Total: PHP 0.00</p>
   <button onclick="submitOrder()">Submit Order</button>
   <button onclick="clearCart()">Clear Cart</button>
