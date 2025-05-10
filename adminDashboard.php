@@ -61,10 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link rel="stylesheet" href="adminDashboard.css">
         <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     </head>
     
     <body>
@@ -184,13 +182,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
           <section id="inventorySection" class="Page-Section">
 
-          <form action="admin_create_product.php" method="POST" enctype="multipart/form-data">
-                <input type="text" name="name" placeholder="Product Name" required>
-                <textarea name="description" placeholder="Description"></textarea>
-                <input type="number" step="0.01" name="price" placeholder="Price" required>
-                <input type="file" name="image" required>
-                <button type="submit">Create Product</button>
-              </form>
+            <div class="ProductForm-Container">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">product_ID</th>
+                    <th scope="col">productName</th>
+                    <th scope="col">productPrice</th>
+                    <th scope="col">productStock</th>
+                    <th scope="col">productImage</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>@social</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
           </section>
 
@@ -234,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <button type="submit">Create Admin</button>
               </form>
-            
+
 
             <div class="tableAdmin">
               <table id="adminTable" class="display">
@@ -293,7 +318,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
 
-        <script>
+          <!-- jQuery -->
+          <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+          <!-- DataTables JS -->
+          <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+          <!-- Bootstrap -->
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+          <script>
 
           document.addEventListener("DOMContentLoaded", () => {
     const links = document.querySelectorAll(".nav-link a");

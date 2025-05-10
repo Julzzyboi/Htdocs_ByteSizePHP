@@ -49,7 +49,7 @@
               <img src="images/PosterThree.png">
             </div>
             
-            </div>
+          </div>
             <br>
             
             <div style="text-align:center">
@@ -81,85 +81,6 @@
           }
           </script>
           
- <!--Poster here-->
- <!--Poster here-->
- <!-- <div class="Poster-Container">
-    <div class="Poster-Wrap">
-    <div class="Poster Slide1 active">
-      <img src="images/PosterThree.png" style="width: 100%" alt="Slide 1">
-  </div>
-
-    <div class="Poster Slide2">
-        <img src="images/PosterTwo.png" style="width: 100%" alt="Slide 2">
-    </div>
-
-    <div class="Poster Slide3">
-      <img src="images/PosterThree.png" style="width: 100%" alt="Slide 3">
-  </div>
-
-
-  <div class="carousel-controls">
-    <div class="control-button active"></div>
-    <div class="control-button"></div>
-    <div class="control-button"></div>
-  </div>
-</div>
-</div>
-
-
-
-
-<script>
-        const slides = document.querySelectorAll('.Poster-Container');
-        const buttons = document.querySelectorAll('.control-button');
-        let currentSlide = 0;
-        let intervalId;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('Active');
-                buttons.forEach((button, j) => {
-                    button.classList.remove('Active');
-                });
-                if (i === index) {
-                    slide.classList.add('Active');
-                    buttons[i].classList.add('Active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        function startCarousel() {
-            intervalId = setInterval(nextSlide, 15000); // 15 seconds
-        }
-
-        function stopCarousel() {
-            clearInterval(intervalId);
-        }
-
-        // --- Event Listeners ---
-        buttons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                stopCarousel();
-                currentSlide = index;
-                showSlide(currentSlide);
-                startCarousel(); // Restart the interval after manual click
-            });
-        });
-
-        // --- Initialize ---
-        showSlide(currentSlide);
-        startCarousel();
-
-        // Optional: Stop carousel on hover, restart on mouse leave
-        const carouselContainer = document.querySelector('.Poster-Container'); // Select the main container
-        carouselContainer.addEventListener('mouseenter', stopCarousel);
-        carouselContainer.addEventListener('mouseleave', startCarousel);
-</script> -->
 
           <div class="product-section">
             <div class="MenuWrap">
@@ -176,6 +97,8 @@
                     <div class="product-grid">
                    </div>      
                   </section>
+
+
                   <!--pastillas-->
                   <section id="second">
                     <div class="product-grid">
@@ -373,10 +296,9 @@
 
                 </div>
               </div>
-          </div>
-      
-      
-        <div class="  cart-section"> 
+          
+    
+        <div class="cart-section"> 
             <div class="cart-container">
               <h2>Your Cart</h2>
               <div class="cart-item"></div>
@@ -384,7 +306,7 @@
               <div class="cart-item"></div>
               <a href="transaction.html" class="Checkout-btn">Proceed to checkout</a>
             </div>
-            </div>
+        </div>
       </div>
       
 
