@@ -192,7 +192,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <span id="errorCpass" class="error-message"></span>
           </div>
+          
+          <label class="agreement">
+    <input type="checkbox" id="agreeTerms"> I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a>
+  </label>
 
+  <label class="agreement">
+    <input type="checkbox" id="agreePrivacy"> I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>
+  </label>
           <button type="submit" id="SignUp-Button">Register</button>
         </form>
       </div>
@@ -221,6 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
 
           <button type="submit" id="Login-Button" name="login_user">Login</button>
+
         </form>
       </div>
     </div>
@@ -289,7 +297,15 @@ function toggleConfirmPasswordVisibility() {
         invisibleIconConfirm.style.display = "none"; // Hide the invisible icon
     }
 }
+function submitPayment() {
+      const terms = document.getElementById("agreeTerms").checked;
+      const privacy = document.getElementById("agreePrivacy").checked;
 
+      if (terms && privacy) {
+      } else {
+        alert("Please agree to both the Terms and Privacy Policy to proceed.");
+      }
+    }
 
   </script>
 </body>
