@@ -134,7 +134,8 @@ text-decoration: none;
 
 }
 .slideshow-container{
-  width: 100%;
+  margin-top: 20px;
+  width: 70%;
 }
 .slideshow-container img{
   width: 100%;
@@ -674,4 +675,8 @@ footer{
   .Instagram img{
     width: 4rem;
     height: 100%;
+  }
+
+  .Instagram{
+    
   }
