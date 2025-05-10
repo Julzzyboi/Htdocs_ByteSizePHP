@@ -49,25 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt_user->close();
 }
-
-// Fetch login activity
-// $sql_login = "
-// SELECT 
-//     l.login_ID AS ID, 
-//     l.user_ID, 
-//     u.firstName, 
-//     u.lastName, 
-//     u.emailAddress, 
-//     u.userRole, 
-//     l.loginTime 
-// FROM 
-//     tbl_login_id l
-// JOIN 
-//     tbl_user_id u ON l.user_ID = u.user_id
-// ORDER BY 
-//     l.loginTime DESC
-// ";
-// $result_login = $conn->query($sql_login);
 ?>
 
 
