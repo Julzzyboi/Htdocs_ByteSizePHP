@@ -119,7 +119,7 @@ flex: 1;
 
   margin-top: 10px;
   right: 10px;
-
+ 
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease, visibility 0s 0.3s;
@@ -265,7 +265,7 @@ top: 1%;
 }
 
 .pastillasMascotLeft{
-left: 20%;
+left: 12%;
 top: 35%;
 }
 
@@ -280,12 +280,12 @@ top: 3%;
 }
 
 .grahamMascotRight{
-left: 70%;
+left: 74%;
 top: 38%;
 }
 
 .cookieMascotRight{
-left: 89%;
+left: 82%;
 top: 72%;
 }
 
@@ -393,33 +393,36 @@ margin-top: -300px;
 }
 /* for dynamic product description */
 .Product-Description-Main-Wrapper{
-  width: 100%;
+  /* width: 100%; */
   height: 600px;
-  position: relative;
+  /* position: relative; */
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   /* justify-content: space-around; */
   /* align-items: center; */
   overflow: hidden;
+
+  /* border: pink 2px solid; */
 }
 
 .Description-Wrap{
 /* border: 2px solid blue; */
-width: 60%;
-width: 55%;
-height: 100%;
+width: 700px;
 display: flex;
-flex-wrap: wrap;
 align-items: center;
 justify-content: center;
 margin: 0;
 padding: 0;
+
 }
 
 .Product-Description{ 
   /* border: 3px solid red; */
-  position: relative;
-  width: 600px;
-  height: 500px;
+  /* position: relative; */
+  width: 500px;
+  height: 400px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -428,8 +431,8 @@ padding: 0;
   position: absolute;
   opacity:0;
   transition: opacity 0.5s ease-in-out;
-  width: 500px;
-  height: 500px;
+  /* width: 500px;
+  height: 500px; */
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
   border-radius: 40px;
 }
@@ -462,9 +465,8 @@ padding: 0;
   cursor: pointer;
   margin: 0;
   transition: all ease-out 0.2s;
-  border: 4px solid #2E222F;
+  border: 5px solid #2E222F;
 }
-
 
 .arrow:hover{
   background-color: #fcfa9b;
@@ -511,43 +513,43 @@ padding: 0;
 }
 
 .Product-1 img{
-  height: 280px;
-  width: 330px;
+  height: 200px;
+  width: 250px;
 }
 
 .Product-2 img{
-  height: 280px;
-  width: 310px;
+  height: 200px;
+  width: 250px;
 }
 
 .Product-3 img{
-  height: 280px;
-  width: 310px;
+  height: 200px;
+  width: 240px;
 }
 
 .Product-1 p{
   font-family: Candy;
-  font-size: 23px;
+  font-size: 19px;
   color: #2E222F;
-  width: 500px;
+  width: 400px;
   background-color: #FFC773;
   text-align: justify;
 }
 
 .Product-2 p{
   font-family: Candy;
-  font-size: 23px;
+  font-size: 19px;
   color: #2E222F;
-  width: 500px;
+  width: 400px;
   background-color: #FFF4BD;
   text-align: justify;
 }
 
 .Product-3 p{
   font-family: Candy;
-  font-size: 23px;
+  font-size: 19px;
   color: #2E222F;
-  width: 500px;
+  width: 400px;
   background-color: #D3815F;
   text-align: justify;
 }
@@ -561,7 +563,7 @@ padding: 0;
   height: 50px;
 
   font-family: Candy;
-  font-size: 25px;
+  font-size: 22px;
   color: #2E222F;
 
   margin-top: 30px;
@@ -570,10 +572,9 @@ padding: 0;
 
 /* Mascots */
 .Mascot-Wrap{
-  position: relative;
+  /* position: relative; */
   /* border: 2px solid purple; */
-  /* border: 2px solid violet; */
-  width:40%;
+  width: 400px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -597,27 +598,27 @@ padding: 0;
 }  
 
 .Mascot[data-index="1"] {
-  width: 350px;
-  height: 350px;
-  top: 22%;
-  left: 5%;
+  width: 200px;
+  height: 200px;
+  top: 200px;
+  left: 10px;
   z-index: 3;
 }
 
 .Mascot[data-index="2"] {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   top: 50px;
-  left: 400px;
+  left: 200px;
   z-index: 2;
   filter:grayscale(100%) contrast(100%) blur(2px) brightness(0.6);
 }
 
 .Mascot[data-index="3"] {
-  width: 180px;
-  height: 180px;
-  top: 350px;
-  left: 400px;
+  width: 150px;
+  height: 150px;
+  top: 400px;
+  left: 200px;
   z-index: 1;
   filter:grayscale(100%) contrast(100%) blur(2px) brightness(0.6);
 }
@@ -657,11 +658,21 @@ padding: 0;
 
 /* TRIVIA */
 
+.triviaSection{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .allFacts{
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+padding-left: 35px;
+/* border: 2px solid green; */
 }
 
 .factOne, .factTwo, .factThree, .factFour{
@@ -759,7 +770,7 @@ animation-duration: 1.2s;
 position: absolute;
 height: 130px;
 margin-top: -170px;
-margin-left: 860px;
+margin-left: 840px;
 
 animation-name: bounce;
 animation-delay: 2s;
@@ -772,7 +783,7 @@ animation-duration: 1.2s;
 position: absolute;
 height: 130px;
 margin-top: -100px;
-margin-left: -50px;
+margin-left: -10px;
 
 animation-name: bounce;
 animation-delay: 1s;
@@ -891,8 +902,6 @@ justify-content: center;
 /* background-color: #FFF9D4;
 border: #2E222F 8px solid; */
 border-radius: 40px;
-
-width: 550px; 
 }
 
 .missionHeader{
@@ -904,17 +913,16 @@ text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0
 
 .missionDescription{
 font-family: Candy;
-font-size: 25px; 
+font-size: 21px; 
 color: #2E222F;
-width: 450px;
 text-align: center;
 
 background-color: #FFF9E4;
-border: 7px solid #2E222F;
+border: 8px solid #2E222F;
 border-radius: 20px;
 
-height: 360px;
-width: 500px;
+height: 350px;
+width: 400px;
 
 padding: 30px;
 }
@@ -924,7 +932,7 @@ display: flex;
 flex-direction: column;
 border: #2E222F 8px solid;
 border-radius: 40px;
-height: 482px;   
+height: 365px; 
 }
 
 .missionPicturesTop{
@@ -933,17 +941,18 @@ flex-direction: row;
 }
 
 .missionPictureOne{
-height: 200px;
+height: 150px;
 border-top-left-radius: 33px;
 }
 
 .missionPictureTwo{
-height: 200px;
-border-top-right-radius: 33px;
+height: 150px;
+border-top-right-radius: 32px;
 }
 
 .missionPictureThree{
-height: 266.5px; 
+height: 200px;
+width: 300px; 
 border-bottom-left-radius: 33px;
 border-bottom-right-radius: 33px;
 }
@@ -955,7 +964,7 @@ z-index: -1;
 }
 
 .missionDescriptionMascots img{
-height: 180px;
+height: 150px;
 position: absolute;
 z-index: 1;
 top: 250px;
@@ -982,7 +991,7 @@ margin-bottom: 150px;
 .visionPicture{
 border: #2E222F 8px solid;
 border-radius: 40px;
-height: 482px;
+height: 350px;
 }
 
 .visionHeader{
@@ -994,9 +1003,8 @@ text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0
 
 .visionDescription{
 font-family: Candy;
-font-size: 25px; 
+font-size: 21px; 
 color: #2E222F;
-width: 450px;
 text-align: center;
 
 
@@ -1004,8 +1012,8 @@ background-color: #FFF9E4;
 border: 7px solid #2E222F;
 border-radius: 20px;
 
-height: 330px;
-width: 450px; 
+height: 300px;
+width: 400px;
 
 padding: 30px;
 }
@@ -1016,11 +1024,8 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 
-/* background-color: #FFF9D4; */
-/* border: #2E222F 8px solid; */
 border-radius: 40px;
 
-width: 550px; 
 }
 
 .visionDescriptionMascots{
@@ -1028,10 +1033,10 @@ z-index: -1;
 }
 
 .visionDescriptionMascots img{
-height: 175px;
+height: 150px;
 z-index: 1;
 margin-top: -90px;
-margin-left: 330px;
+
 
 animation-name: bounce;
 animation-delay: 3s;
@@ -1087,14 +1092,14 @@ footer{
   position: relative;
   /* border: 1px solid red; */
   display: flex;
-  margin: 20px;
   justify-content: space-evenly;
-
+  width:100%;
+  border: 2px solid green;
 }
 .F-logo{
-  position:relative ;
-  width: 300px;
-  height: auto;
+  width: 250px;
+  height: 300px;
+  float: left;
   /* border: 1px solid #2E222F; */
   /* background-color: green; */
 }
@@ -1105,12 +1110,11 @@ footer{
 }
 
 .F-Details{
-  position: relative;
   /* border: 1px solid orange; */
   width: 50%;
   height: 300px;
   display: flex;
-  gap: 130px;
+  gap: 20%;
   padding: 20px;
   align-items: start;
   justify-content: center;
@@ -1144,29 +1148,33 @@ footer{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border: 2px solid red;
+  float: right;
 }
 .F-Mascots{
   display: flex;
   flex-direction: row;
 }
 .M1,.M2,.M3{
-  position: absolute;
+  /* position: absolute; */
   top:-130px;
 }
+
 .M1{
-  right:180px;
+  left: 72%;
 }
 .M2{
-  right:80px;
+  left: 78%;
 }
 .M3{
-  right:-30px;
+  left: 84%; 
 }
+
 .FM{
   position: absolute;
   /* border: 3px solid indigo; */
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 
 .FM img{
@@ -1179,48 +1187,50 @@ footer{
   display: flex;
   flex-direction: column;
   font-family: candy;
-  justify-content: flex-end;
 }
 .SocialIcons{
-  position: relative;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
   align-items: center;
-  
 }
 .Contact{
-font-size: 20px;
+font-size: 15px;
+color: #2E222F;
 }
 .Gmail{
-width:auto;
-height: 50px;
-width: 4rem;
-font-size: 15px;
+height: 30px;
+font-size: 13px;
+color:#2E222F;
 }
 .Gmail img{
 /* border: 1px solid rgb(244, 19, 19); */
-width: 4rem;
-height: 100%;
-padding:10px;
+height: 50px;
+width: 30px;
 }
 .Facebook{
-width: auto;
-height: 50px;
+height: 30px;
+font-size: 13px;
+color: #2E222F;
 /* border: 1px solid black; */
 }
 .Facebook img{
 /* border: 1px solid green; */
-width: 4rem;
-height: 100%;
-padding:10px;
+height: 45px;
+width: 30px;
 }
 .Instagram{
-width: auto;
-height: 50px;
-/* border: 1px solid black; */
+height: 30px;
+font-size: 13px;
+margin-top: 4px;
 }
+
 .Instagram img{
 /* border: 1px solid orange; */
-width: 4rem;
-height: 100%;
+height: 60px;
+width: 42px;
+margin-left: -6px; 
+}
+
+.Instagram p{
+  margin-left: -5px;
 }
