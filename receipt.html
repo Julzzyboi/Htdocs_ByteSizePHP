@@ -8,25 +8,56 @@
 </head>
 <body>
 
-  <!-- Modal Receipt -->
   <div class="modal-overlay active" id="receiptModal">
     <section class="receiptContainer">
       <div class="receiptCard">
         <img src="images/checkbg.png" alt="Success" class="successIcon" />
         <h1>PAYMENT SUCCESS!</h1>
         <h2>ByteSize Delights</h2>
+
         <div class="info">
-          <p><strong>TOTAL PAYMENT</strong><br></p>
-          <p><strong>REF. NUMBER</strong><br></p>
-          <p><strong>PAYMENT TIME</strong><br></p>
-          <p><strong>PAYMENT METHOD</strong><br></p>
-          <p><strong>DELIVERY ADDRESS</strong><br></p>
+          <p><strong>TOTAL PAYMENT</strong><br><span id="r_total"></span></p>
+          <p><strong>REF. NUMBER</strong><br><span id="r_ref"></span></p>
+          <p><strong>PAYMENT TIME</strong><br><span id="r_time"></span></p>
+          <p><strong>PAYMENT METHOD</strong><br><span id="r_method"></span></p>
+          <p><strong>DELIVERY ADDRESS</strong><br><span id="r_address"></span></p>
         </div>
 
-        
+        <p id="countdownText">Redirecting in 4 seconds...</p>
       </div>
     </section>
   </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("orderDetails"));
+    const refNumber = "REF" + Math.floor(Math.random() * 1000000);
+    const time = new Date().toLocaleString();
+
+    if (data) {
+      document.getElementById("r_total").textContent = data.totalAmount;
+      document.getElementById("r_method").textContent = data.paymentMethod;
+      document.getElementById("r_address").textContent = data.address;
+      document.getElementById("r_ref").textContent = refNumber;
+      document.getElementById("r_time").textContent = time;
+    }
+
+    
+    localStorage.setItem("receiptRef", refNumber);
+    localStorage.setItem("receiptTime", time);
+
+    
+    let seconds = 4;
+    const countdownText = document.getElementById("countdownText");
+
+    const interval = setInterval(() => {
+      seconds--;
+      countdownText.textContent = `Redirecting in ${seconds} second${seconds !== 1 ? "s" : ""}...`;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        window.location.href = "Product.html";
+      }
+    }, 1000);
+  </script>
 
 </body>
 </html>

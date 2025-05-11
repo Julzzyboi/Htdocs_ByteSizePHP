@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Transaction</title>
   <link rel="stylesheet" href="transaction.css" />
+  <style>
+    .hidden { display: none; }
+  </style>
 </head>
 <body>
 
-  
 
   <!-- Modal Checkout -->
   <div class="modal-overlay active" id="checkoutModal">
@@ -18,8 +20,8 @@
       <h3>Order Details:</h3>
 
       <div class="amount">
-        <p>Total Amount to Pay:</p>
-      </div>
+      <p>Total Amount to Pay: <span id="amountDisplay">₱0.00</span></p>
+     </div>
 
       <div class="paymentBoxGroup">
         <label for="payment">Payment Methods</label>
@@ -32,20 +34,76 @@
       <div class="paymentBoxGroup">
         <label for="delivery">Mode of Delivery</label>
         <select id="delivery">
-          <option>Pick-up</option>
-          <option>Delivery</option>
+          <option value="Pick-up">Pick-up</option>
+          <option value="Delivery">Delivery</option>
         </select>
       </div>
 
-      <div class="paymentBoxGroup">
+      <div class="paymentBoxGroup" id="addressGroup">
         <label for="address">Delivery Address</label>
         <input type="text" id="address" placeholder="UST" />
       </div>
 
       <a href="Product.html" class="backtoCartbtn">Back to Cart</a>
-      <a href="receipt.html" class="confirmButton">Confirm</a>
+      <button class="confirmButton" id="confirmBtn">Confirm</button>
     </section>
   </div>
+
+  <script>
+
+    const deliverySelect = document.getElementById("delivery");
+    const addressGroup = document.getElementById("addressGroup");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const paymentSelect = document.getElementById("payment");
+    const addressInput = document.getElementById("address");
+    const amountDisplay = document.getElementById("amountDisplay");
+
+    
+    deliverySelect.addEventListener("change", () => {
+      if (deliverySelect.value === "Delivery") {
+        addressGroup.style.display = "block";
+      } else {
+        addressGroup.style.display = "none";
+        addressInput.value = ""; 
+      }
+    });
+
+   
+    confirmBtn.addEventListener("click", () => {
+      const paymentMethod = paymentSelect.value;
+      const deliveryMode = deliverySelect.value;
+      const address = addressInput.value.trim();
+      const totalAmount = amountDisplay.textContent;
+
+      if (deliveryMode === "Delivery" && address === "") {
+        alert("Please enter a delivery address.");
+        return;
+      }
+
+      const orderDetails = {
+        paymentMethod,
+        deliveryMode,
+        address: deliveryMode === "Delivery" ? address : "N/A",
+        totalAmount
+      };
+      localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+      
+      window.location.href = "receipt.html";
+    });
+
+   
+    if (deliverySelect.value === "Pick-up") {
+      addressGroup.style.display = "none";
+    }
+
+    const totalAmount = localStorage.getItem("totalAmount");
+if (totalAmount) {
+  amountDisplay.textContent = `₱${parseFloat(totalAmount).toFixed(2)}`;
+} else {
+  amountDisplay.textContent = "₱0.00"; 
+}
+  </script>
 
 </body>
 </html>

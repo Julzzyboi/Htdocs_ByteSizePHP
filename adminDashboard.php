@@ -49,25 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt_user->close();
 }
-
-// Fetch login activity
-// $sql_login = "
-// SELECT 
-//     l.login_ID AS ID, 
-//     l.user_ID, 
-//     u.firstName, 
-//     u.lastName, 
-//     u.emailAddress, 
-//     u.userRole, 
-//     l.loginTime 
-// FROM 
-//     tbl_login_id l
-// JOIN 
-//     tbl_user_id u ON l.user_ID = u.user_id
-// ORDER BY 
-//     l.loginTime DESC
-// ";
-// $result_login = $conn->query($sql_login);
 ?>
 
 
@@ -80,11 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link rel="stylesheet" href="adminDashboard.css">
         <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    </head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
     
     <body>
         <label>
@@ -203,16 +182,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
           <section id="inventorySection" class="Page-Section">
 
-          <form action="admin_create_product.php" method="POST" enctype="multipart/form-data">
-                <input type="text" name="name" placeholder="Product Name" required>
-                <textarea name="description" placeholder="Description"></textarea>
-                <input type="number" step="0.01" name="price" placeholder="Price" required>
-                <input type="file" name="image" required>
-                <button type="submit">Create Product</button>
-              </form>
+            <div class="ProductForm-Container">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Product</button>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Hotdog
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">product_ID</th>
+                    <th scope="col">productName</th>
+                    <th scope="col">productPrice</th>
+                    <th scope="col">productStock</th>
+                    <th scope="col">productImage</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                   
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                   
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
           </section>
 
+          <!-- Account Section -->
           <section id="accountSection" class="Page-Section">
             <div class="Account-Container">
               <form id="AdminForm" method="POST" action="adminDashboard.php">
@@ -253,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <button type="submit">Create Admin</button>
               </form>
-            
+
 
             <div class="tableAdmin">
               <table id="adminTable" class="display">
@@ -312,7 +335,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
 
-        <script>
+          <!-- jQuery -->
+          <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+          <!-- DataTables JS -->
+          <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+          <!-- Bootstrap -->
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+          <script>
 
           document.addEventListener("DOMContentLoaded", () => {
     const links = document.querySelectorAll(".nav-link a");
