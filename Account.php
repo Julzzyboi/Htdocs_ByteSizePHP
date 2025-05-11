@@ -91,6 +91,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $conn->close();
 }
+
+          if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+              if (!isset($_POST['termsCheckbox']) || !isset($_POST['privacyCheckbox'])) {
+                  $_SESSION['signup_error'] = "You must accept both the Terms & Conditions and the Privacy Policy.";
+                  header("Location: Account.php");
+                  exit();
+              }
+
+          }
+
+
 ?>
 
 
@@ -192,17 +203,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <span id="errorCpass" class="error-message"></span>
           </div>
-          
-          <label class="agreement">
-    <input type="checkbox" id="agreeTerms"> I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a>
-  </label>
 
-  <label class="agreement">
-    <input type="checkbox" id="agreePrivacy"> I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>
-  </label>
+              <div>
+                <input type="checkbox" id="termsCheckbox">
+                <label for="termsCheckbox">
+                  I agree to the <a href="#" onclick="openModal('tmodalTerms')">Terms and Conditions</a>
+                </label>
+              </div>
+              <div>
+                <input type="checkbox" id="privacyCheckbox">
+                <label for="privacyCheckbox">
+                  I agree to the <a href="#" onclick="openModal('tmodalPrivacy')">Privacy Policy</a>
+                </label>
+              </div>
+
+              <span id="errortermsCheckbox" class="error-message"></span>
+              <span id="errorprivacyCheckbox" class="error-message"></span>
+
+
+
           <button type="submit" id="SignUp-Button">Register</button>
         </form>
       </div>
+
+
 
 
       <!-- Login -->
@@ -250,8 +274,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       background:rgba(0,0,0,0.5); z-index:999;">
         </div>
   </div>
+                              
+              <div id="tmodalTerms" class="modal">
+                <div class="modal-content">
+                  <span class="close" onclick="closeModal('tmodalTerms')">&times;</span>
+                  <iframe src="terms.html" width="100%" height="400px"></iframe>
+                </div>
+              </div>
+
+              
+              <div id="tmodalPrivacy" class="modal">
+                <div class="modal-content">
+                  <span class="close" onclick="closeModal('tmodalPrivacy')">&times;</span>
+                  <iframe src="privacy.html" width="100%" height="400px"></iframe>
+                </div>
+              </div>
+
   <script src="Account.js"></script>
   <script>
+    
     // for  sliding animation
     const Mcontainer = document.getElementById("Main");
 
@@ -297,15 +338,23 @@ function toggleConfirmPasswordVisibility() {
         invisibleIconConfirm.style.display = "none"; // Hide the invisible icon
     }
 }
-function submitPayment() {
-      const terms = document.getElementById("agreeTerms").checked;
-      const privacy = document.getElementById("agreePrivacy").checked;
 
-      if (terms && privacy) {
-      } else {
-        alert("Please agree to both the Terms and Privacy Policy to proceed.");
-      }
-    }
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "block";
+  }
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+
 
   </script>
 </body>

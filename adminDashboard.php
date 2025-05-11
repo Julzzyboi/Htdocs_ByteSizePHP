@@ -1,7 +1,10 @@
 <?php
+session_start();
 // Include database connection
 include('Db_connection.php'); 
 
+
+// for admin creation
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data safely
     $firstName = $_POST['firstName'] ?? '';
@@ -59,10 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="adminDashboard.css">
-        <!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
+      
+        
+        <script src="https://code.jquery.com/jquery-3.7.1.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script> 
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
     
     <body>
@@ -180,60 +188,109 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h1>Tapusin</h1>
           </section>
           
+
+          <!-- Inventory Section -->
           <section id="inventorySection" class="Page-Section">
 
             <div class="ProductForm-Container">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Product</button>
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product</button>
+            <!-- Modal -->
+                  <table class="table table-bordered table-striped table-hover" id="productTable" style="min-width: 1000px; width: 100%;">
+                    <thead class="table-dark text-center">
+                      <tr>
+                        <th>Product ID</th>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th> 
+                        <th>Stock</th>
+                        <th>Image</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-center align-middle">
+                      <?php
+                      $query  = "SELECT * FROM `tbl_product_id`";
+                      $result = mysqli_query($conn, $query);
+                      if ($result) {
+                        while($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                        <tr>
+                          <td><?= $row['product_ID']; ?></td>
+                          <td><?= $row['productCategory']; ?></td>
+                          <td><?= $row['productName']; ?></td>
+                          <td><?= $row['productDescription']; ?></td>
+                          <td><?= number_format($row['productPrice'], 2); ?></td>
+                          <td><?= $row['productStock']; ?></td>
+                          <td>
+                            <img src="<?= $row['productImage']; ?>" alt="Product Image"
+                                style="max-width: 80px; height: auto; border-radius: 5px;">
+                          </td>
+                        </tr>
+                      <?php
+                        }
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+          </section>
+
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <form method="POST" enctype="multipart/form-data" action="add_Product.php" id="productForm"> <!-- Add action="your_handler.php" if needed -->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <!-- Product Category (Radio Buttons) -->
+                    <div class="mb-3">
+                      <label class="form-label">Product Category</label><br>
+                      <input type="text" name="productCategory" id="productCategory" class="form-control" >
                     </div>
-                    <div class="modal-body">
-                      Hotdog
+
+                    <!-- Product Name -->
+                    <div class="mb-3">
+                      <label for="productName" class="form-label">Product Name</label>
+                      <input type="text" name="productName" id="productName" class="form-control" >
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                      <label for="productDescription" class="form-label">Product Description</label>
+                      <textarea name="productDescription" id="productDescription" class="form-control" rows="3" ></textarea>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="mb-3">
+                      <label for="productPrice" class="form-label">Price</label>
+                      <input type="number" name="productPrice" id="productPrice" class="form-control" >
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="mb-3">
+                      <label for="productStock" class="form-label">Stock Quantity</label>
+                      <input type="number" name="productStock" id="productStock" class="form-control" min="0">
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="mb-3">
+                      <label for="productImage" class="form-label">Product Image</label>
+                      <input type="file" name="productImage" id="productImage" class="form-control" accept="image/*" >
                     </div>
                   </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                  </div>
                 </div>
-              </div>
-
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">product_ID</th>
-                    <th scope="col">productName</th>
-                    <th scope="col">productPrice</th>
-                    <th scope="col">productStock</th>
-                    <th scope="col">productImage</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                   
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                   
-                  </tr>
-                </tbody>
-              </table>
+              </form>
             </div>
-
-          </section>
+          </div>
 
           <!-- Account Section -->
           <section id="accountSection" class="Page-Section">
@@ -279,7 +336,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <div class="tableAdmin">
-              <table id="adminTable" class="display">
+              <table class="table display nowrap" id="adminTable" style="width:100%">
               
                 <thead>
                     <tr>
@@ -311,36 +368,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
                     }
                     ?>
-              </tbody>
-           </table>
-        </div>
-<!-- Login Activity -->
-        <div class="LoginAct">
-           <!-- <h2>Login Activity</h2> -->
-            <table id="loginTable" class="display">
-              <thead>
-                <tr>
-                  <th>login_ID</th>
-                  <th>user_ID</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Login Time</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
+                  <!-- Login Activity -->
+                <div class="LoginAct">
+                <!-- <h2>Login Activity</h2> -->
+                      <table class="table display nowrap" id="loginTable" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>login_ID</th>
+                            <th>user_ID</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Login Time</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                      </ttabl>
+                  </div>
+              </div>
+            </section>
           </div>
-        </div>
-          </section>
 
-        </div>
 
-          <!-- jQuery -->
-          <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-          <!-- DataTables JS -->
-          <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-          <!-- Bootstrap -->
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+
+            <div id="successModal" class="modal" style="display:none;">
+              <div class="modal-content">
+                <span id="closeSuccessModal" class="close">&times;</span>
+                <p id="successMessage"></p>
+              </div>
+            </div>
+
+        <!-- scripts -->
+
+      
+         
+        <!-- Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- for add product validation -->
+        <script src="add_Product.js"></script>
+
           <script>
 
           document.addEventListener("DOMContentLoaded", () => {
@@ -372,21 +443,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   });
           // for admin creation DataTables
           $(document).ready(function () {
-        $('#adminTable').DataTable();
+        $('#adminTable').DataTable({
+           responsive: true,
+            scrollX: true, // optional: enables horizontal scrolling
+          }
+        );
     });
 
 
-    $(document).ready(function() {
-    var loginTable = $('#loginTable').DataTable({
-        ajax: 'fetch_Login.php',
-        columns: [
-            { data: 'login_ID' },
-            { data: 'user_ID' },
-            { data: 'emailAddress'},
-            { data: 'userRole' },
-            { data: 'loginTime' }
-        ]
-    });
+    // $(document).ready(function() {
+    // var loginTable = $('#loginTable').DataTable({
+    //     responsive: true,
+    //     scrollX: true, // optional: enables horizontal scrolling
+    //     ajax: 'fetch_Login.php',
+    //     columns: [
+    //         { data: 'login_ID' },
+    //         { data: 'user_ID' },
+    //         { data: 'emailAddress'},
+    //         { data: 'userRole' },
+    //         { data: 'loginTime' }
+    //     ]
+    // });
 
     // Optionally reload table after form submission
     $('#adminForm').on('submit', function(e) {
@@ -400,7 +477,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             success: function(response) {
                 if (response.success) {
                     Swal.fire('Success', response.message, 'success');
-                    loginTable.ajax.reload(); // 🔁 Refresh login data
+                    loginTable.ajax.reload(); //  Refresh login data
                     $('#adminForm')[0].reset(); // clear form
                 } else {
                     Swal.fire('Error', response.message, 'error');
@@ -408,7 +485,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         });
     });
+
+
+  // for Product creation DataTables
+//         $(document).ready(function () {
+//   $('#productTable').DataTable({
+//      responsive: true
+   
+//       ordering: true,
+//       info: true
+      
+       
+//   });
+// });
+
+  new DataTable('#productTable', {
+        responsive: {
+      details: {
+        type: 'inline', // or 'column' if you want an icon
+        target: '0' // clicking the row reveals hidden columns
+      }
+    },
+    order: [1, 'asc'],
+    scrollX: true
+        
+        
 });
+
+
+
     
         </script>
     </body>

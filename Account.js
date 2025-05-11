@@ -10,6 +10,11 @@ function validateForm(event) {
     const genderChecked = document.querySelector('input[name="Gender"]:checked');
     const password = document.getElementById("password");
     const cpass = document.getElementById("Cpass");
+    const termsCheckbox = document.getElementById("termsCheckbox");
+    const privacyCheckbox = document.getElementById("privacyCheckbox");
+    const errorCheckboxes = document.getElementById("errorCheckboxes");
+
+
   
     let isValid = true;
   
@@ -75,9 +80,24 @@ function validateForm(event) {
     } else {
       clearError(cpass);
     }
+
+    if (!termsCheckbox.checked) {
+      showError(termsCheckbox, "You must agree to the Terms and Conditions.");
+    } else {
+      clearError(termsCheckbox);
+    }
+
+    if (!privacyCheckbox.checked) {
+      showError(privacyCheckbox, "You must agree to the Privacy Policy.");
+    } else {
+      clearError(privacyCheckbox);
+    }
+
   
     if (isValid) form.submit();
   }
+
+
   
   // Remove red borders and messages as user types
   document.addEventListener("DOMContentLoaded", () => {

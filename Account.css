@@ -554,7 +554,50 @@ button:active{
     height: 100%;
 }
 
-.agreement {
+#termsCheckbox, #privacyCheckbox {
     margin: 8px 0;
     font-size: 16px;
+    margin-top: 5px;
   }
+
+ 
+
+.modal {
+  display: none;
+  position: fixed; 
+  z-index: 9999;    
+  left: 0;
+  top: 0;
+  width: 100vw;   
+  height: 100vh;    
+  overflow: auto;  
+}
+
+
+.modal-content {
+  background-color: transparent;
+  margin: 10% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 10000; 
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-btn:hover {
+  color: red;
+}
