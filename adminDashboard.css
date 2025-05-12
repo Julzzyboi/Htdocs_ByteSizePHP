@@ -410,3 +410,8 @@ section.active-section {
 }
 
 /* for products */
+#successModal.modal {
+  z-index: 1070 !important;
+}
+
+

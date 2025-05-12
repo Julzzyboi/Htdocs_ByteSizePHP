@@ -1,52 +1,30 @@
 <?php
-require_once 'Db_connection.php'; // include your DB connection
+require_once 'Db_connection.php';
 
 $errors = [];
 
-// Validation
-if (empty($_POST['productCategory'])) {
-    $errors[] = "Must choose a product type.";
-}
-if (empty($_POST['productName'])) {
-    $errors[] = "Product name is required.";
-}
-if (empty($_POST['productDescription'])) {
-    $errors[] = "Description is required.";
-}
-if (empty($_POST['productPrice']) || !is_numeric($_POST['productPrice'])) {
-    $errors[] = "Valid price is required.";
-}
-if (empty($_POST['productStock']) || !is_numeric($_POST['productStock'])) {
-    $errors[] = "Stock number is required.";
-}
-if (!isset($_FILES['productImage']) || $_FILES['productImage']['error'] != 0) {
-    $errors[] = "Product image is required.";
-}
+if (empty($_POST['productCategory'])) $errors[] = "Category required.";
+if (empty($_POST['productName'])) $errors[] = "Name required.";
+if (empty($_POST['productDescription'])) $errors[] = "Description required.";
+if (empty($_POST['productPrice']) || !is_numeric($_POST['productPrice'])) $errors[] = "Valid price required.";
+if (empty($_POST['productStock']) || !is_numeric($_POST['productStock'])) $errors[] = "Valid stock required.";
+if (!isset($_FILES['productImage']) || $_FILES['productImage']['error'] != 0) $errors[] = "Image required.";
 
-if (!empty($errors)) {
-    echo json_encode([
-        'status' => 'error',
-        'message' => implode("\\n", $errors)
-    ]);
+if ($errors) {
+    echo json_encode(['status' => 'error', 'message' => implode("\\n", $errors)]);
     exit;
 }
 
-
 // Handle image upload
 $uploadDir = 'uploads/';
-if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
-}
-
+if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 $imageName = time() . '_' . basename($_FILES["productImage"]["name"]);
 $targetFile = $uploadDir . $imageName;
-
 if (!move_uploaded_file($_FILES["productImage"]["tmp_name"], $targetFile)) {
     echo json_encode(['status' => 'error', 'message' => 'Failed to upload image.']);
     exit;
 }
 
-// Insert into DB
 $category = $conn->real_escape_string($_POST['productCategory']);
 $name = $conn->real_escape_string($_POST['productName']);
 $description = $conn->real_escape_string($_POST['productDescription']);

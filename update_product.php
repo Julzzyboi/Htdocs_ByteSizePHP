@@ -1,6 +1,17 @@
 <?php
-include 'Db_connection.php'; // adjust this if your DB connection is elsewhere
+include 'Db_connection.php'; 
 
+// Fetch product data for modal
+if (isset($_POST['product_ID']) && !isset($_POST['update_product'])) {
+    $product_ID = mysqli_real_escape_string($conn, $_POST['product_ID']);
+    $query = "SELECT * FROM tbl_product_id WHERE product_ID='$product_ID'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    echo json_encode($row);
+    exit;
+}
+
+// Update product logic (your existing code)
 if (isset($_POST['update_product'])) {
     $product_ID = mysqli_real_escape_string($conn, $_POST['product_ID']);
     $productName = mysqli_real_escape_string($conn, $_POST['productName']);
@@ -41,8 +52,9 @@ if (isset($_POST['update_product'])) {
 
     if (mysqli_query($conn, $query)) {
         echo "<script>
+                preventDefault();
                 alert('Product updated successfully!');
-                window.location.href='your_main_page.php'; // change this to your actual page
+                window.location.href='adminDashboard.php'; 
               </script>";
     } else {
         echo "Error: " . mysqli_error($conn);

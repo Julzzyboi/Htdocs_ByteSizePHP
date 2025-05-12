@@ -61,19 +61,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Document</title>
   <link rel="stylesheet" href="adminDashboard.css">
   <!-- DataTables CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
 
-    <!-- scripts -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script> 
-    <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-   
+
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
 </head>
 
 <body>
@@ -223,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section id="inventorySection" class="Page-Section">
 
       <div class="ProductForm-Container">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">Add
           Product</button>
 
         <table class="table table-bordered table-striped table-hover" id="productTable"
@@ -259,45 +262,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <img src="<?= $row['productImage']; ?>" alt="Product Image"
                       style="max-width: 80px; height: auto; border-radius: 5px;">
                   </td>
-                 <td><a href="#" class="btn btn-success updateBtn" data-id="<?= $row['product_ID']; ?>">Update</a></td>
-                 <td><a href="#" class="btn btn-danger deleteBtn" data-id="<?= $row['product_ID']; ?>">Delete</a></td>
+                  <td><a href="#" class="btn btn-success updateBtn" data-id="<?= $row['product_ID']; ?>">Update</a></td>
+                  <td><a href="#" class="btn btn-danger deleteBtn" data-id="<?= $row['product_ID']; ?>">Delete</a></td>
 
-                <?php
+                  <?php
               }
             }
             ?>
           </tbody>
         </table>
-        <!-- Update Modal -->
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form id="updateForm" method="post" enctype="multipart/form-data">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Update Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="product_ID" id="edit_product_ID">
-          <!-- Add input fields for category, name, etc. -->
-          <div class="mb-3">
-            <label for="edit_productName" class="form-label">Product Name</label>
-            <input type="text" class="form-control" name="productName" id="edit_productName">
-          </div>
-          <!-- Repeat for description, price, stock, etc. -->
-        </div>
-        <div class="modal-footer">
-          <button type="submit" name="update_product" class="btn btn-primary">Update</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
+      
+     
       </div>
     </section>
-
-
-
 
 
 
@@ -397,21 +374,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </table>
         </div>
       </div>
-    </section> 
+    </section>
   </div>
 
+     <!-- Update Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form id="updateForm" method="post" enctype="multipart/form-data" action="update_product.php">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Update Product</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" name="product_ID" id="edit_product_ID">
+                  <!-- Add input fields for category, name, etc. -->
+                  <div class="mb-3">
+                    <label for="edit_productCategory" class="form-label">Category</label>
+                    <input type="text" class="form-control" name="productCategory" id="edit_productCategory">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" name="productName" id="edit_productName">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" name="productDescription" id="edit_productDescription">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productPrice" class="form-label">Price</label>
+                    <input type="number" class="form-control" name="productPrice" id="edit_productPrice">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productStock" class="form-label">Stock</label>
+                    <input type="number" class="form-control" name="productStock" id="edit_productStock">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productImage" class="form-label">Image</label>
+                    <input type="file" class="form-control" name="productImage" id="edit_productImage">
+                  </div>
+                  <!-- Repeat for description, price, stock, etc. -->
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" name="update_product" class="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
 
-
-
-
-  
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <form method="POST" enctype="multipart/form-data" action="add_Product.php" id="productForm">
         <!-- Add action="your_handler.php" if needed -->
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+            <h5 class="modal-title" id="productModalLabel">Add New Product</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
@@ -433,7 +451,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Product Price -->
             <label for="productCategory" name="productCategory">Price: </label>
-            <label for="productCategory" name="productCategory">Category</label>
             <input type="number" name="productPrice" id="productPrice" class="form-control">
             <span class="error-msg text-danger" id="productPriceError"></span>
 
@@ -457,7 +474,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 
-  
+    <!-- Success Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+              <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p id="successMessage">Product added successfully!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+              <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p id="errorMessage"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
 
 
   <script>
@@ -507,75 +557,114 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     ]
     //   });
 
-      // Optionally reload table after form submission
-      $('#adminForm').on('submit', function (e) {
-        e.preventDefault();
+    // Optionally reload table after form submission
+    $('#adminForm').on('submit', function (e) {
+      e.preventDefault();
 
-        $.ajax({
-          type: 'POST',
-          url: 'adminDashboard.php',
-          data: $(this).serialize(),
-          dataType: 'json',
-          success: function (response) {
-            if (response.success) {
-              Swal.fire('Success', response.message, 'success');
-              loginTable.ajax.reload(); // 🔁 Refresh login data
-              $('#adminForm')[0].reset(); // clear form
-            } else {
-              Swal.fire('Error', response.message, 'error');
-            }
+      $.ajax({
+        type: 'POST',
+        url: 'adminDashboard.php',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (response) {
+          if (response.success) {
+            Swal.fire('Success', response.message, 'success');
+            loginTable.ajax.reload(); // 🔁 Refresh login data
+            $('#adminForm')[0].reset(); // clear form
+          } else {
+            Swal.fire('Error', response.message, 'error');
           }
-        });
+        }
       });
-    
+    });
+
 
 
     // Datatables Products
-     new DataTable('#productTable', {
-        responsive: {
-      details: {
-        type: 'inline', // or 'column' if you want an icon
-        target: '0' // clicking the row reveals hidden columns
-      }
-    },
-    order: [1, 'asc'],
-    scrollX: true
-});
-
-$(document).ready(function () {
-  $('.updateBtn').on('click', function () {
-    let productId = $(this).data('id');
-
-    $.ajax({
-      url: 'fetch_product.php',
-      type: 'POST',
-      data: { product_ID: productId },
-      dataType: 'json',
-      success: function (data) {
-        $('#edit_product_ID').val(data.product_ID);
-        $('#edit_productName').val(data.productName);
-        // Fill in other fields...
-
-        $('#updateModal').modal('show');
-      }
+    new DataTable('#productTable', {
+      responsive: {
+        details: {
+          type: 'inline', // or 'column' if you want an icon
+          target: '0' // clicking the row reveals hidden columns
+        }
+      },
+      order: [1, 'asc'],
+      scrollX: true
     });
-  });
 
-  $('.deleteBtn').on('click', function () {
-    let productId = $(this).data('id');
-    if (confirm("Are you sure you want to delete this product?")) {
+
+    // product message
+    $('#productForm').on('submit', function (e) {
+      e.preventDefault();
+
+      let formData = new FormData(this);
+
       $.ajax({
-        url: 'delete_product.php',
-        type: 'POST',
-        data: { product_ID: productId },
-        success: function (response) {
-          alert("Product deleted successfully!");
-          location.reload(); // Or remove row with JS
+        url: 'add_product.php',
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function (res) {
+          $('#productModal').modal('hide');
+          $('#productModal').one('hidden.bs.modal', function () {
+            $('#productForm')[0].reset();
+            // Remove any lingering modal-backdrop and modal-open class
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+            alert(res.message);
+            location.reload(); // <-- This will refresh the page after the alert is closed
+          });
+        },
+        error: function () {
+          $('#productModal').modal('hide');
+          $('#productModal').one('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+            alert('An error occurred. Please try again.');
+            location.reload(); // <-- Optional: refresh on error as well
+          });
         }
       });
-    }
-  });
-});
+    });
+
+
+    $(document).on('click', '.updateBtn', function () {
+      let productId = $(this).data('id');
+      $.ajax({
+        url: 'update_product.php',
+        type: 'POST',
+        data: { product_ID: productId },
+        dataType: 'json',
+        success: function (data) {
+          $('#edit_product_ID').val(data.product_ID);
+          $('#edit_productCategory').val(data.productCategory);
+          $('#edit_productName').val(data.productName);
+          $('#edit_productDescription').val(data.productDescription);
+          $('#edit_productPrice').val(data.productPrice);
+          $('#edit_productStock').val(data.productStock);
+          $('#updateModal').modal('show');
+        }
+      });
+    });
+
+
+    $('.deleteBtn').on('click', function () {
+      let productId = $(this).data('id');
+      if (confirm("Are you sure you want to delete this product?")) {
+        $.ajax({
+          url: 'delete_product.php',
+          type: 'POST',
+          data: { product_ID: productId },
+          success: function (response) {
+            alert("Product deleted successfully!");
+            location.reload(); // Or remove row with JS
+          }
+        });
+      }
+    });
+
 
 
   </script>
