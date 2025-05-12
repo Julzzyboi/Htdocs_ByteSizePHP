@@ -1,4 +1,4 @@
-/* FONTS */
+/* FONTS */ 
 @font-face {
   font-family: Back;
   src: url(fonts/Backso.ttf);
@@ -14,10 +14,6 @@
   src: url(fonts/font2/Alatsi-Regular.ttf);
 }
 
-
-
-
-
 /* UNIVERSAL */
 * {
   box-sizing: border-box;
@@ -30,24 +26,22 @@ html, body {
   background: linear-gradient(#ffc0cb 70%, #fff7c6 85%);
 }
 
-
-/* CHECKOUT SECTION */
+/* CHECKOUT CONTAINER */
 .checkoutContainer {
-  max-width: 700px;
-  margin: 100px auto 50px;
-  background-color: #FFC0CB;
-  border-radius: 30px;
+  background-color: #FFC5D3;
+  border-radius: 10px;
   padding: 40px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   text-align: center;
+  border: none;
 }
+
 
 .checkoutContainer h1 {
   font-size: 48px;
-  color: #ff69a0;
+  color: black;
   margin-bottom: 10px;
 }
-
 
 .checkoutContainer h3 {
   font-size: 28px;
@@ -62,17 +56,8 @@ html, body {
   font-weight: bold;
 }
 
-.amount input {
-  width: 100%;
-  padding: 12px 20px;
-  border-radius: 20px;
-  border: 1px solid black;
-  background-color: #FFF4BD;
-  font-size: 16px;
-  font-family: Alatsi;
-}
 
-.paymentBoxGroup{
+.paymentBoxGroup {
   margin-bottom: 25px;
   text-align: left;
 }
@@ -96,7 +81,8 @@ html, body {
   font-family: Alatsi;
 }
 
-.confirmButton{
+/* BUTTONS */
+.confirmButton {
   text-decoration: none;
   background-color: #91DB69;
   color: black;
@@ -110,7 +96,7 @@ html, body {
   margin-top: 20px;
 }
 
-.backtoCartbtn{
+.backtoCartbtn {
   text-decoration: none;
   background-color: #91DB69;
   color: black;
@@ -127,6 +113,5 @@ html, body {
 .confirmButton:hover {
   background-color: #91DB69;
 }
-
 
 

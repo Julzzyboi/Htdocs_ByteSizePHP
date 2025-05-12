@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'Db_connection.php';
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
