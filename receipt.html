@@ -12,8 +12,8 @@
     <section class="receiptContainer">
       <div class="receiptCard">
         <img src="images/checkbg.png" alt="Success" class="successIcon" />
-        <h1>PAYMENT SUCCESS!</h1>
-        <h2>ByteSize Delights</h2>
+        <p class="paymentSuccessful">PAYMENT SUCCESS!</p>
+        <p class="byteSize">ByteSize Delights</p>
 
        <div class="info">
        <div class="info-row">
@@ -62,7 +62,7 @@
     localStorage.setItem("receiptTime", time);
 
     
-    let seconds = 4;
+    let seconds = 50000;
     const countdownText = document.getElementById("countdownText");
 
     const interval = setInterval(() => {

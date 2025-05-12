@@ -9,10 +9,6 @@
     src: url(fonts/CandyBeans.ttf);
   }
   
-  @font-face {
-    font-family: Alatsi;
-    src: url(fonts/font2/Alatsi-Regular.ttf);
-  }
 
   body {
     margin: 0;
@@ -24,16 +20,15 @@
   background: linear-gradient(#ffc0cb 70%, #fff7c6 85%);
 }
 
-  
-  
 
   /* RECEIPT BODY */
 
   .receiptContainer {
     background-color: #FFC5D3;
+    border: 7px solid #2e222f;
     max-width: 700px;
     margin: 100px auto 50px;
-    border-radius: 30px;
+    border-radius: 40px;
     padding: 40px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     text-align: center;
@@ -53,52 +48,60 @@
     margin-bottom: 20px;
   }
   
-  .receiptCard h1 {
-    font-size: 36px;
-    color: #1f6b30;
-    text-shadow: 2px 2px #fff;
+  .paymentSuccessful{
+    font-size: 35px;
+    color: #91DB69;
+    text-shadow: rgb(46, 34, 47) 3px 0px 0px, rgb(46, 34, 47) 2.83487px 0.981584px 0px, rgb(46, 34, 47) 2.35766px 1.85511px 0px, rgb(46, 34, 47) 1.62091px 2.52441px 0px, rgb(46, 34, 47) 0.705713px 2.91581px 0px, rgb(46, 34, 47) -0.287171px 2.98622px 0px, rgb(46, 34, 47) -1.24844px 2.72789px 0px, rgb(46, 34, 47) -2.07227px 2.16926px 0px, rgb(46, 34, 47) -2.66798px 1.37182px 0px, rgb(46, 34, 47) -2.96998px 0.42336px 0px, rgb(46, 34, 47) -2.94502px -0.571704px 0px, rgb(46, 34, 47) -2.59586px -1.50383px 0px, rgb(46, 34, 47) -1.96093px -2.27041px 0px, rgb(46, 34, 47) -1.11013px -2.78704px 0px, rgb(46, 34, 47) -0.137119px -2.99686px 0px, rgb(46, 34, 47) 0.850987px -2.87677px 0px, rgb(46, 34, 47) 1.74541px -2.43999px 0px, rgb(46, 34, 47) 2.44769px -1.73459px 0px, rgb(46, 34, 47) 2.88051px -0.838247px 0px;
     font-family: Back;
     text-align: center;
   }
   
-  .receiptCard h2 {
-    font-size: 20px;
-    margin: 10px 0 30px;
-    color: #2e222f;
+  .byteSize {
     font-family: Back;
+    font-size: 20px;
+    color: #FF9FC2;
+    text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
     text-align: center;
+
+    margin-top: -30px;
   }
   
   .info {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
-}
+    font-size: 15px;
+    color:#2e222f;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
 
 .info-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px dashed #aaa;
+  border-bottom: 1px dashed #FF9FC2;
   padding-bottom: 5px;
 }
 
 .info-row p {
   margin: 0;
-  font-weight: bold;
-  color: #2e222f;
-  font-family: Alatsi;
+  color: #FF69A0;
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
+  font-family: Candy;
+  letter-spacing: 1px;
 }
 
 .info-row span {
   text-align: right;
-  font-family: Alatsi;
+  font-family: Candy;
   color: #2e222f;
 }
 
-  
- 
+#countdownText{
+  font-family: Candy;
+  color: #2e222f;
+}
 
   /*MODAL*/
   
@@ -117,5 +120,25 @@
   
   .modal-overlay.active {
     display: flex;
+  }
+
+  /* RESPONSIVENESS */
+
+  @media screen and (max-width: 520px) {
+    .receiptContainer{
+      width: 280px;
+      height: 400px;
+    }
+
+    .paymentSuccessful{
+      font-size: 25px;
+      margin-bottom: 40px;
+    }
+
+    .successIcon {
+      width: 60px;
+      margin-top: -10px;
+      margin-bottom: -10px;
+  }
   }
   
