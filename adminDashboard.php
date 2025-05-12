@@ -63,12 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- scripts -->
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+  
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -422,7 +425,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 
      
-
+<!-- add product modal -->
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <form method="POST" enctype="multipart/form-data" action="add_Product.php" id="productForm">
@@ -589,40 +592,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // product message
     $('#productForm').on('submit', function (e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      let formData = new FormData(this);
+  let formData = new FormData(this);
 
-      $.ajax({
-        url: 'add_product.php',
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (res) {
-          $('#productModal').modal('hide');
-          $('#productModal').one('hidden.bs.modal', function () {
-            $('#productForm')[0].reset();
-            // Remove any lingering modal-backdrop and modal-open class
-            $('.modal-backdrop').remove();
-            $('body').removeClass('modal-open');
-            alert(res.message);
-            location.reload(); // <-- This will refresh the page after the alert is closed
-          });
-        },
-        error: function () {
-          $('#productModal').modal('hide');
-          $('#productModal').one('hidden.bs.modal', function () {
-            $('.modal-backdrop').remove();
-            $('body').removeClass('modal-open');
-            alert('An error occurred. Please try again.');
-            location.reload(); // <-- Optional: refresh on error as well
-          });
-        }
+  $.ajax({
+    url: 'add_product.php',
+    method: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function (res) {
+      $('#productModal').modal('hide');
+      $('#productModal').one('hidden.bs.modal', function () {
+        $('#productForm')[0].reset();
+        // Remove any lingering modal-backdrop and modal-open class
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+        Swal.fire({
+          icon: res.success ? 'success' : 'error',
+          title: res.success ? 'Success' : 'Error',
+          text: res.message,
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          location.reload();
+        });
       });
-    });
-
+    },
+    error: function () {
+      $('#productModal').modal('hide');
+      $('#productModal').one('hidden.bs.modal', function () {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred. Please try again.',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          location.reload();
+        });
+      });
+    }
+  });
+});
 
   // 1. When clicking the update button, fetch product data and show modal
 $(document).on('click', '.updateBtn', function () {
@@ -660,36 +676,72 @@ $('#updateForm').on('submit', function (e) {
     success: function (response) {
       $('#updateModal').modal('hide');
       if (response.success) {
-        // Show a success modal or alert
-        alert('Product updated successfully!');
-        location.reload(); // Reload to show updated data
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Product updated successfully!',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          location.reload();
+        });
       } else {
-        // Show an error modal or alert
-        alert(response.error || 'Update failed.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: response.error || 'Update failed.'
+        });
       }
     },
     error: function () {
       $('#updateModal').modal('hide');
-      alert('An error occurred.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred.'
+      });
     }
   });
 });
 
-    $('.deleteBtn').on('click', function () {
-      let productId = $(this).data('id');
-      if (confirm("Are you sure you want to delete this product?")) {
-        $.ajax({
-          url: 'delete_product.php',
-          type: 'POST',
-          data: { product_ID: productId },
-          success: function (response) {
-            alert("Product deleted successfully!");
-            location.reload(); // Or remove row with JS
-          }
-        });
-      }
-    });
-
+    $(document).on('click', '.deleteBtn', function () {
+  let productId = $(this).data('id');
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: 'delete_product.php',
+        type: 'POST',
+        data: { product_ID: productId },
+        success: function (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Product deleted successfully!',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        },
+        error: function () {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while deleting.'
+          });
+        }
+      });
+    }
+  });
+});
 
 
   </script>

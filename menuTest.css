@@ -1,0 +1,55 @@
+/* FONTS */
+ @font-face {
+    font-family: Back;
+    src: url(fonts/Backso.ttf);
+  }
+  
+  @font-face {
+    font-family: Candy;
+    src: url(fonts/CandyBeans.ttf);
+  }
+  
+
+.product-card {
+  position: relative;
+  background-color: #ffd6f8;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .card{
+    width: 180px;
+    height: 180px;
+  }
+   .card img {
+    width: 100%;
+    height: 100%;
+    background-color: #ffc773;
+    margin: 20px auto;
+    border: 1px solid #d9b678;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .card-body{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+  }
+
+  .card-title{
+    font-family: Back;
+  }
+
+  .card-text{
+    font-family: Candy;
+
+  }

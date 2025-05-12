@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ByteSize Delights - Products</title>
+  <link rel="stylesheet" href="Product.css" />
+</head>
+
+<body>
+  <!-- Navigation bar -->
+  <nav>
+    <div class="navigationBar">
+      <div class="navigationLogo">
+        <img src="images/navigationBarLogo.png" alt="Small ByteSize Logo">
+      </div>
+      <div class="navButton">
+        <ul class="navigationContents">
+          <h1>|</h1>
+          <li><a href="customer_home.html" class="activeNav" ;>Home</a></li>
+          <h1>|</h1>
+          <li><a href="Product.html">Products</a></li>
+          <h1>|</h1>
+          <li><a href="#">FAQs</a></li>
+          <h1>|</h1>
+        </ul>
+      </div>
+      <div class="userAccountNavigationSection">
+        <img src="images/userIcon.png" alt="User Icon">
+      </div>
+    </div>
+  </nav>
+
+  <!-- main content -->
+  <main>
+    <div class="Grid-Container">
+
+      <div class="Poster-Container">
+        <div class="slideshow-container">
+
+          <div class="mySlides fade">
+            <img src="images/PosterOne.png">
+          </div>
+
+          <div class="mySlides fade">
+            <img src="images/PosterTwo.png">
+          </div>
+
+          <div class="mySlides fade">
+            <img src="images/PosterThree.png">
+          </div>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div> <!--Poster here-->
+
+
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Make sure Bootstrap JS is loaded if you want to use Bootstrap components -->
+      <script>
+
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) { slideIndex = 1 }
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex - 1].style.display = "block";
+          dots[slideIndex - 1].className += " active";
+          setTimeout(showSlides, 10000); // Change image every 2 seconds
+        }
+
+
+         let cart = [];
+
+        // Add to Cart button click handler
+        $(document).on('click', '.addToCartBtn', function () {
+            const productId = $(this).data('id');
+            const productName = $(this).data('name');
+            const productPrice = parseFloat($(this).data('price'));
+            const productImage = $(this).data('image');
+
+            // Check if item already in cart
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    qty: 1
+                });
+            }
+            renderCart();
+        });
+
+        // Render cart items in the cart container
+        function renderCart() {
+            let html = '';
+            if (cart.length === 0) {
+                html = '<p>Your cart is empty.</p>';
+            } else {
+                html = '<ul class="list-group mb-3">';
+                cart.forEach((item, idx) => {
+                    html += `
+        <li class="list-group-item d-flex align-items-center">
+          <img src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
+          <span class="flex-grow-1">${item.name} (x${item.qty})</span>
+          <span class="me-3">Php ${(item.price * item.qty).toFixed(2)}</span>
+          <button class="btn btn-danger btn-sm removeFromCartBtn" data-idx="${idx}">&times;</button>
+        </li>
+      `;
+                });
+                html += '</ul>';
+                html += `<div class="text-end"><strong>Total: Php ${cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)}</strong></div>`;
+            }
+            $('#cartContainer').html(html);
+        }
+
+        // Remove from cart handler
+        $(document).on('click', '.removeFromCartBtn', function () {
+            const idx = $(this).data('idx');
+            cart.splice(idx, 1);
+            renderCart();
+        });
+      </script>
+
+      <!--Poster here-->
+      <!--Poster here-->
+      <!-- <div class="Poster-Container">
+    <div class="Poster-Wrap">
+    <div class="Poster Slide1 active">
+      <img src="images/PosterThree.png" style="width: 100%" alt="Slide 1">
+  </div>
+
+    <div class="Poster Slide2">
+        <img src="images/PosterTwo.png" style="width: 100%" alt="Slide 2">
+    </div>
+
+    <div class="Poster Slide3">
+      <img src="images/PosterThree.png" style="width: 100%" alt="Slide 3">
+  </div>
+
+
+  <div class="carousel-controls">
+    <div class="control-button active"></div>
+    <div class="control-button"></div>
+    <div class="control-button"></div>
+  </div>
+</div>
+</div>
+
+
+
+
+<script>
+        const slides = document.querySelectorAll('.Poster-Container');
+        const buttons = document.querySelectorAll('.control-button');
+        let currentSlide = 0;
+        let intervalId;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('Active');
+                buttons.forEach((button, j) => {
+                    button.classList.remove('Active');
+                });
+                if (i === index) {
+                    slide.classList.add('Active');
+                    buttons[i].classList.add('Active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function startCarousel() {
+            intervalId = setInterval(nextSlide, 15000); // 15 seconds
+        }
+
+        function stopCarousel() {
+            clearInterval(intervalId);
+        }
+
+        // --- Event Listeners ---
+        buttons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                stopCarousel();
+                currentSlide = index;
+                showSlide(currentSlide);
+                startCarousel(); // Restart the interval after manual click
+            });
+        });
+
+        // --- Initialize ---
+        showSlide(currentSlide);
+        startCarousel();
+
+        // Optional: Stop carousel on hover, restart on mouse leave
+        const carouselContainer = document.querySelector('.Poster-Container'); // Select the main container
+        carouselContainer.addEventListener('mouseenter', stopCarousel);
+        carouselContainer.addEventListener('mouseleave', startCarousel);
+</script> -->
+
+
+      <div class="product-section">
+        <div class="MenuWrap">
+          <div class="nav-products">
+            <a href="#first" class="SecButton Section-Cookie"><img src="HomePage/Cookie Mascot.png"></a>
+            <a href="#second" class="SecButton Section-Pastillas"><img src="HomePage/Pastillias Mascot.png"></a>
+            <a href="#third" class="SecButton Section-Graham"><img src="HomePage/GrahamBall Mascot.png"></a>
+            <a href="#fourth" class="SecButton Section-Limited"><img src="HomePage/limited.png"></a>
+          </div>
+          <!--cookie-->
+          <div class="Section-container">
+
+            <section id="first">
+              <div class="Product-Wrap card1">
+                <!-- <div class="menuName">Cookies</div> -->
+                <div class="product-grid"></div>
+              </div>
+            </section>
+            <!--pastillas-->
+            <section id="second">
+              <div class="Product-Wrap card2">
+                <!-- <div class="menuName">Pastillas</div> -->
+
+                <div class="product-grid">
+                  <?php
+                  // Make sure $conn is your open MySQLi connection
+                  include 'Db_connection.php';
+                  $query = "SELECT * FROM `tbl_product_id`";
+                  $result = mysqli_query($conn, $query);
+                  if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      ?>
+
+                      <div class="product-card">
+                        <div class="card-Image">
+                          <img src="<?= $row['productImage']; ?>" class="card-img-top"
+                            alt="<?= htmlspecialchars($row['productName']); ?>">
+
+                          <div class="card-body">
+                            <p class="card-title"><?= htmlspecialchars($row['productName']); ?></p>
+                            </>
+                            <p class="card-text"><?= htmlspecialchars($row['productDescription']); ?></p>
+                            <p class="card-text"><strong>Php <?= number_format($row['productPrice'], 2); ?></strong></p>
+                            <button class="btn btn-primary addToCartBtn" data-id="<?= $row['product_ID']; ?>"
+                              data-name="<?= htmlspecialchars($row['productName']); ?>"
+                              data-price="<?= $row['productPrice']; ?>" data-image="<?= $row['productImage']; ?>">Add
+                              to Cart</button>
+                          </div>
+                        </div>
+                      </div>
+                      <?php
+                    }
+                  }
+                  ?>
+
+                </div>
+            </section>
+            <!--graham-->
+            <section id="third">
+              <div class="product-grid">
+                <div class="product-card">
+                  <div class="product-name">Chocolate Graham Balls</div>
+                  <div class="product-info">
+                    <div class="product-qty">
+                      <a href="?id=7">7pcs</a>
+                    </div>
+                    <div class="product-qty">
+                      <a href="?id=10">10pcs</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="product-card">
+                  <div class="product-name">Ube Graham Balls</div>
+                  <div class="product-info">
+                    <div class="product-qty">
+                      <a href="?id=7">7pcs</a>
+                    </div>
+                    <div class="product-qty">
+                      <a href="?id=10">10pcs</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="product-card">
+                  <div class="product-name">Matcha Graham Balls</div>
+                  <div class="product-info">
+                    <div class="product-qty">
+                      <a href="?id=7">7pcs</a>
+                    </div>
+                    <div class="product-qty">
+                      <a href="?id=10">10pcs</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="product-card">
+                  <div class="product-name">Mango Graham Balls</div>
+                  <div class="product-info">
+                    <div class="product-qty">
+                      <a href="?id=7">7pcs</a>
+                    </div>
+                    <div class="product-qty">
+                      <a href="?id=10">10pcs</a>
+                    </div>
+                  </div>
+                </div>
+            </section>
+
+            <section id="fourth">
+              <div class="product-grid"></div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-section">
+        <div class="cart-container">
+          <h2>Your Cart</h2>
+           <div class="container">
+            <h3>Your Cart</h3>
+            <div id="cartContainer">
+                <p>Your cart is empty.</p>
+            </div>
+        </div>
+          <a href="transaction.html" class="Checkout-btn">Proceed to checkout</a>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+
+
+  <!-- footer -->
+  <footer>
+    <svg class="wave" id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 260" version="1.1"
+      xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+          <stop stop-color="rgba(255, 192, 203, 1)" offset="0%"></stop>
+          <stop stop-color="rgba(255, 192, 203, 1)" offset="100%"></stop>
+        </linearGradient>
+      </defs>
+      <path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)"
+        d="M0,26L10.9,56.3C21.8,87,44,147,65,143C87.3,139,109,69,131,52C152.7,35,175,69,196,108.3C218.2,147,240,191,262,182C283.6,173,305,113,327,82.3C349.1,52,371,52,393,47.7C414.5,43,436,35,458,60.7C480,87,502,147,524,182C545.5,217,567,225,589,203.7C610.9,182,633,130,655,121.3C676.4,113,698,147,720,147.3C741.8,147,764,113,785,108.3C807.3,104,829,130,851,138.7C872.7,147,895,139,916,147.3C938.2,156,960,182,982,199.3C1003.6,217,1025,225,1047,190.7C1069.1,156,1091,78,1113,60.7C1134.5,43,1156,87,1178,91C1200,95,1222,61,1244,60.7C1265.5,61,1287,95,1309,130C1330.9,165,1353,199,1375,195C1396.4,191,1418,147,1440,125.7C1461.8,104,1484,104,1505,108.3C1527.3,113,1549,121,1560,125.7L1570.9,130L1570.9,260L1560,260C1549.1,260,1527,260,1505,260C1483.6,260,1462,260,1440,260C1418.2,260,1396,260,1375,260C1352.7,260,1331,260,1309,260C1287.3,260,1265,260,1244,260C1221.8,260,1200,260,1178,260C1156.4,260,1135,260,1113,260C1090.9,260,1069,260,1047,260C1025.5,260,1004,260,982,260C960,260,938,260,916,260C894.5,260,873,260,851,260C829.1,260,807,260,785,260C763.6,260,742,260,720,260C698.2,260,676,260,655,260C632.7,260,611,260,589,260C567.3,260,545,260,524,260C501.8,260,480,260,458,260C436.4,260,415,260,393,260C370.9,260,349,260,327,260C305.5,260,284,260,262,260C240,260,218,260,196,260C174.5,260,153,260,131,260C109.1,260,87,260,65,260C43.6,260,22,260,11,260L0,260Z">
+      </path>
+    </svg>
+
+    <div class="Footer-Content">
+      <div class="F-logo">
+        <img src="HomePage/FooterLogo.png" alt="">
+      </div>
+      <div class="F-Details">
+        <div class="Detail 1">
+          <a href="">Home</a>
+          <ul>
+            <li>Our Products</li>
+            <li>ByteSize Story</li>
+            <li>Mission</li>
+            <li>Vision</li>
+          </ul>
+        </div>
+
+        <div class="Detail 2">
+          <a href="">Products</a>
+          <ul>
+            <li>Our Products</li>
+            <li>ByteSize Story</li>
+            <li>Mission</li>
+            <li>Vision</li>
+          </ul>
+        </div>
+        <div class="Detail 3">
+          <a href="">Services</a>
+          <ul>
+            <li>Our Products</li>
+            <li>ByteSize Story</li>
+            <li>Mission</li>
+            <li>Vision</li>
+          </ul>
+        </div>
+      </div>
+      <div class="RightFooter">
+        <div class="F-Mascots">
+          <div class="FM M1"><img src="HomePage/Cookie Mascot.png"></div>
+          <div class="FM M2"><img src="HomePage/Pastillias Mascot.png"></div>
+          <div class="FM M3"><img src="HomePage/GrahamBall Mascot.png"></div>
+        </div>
+        <div class="F-Socials">
+          <p class="Contact">Contact Us:</p>
+          <div class="SocialIcons Gmail">
+            <a href=""><img src="Footer/gmail.svg"></a>
+            <p>bytesizedelights@Gmail.com</p>
+          </div>
+          <div class="SocialIcons Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61555877165065"><img src="Footer/facebook.svg"></a>
+            <p>ByteSize Delights</p>
+          </div>
+          <div class="SocialIcons Instagram">
+            <a
+              href="https://www.instagram.com/bytesize.delights?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><img
+                src="Footer/instagram.svg"></a>
+            <p>@bytesizedelights</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    window.addEventListener("hashchange", updateSection);
+    window.addEventListener("DOMContentLoaded", updateSection);
+
+    function updateSection() {
+      const hash = window.location.hash;
+      const sections = document.querySelectorAll('section');
+      const buttons = document.querySelectorAll('.SecButton');
+
+      sections.forEach(section => section.classList.remove('active-section'));
+      buttons.forEach(btn => btn.classList.remove('active-sec-button'));
+
+      if (hash) {
+        const target = document.querySelector(hash);
+        const activeBtn = document.querySelector(`.SecButton[href="${hash}"]`);
+
+        if (target) target.classList.add('active-section');
+        if (activeBtn) activeBtn.classList.add('active-sec-button');
+      } else {
+        // Default section and button
+        const defaultSection = document.querySelector('#first');
+        const defaultButton = document.querySelector('.SecButton[href="#first"]');
+        if (defaultSection) defaultSection.classList.add('active-section');
+        if (defaultButton) defaultButton.classList.add('active-sec-button');
+      }
+    }
+  </script>
+</body>
+
+</html>

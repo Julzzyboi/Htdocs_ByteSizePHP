@@ -358,6 +358,11 @@ section.active-section {
 
 }
 
+/* for products */
+.ProductForm-Container{
+    border: 2px solid black;
+
+}
 
 /* for accounts */
 
