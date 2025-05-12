@@ -18,6 +18,11 @@
     margin: 0;
     background: linear-gradient(to bottom, #fff7c6 0%, #ffc0cb 100%);
   }
+ 
+  html, body {
+  height: 100%;
+  background: linear-gradient(#ffc0cb 70%, #fff7c6 85%);
+}
 
   
   
@@ -25,7 +30,7 @@
   /* RECEIPT BODY */
 
   .receiptContainer {
-    background-color: #FFC0CB;
+    background-color: #FFC5D3;
     max-width: 700px;
     margin: 100px auto 50px;
     border-radius: 30px;
@@ -35,7 +40,7 @@
   }
   
   .receiptCard {
-    background-color: #FFC0CB;
+    background-color: #FFC5D3;
   }
 
   .DownloadIcon {
@@ -64,32 +69,36 @@
     text-align: center;
   }
   
-  .info p {
-    font-size: 16px;
-    margin-bottom: 15px;
-    line-height: 1.4;
-    color: #2e222f;
-    text-align: left;
-  }
+  .info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px dashed #aaa;
+  padding-bottom: 5px;
+}
+
+.info-row p {
+  margin: 0;
+  font-weight: bold;
+  color: #2e222f;
+  font-family: Alatsi;
+}
+
+.info-row span {
+  text-align: right;
+  font-family: Alatsi;
+  color: #2e222f;
+}
+
   
-  .downloadSection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .download-btn {
-    color: black;
-    font-size: 16px;
-    text-decoration: none;
-    font-family: Candy;
-  }
-  
-  .download-btn:hover {
-    background-color: #2ea043;
-  }
+ 
 
   /*MODAL*/
   

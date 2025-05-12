@@ -26,7 +26,7 @@ html, body {
   background: linear-gradient(#ffc0cb 70%, #fff7c6 85%);
 }
 
-/* CHECKOUT MODAL CONTAINER */
+/* CHECKOUT CONTAINER */
 .checkoutContainer {
   background-color: #FFC5D3;
   border-radius: 10px;
@@ -36,7 +36,7 @@ html, body {
   border: none;
 }
 
-/* HEADER STYLES */
+
 .checkoutContainer h1 {
   font-size: 48px;
   color: black;
@@ -49,14 +49,14 @@ html, body {
   margin-bottom: 20px;
 }
 
-/* AMOUNT SECTION */
+
 .amount {
   margin: 20px 0;
   font-size: 20px;
   font-weight: bold;
 }
 
-/* FORM ELEMENTS */
+
 .paymentBoxGroup {
   margin-bottom: 25px;
   text-align: left;
