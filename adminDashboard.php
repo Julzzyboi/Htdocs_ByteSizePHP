@@ -61,10 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Document</title>
   <link rel="stylesheet" href="adminDashboard.css">
   <!-- DataTables CSS -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script> 
+   
 </head>
 
 <body>
@@ -229,6 +234,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <th>Price</th>
               <th>Stock</th>
               <th>Image</th>
+              <th>Update</th>
+              <th>Delete</th>
+
+
             </tr>
           </thead>
           <tbody class="text-center align-middle">
@@ -243,13 +252,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <td><?= $row['productCategory']; ?></td>
                   <td><?= $row['productName']; ?></td>
                   <td><?= $row['productDescription']; ?></td>
-                  <td><?= number_format($row['productPrice'], 2); ?></td>
+                  <td><?= '₱' . number_format($row['productPrice'], 2); ?></td>
                   <td><?= $row['productStock']; ?></td>
                   <td>
                     <img src="<?= $row['productImage']; ?>" alt="Product Image"
                       style="max-width: 80px; height: auto; border-radius: 5px;">
                   </td>
-                </tr>
+                  <td><a href="#" class="btn btn-success">Update</a></td>
+                  <td><a href="#" class="btn btn-danger">Delete</a></td>
+
                 <?php
               }
             }
@@ -380,33 +391,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           <div class="modal-body">
             <!-- Product Category -->
-            <label for="productCategory" name="productCategory">Category</label>
+            <label for="productCategory" name="productCategory">Category: </label>
             <input type="text" name="productCategory" id="productCategory" class="form-control">
             <span class="error-msg text-danger" id="productCategoryError"></span>
 
             <!-- Product Name -->
-            <label for="productName" name="productName">Product Name</label>
+            <label for="productName" name="productName">Product Name: </label>
             <input type="text" name="productName" id="productName" class="form-control">
             <span class="error-msg text-danger" id="productNameError"></span>
 
             <!-- Product Description -->
-            <label for="productCategory" name="productCategory">Category</label>
+            <label for="productCategory" name="productCategory">Description: </label>
             <input type="text" name="productDescription" id="productDescription" class="form-control">
             <span class="error-msg text-danger" id="productDescriptionError"></span>
 
             <!-- Product Price -->
-            <label for="productCategory" name="productCategory">Category</label>
+            <label for="productCategory" name="productCategory">Price: </label>
             <label for="productCategory" name="productCategory">Category</label>
             <input type="number" name="productPrice" id="productPrice" class="form-control">
             <span class="error-msg text-danger" id="productPriceError"></span>
 
             <!-- Stock Quantity -->
-            <label for="productCategory" name="productCategory">Category</label>
+            <label for="productCategory" name="productCategory">Stock: </label>
             <input type="number" name="productStock" id="productStock" class="form-control">
             <span class="error-msg text-danger" id="productStockError"></span>
 
             <!-- Product Image -->
-            <label for="productCategory" name="productCategory">Category</label>
+            <label for="productCategory" name="productCategory">Product Image: </label>
             <input type="file" name="productImage" id="productImage" class="form-control" required>
             <span class="error-msg text-danger" id="productImageError"></span>
 
@@ -421,14 +432,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-    crossorigin="anonymous"></script>
   <script>
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -459,22 +462,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       });
     });
     // for admin creation DataTables
-    $(document).ready(function () {
-      $('#adminTable').DataTable();
-    });
+    // $(document).ready(function () {
+    //   $('#adminTable').DataTable();
+    // });
 
 
-    $(document).ready(function () {
-      var loginTable = $('#loginTable').DataTable({
-        ajax: 'fetch_Login.php',
-        columns: [
-          { data: 'login_ID' },
-          { data: 'user_ID' },
-          { data: 'emailAddress' },
-          { data: 'userRole' },
-          { data: 'loginTime' }
-        ]
-      });
+    // $(document).ready(function () {
+    //   var loginTable = $('#loginTable').DataTable({
+    //     ajax: 'fetch_Login.php',
+    //     columns: [
+    //       { data: 'login_ID' },
+    //       { data: 'user_ID' },
+    //       { data: 'emailAddress' },
+    //       { data: 'userRole' },
+    //       { data: 'loginTime' }
+    //     ]
+    //   });
 
       // Optionally reload table after form submission
       $('#adminForm').on('submit', function (e) {
@@ -500,23 +503,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Datatables Products
-//            $(document).ready(function () {
-//   $('#productTable').DataTable({
-//      responsive: true
-   
-//       ordering: true,
-//       info: true
-      
-       
-//   });
-// });
-
-//   new DataTable('#productTable', {
-//     responsive: true,
-//     scrollX: true
+     new DataTable('#productTable', {
+        responsive: {
+      details: {
+        type: 'inline', // or 'column' if you want an icon
+        target: '0' // clicking the row reveals hidden columns
+      }
+    },
+    order: [1, 'asc'],
+    scrollX: true
         
         
-// });
+});
 
 
   </script>

@@ -31,6 +31,7 @@ if (!empty($errors)) {
     exit;
 }
 
+
 // Handle image upload
 $uploadDir = 'uploads/';
 if (!is_dir($uploadDir)) {

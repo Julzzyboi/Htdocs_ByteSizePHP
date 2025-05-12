@@ -354,11 +354,6 @@ section.active-section {
 #accountSection{
     background-color: rgb(169, 247, 159);
     overflow: hidden;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
 
 
 }
