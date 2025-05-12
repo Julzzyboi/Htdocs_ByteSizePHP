@@ -1,5 +1,5 @@
 <?php
-include 'Db_connection.php'; 
+include 'Db_connection.php';
 
 // Fetch product data for modal
 if (isset($_POST['product_ID']) && !isset($_POST['update_product'])) {
@@ -11,7 +11,7 @@ if (isset($_POST['product_ID']) && !isset($_POST['update_product'])) {
     exit;
 }
 
-// Update product logic (your existing code)
+// Update product logic
 if (isset($_POST['update_product'])) {
     $product_ID = mysqli_real_escape_string($conn, $_POST['product_ID']);
     $productName = mysqli_real_escape_string($conn, $_POST['productName']);
@@ -25,9 +25,8 @@ if (isset($_POST['update_product'])) {
         $imageName = $_FILES['productImage']['name'];
         $imageTmp = $_FILES['productImage']['tmp_name'];
         $imagePath = 'uploads/' . basename($imageName);
-        
+
         if (move_uploaded_file($imageTmp, $imagePath)) {
-            // Update with new image
             $query = "UPDATE tbl_product_id SET 
                       productCategory='$productCategory', 
                       productName='$productName', 
@@ -37,10 +36,10 @@ if (isset($_POST['update_product'])) {
                       productImage='$imagePath'
                       WHERE product_ID='$product_ID'";
         } else {
-            die("Image upload failed.");
+            echo json_encode(['success' => false, 'error' => 'Image upload failed.']);
+            exit;
         }
     } else {
-        // Update without changing the image
         $query = "UPDATE tbl_product_id SET 
                   productCategory='$productCategory', 
                   productName='$productName', 
@@ -51,13 +50,10 @@ if (isset($_POST['update_product'])) {
     }
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>
-                preventDefault();
-                alert('Product updated successfully!');
-                window.location.href='adminDashboard.php'; 
-              </script>";
+        echo json_encode(['success' => true]);
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo json_encode(['success' => false, 'error' => mysqli_error($conn)]);
     }
+    exit;
 }
 ?>

@@ -271,7 +271,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
           </tbody>
         </table>
-      
+      <!-- Update Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form id="updateForm" method="post" enctype="multipart/form-data" action="update_product.php">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Update Product</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" name="product_ID" id="edit_product_ID">
+                  <!-- Add input fields for category, name, etc. -->
+                  <div class="mb-3">
+                    <label for="edit_productCategory" class="form-label">Category</label>
+                    <input type="text" class="form-control" name="productCategory" id="edit_productCategory">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" name="productName" id="edit_productName">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" name="productDescription" id="edit_productDescription">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productPrice" class="form-label">Price</label>
+                    <input type="number" class="form-control" name="productPrice" id="edit_productPrice">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productStock" class="form-label">Stock</label>
+                    <input type="number" class="form-control" name="productStock" id="edit_productStock">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit_productImage" class="form-label">Image</label>
+                    <input type="file" class="form-control" name="productImage" id="edit_productImage">
+                  </div>
+                  <!-- Repeat for description, price, stock, etc. -->
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" name="update_product" class="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
      
       </div>
     </section>
@@ -377,51 +421,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </section>
   </div>
 
-     <!-- Update Modal -->
-        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form id="updateForm" method="post" enctype="multipart/form-data" action="update_product.php">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Update Product</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                  <input type="hidden" name="product_ID" id="edit_product_ID">
-                  <!-- Add input fields for category, name, etc. -->
-                  <div class="mb-3">
-                    <label for="edit_productCategory" class="form-label">Category</label>
-                    <input type="text" class="form-control" name="productCategory" id="edit_productCategory">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productName" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" name="productName" id="edit_productName">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productDescription" class="form-label">Description</label>
-                    <input type="text" class="form-control" name="productDescription" id="edit_productDescription">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productPrice" class="form-label">Price</label>
-                    <input type="number" class="form-control" name="productPrice" id="edit_productPrice">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productStock" class="form-label">Stock</label>
-                    <input type="number" class="form-control" name="productStock" id="edit_productStock">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productImage" class="form-label">Image</label>
-                    <input type="file" class="form-control" name="productImage" id="edit_productImage">
-                  </div>
-                  <!-- Repeat for description, price, stock, etc. -->
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" name="update_product" class="btn btn-primary">Update</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
+     
 
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -503,12 +503,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
           </div>
         </div>
-
-
-
-
-
-
 
   <script>
 
@@ -630,25 +624,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     });
 
 
-    $(document).on('click', '.updateBtn', function () {
-      let productId = $(this).data('id');
-      $.ajax({
-        url: 'update_product.php',
-        type: 'POST',
-        data: { product_ID: productId },
-        dataType: 'json',
-        success: function (data) {
-          $('#edit_product_ID').val(data.product_ID);
-          $('#edit_productCategory').val(data.productCategory);
-          $('#edit_productName').val(data.productName);
-          $('#edit_productDescription').val(data.productDescription);
-          $('#edit_productPrice').val(data.productPrice);
-          $('#edit_productStock').val(data.productStock);
-          $('#updateModal').modal('show');
-        }
-      });
-    });
+  // 1. When clicking the update button, fetch product data and show modal
+$(document).on('click', '.updateBtn', function () {
+  let productId = $(this).data('id');
+  $.ajax({
+    url: 'update_product.php',
+    type: 'POST',
+    data: { product_ID: productId },
+    dataType: 'json',
+    success: function (data) {
+      $('#edit_product_ID').val(data.product_ID);
+      $('#edit_productCategory').val(data.productCategory);
+      $('#edit_productName').val(data.productName);
+      $('#edit_productDescription').val(data.productDescription);
+      $('#edit_productPrice').val(data.productPrice);
+      $('#edit_productStock').val(data.productStock);
+      $('#updateModal').modal('show');
+    }
+  });
+});
 
+// 2. When submitting the update form, send data via AJAX
+$('#updateForm').on('submit', function (e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+  formData.append('update_product', true);
+
+  $.ajax({
+    url: 'update_product.php',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function (response) {
+      $('#updateModal').modal('hide');
+      if (response.success) {
+        // Show a success modal or alert
+        alert('Product updated successfully!');
+        location.reload(); // Reload to show updated data
+      } else {
+        // Show an error modal or alert
+        alert(response.error || 'Update failed.');
+      }
+    },
+    error: function () {
+      $('#updateModal').modal('hide');
+      alert('An error occurred.');
+    }
+  });
+});
 
     $('.deleteBtn').on('click', function () {
       let productId = $(this).data('id');
