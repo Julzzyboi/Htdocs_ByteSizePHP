@@ -1,52 +1,36 @@
 
-document.getElementById("productForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  console.log("submitting...");
+$(document).ready(function () {
+    $('#productForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent the form from submitting the traditional way
 
-  const formData = new FormData(this);
+        // Prepare form data
+        var formData = new FormData(this);
 
-  fetch("add_Product.php", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === "error") {
-      // Show validation errors
-      Object.keys(data.errors).forEach(field => {
-        const errorSpan = document.querySelector(`#${field}Error`);
-        if (errorSpan) {
-          errorSpan.textContent = data.errors[field];
-        }
-      });
-    } else if (data.status === "success") {
-      // Clear errors
-      document.querySelectorAll(".error-msg").forEach(el => el.textContent = "");
+        // Make the AJAX request
+        $.ajax({
+            url: 'add_Product.php',
+            type: 'POST',
+            data: formData,
+            contentType: false,  // Do not set content type for form data
+            processData: false,  // Do not process data
+            dataType: 'json',    // Expect a JSON response
+            success: function (data) {
+                // Check for success
+                if (data.status === 'error') {
+                    // Display errors in alert
+                    alert('Error: ' + data.message);
+                } else if (data.status === 'success') {
+                    // Display success message
+                    alert('Success: ' + data.message);
 
-      // Show success modal
-      document.getElementById("successMessage").textContent = data.message;
-      document.getElementById("successModal").style.display = "block";
-
-      // Optionally reset form
-      this.reset();
-    }
-  })
-  .catch(err => console.error("Request failed", err));
+                    // Optionally, reset the form after successful submission
+                    $('#productForm')[0].reset();
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX errors
+                alert('An error occurred while processing the form.');
+            }
+        });
+    });
 });
-
-s
-function showModal(message) {
-      document.getElementById('modalMessage').textContent = message;
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('modal').style.display = 'block';
-  }
-  
-  function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('overlay').style.display = 'none';
-  }
-  
-
-
-
-  

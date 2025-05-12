@@ -1,15 +1,7 @@
  <?php
 session_start();
 
-// if (!isset($_SESSION['user_ID'])) {
-//   header("Location: Account.php");
-//   exit();
-// } 
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,8 +88,9 @@ session_start();
 
       <!-- Dynamic Product Description-->
 
-      <div class="ourProductsHeader animated">
-          <p>Our Products</p>
+      <div class="animated">
+          <p class="ourProductsHeader">Our Products</p>
+          <p class="ourProductsDescription">Get ready to satisfy your sweet tooth with our handmade goodies! From soft and creamy pastillas to chewy graham balls and freshly baked cookies, every bite is made with love and a sprinkle of joy. Perfect for sharing—or keeping all to yourself!</p>
       </div>
 
       <div class="Product-Description-Main-Wrapper animated">
@@ -184,9 +177,15 @@ session_start();
       </div>
       </div>
 
+      <div class="missionVisionStart">
+        <p class="missionVisionHeader">Our Delightful Goals</p>
+        <p class="misionVisionDescription">Our vision is to spread smiles and sweetness everywhere we go, one treat at a time! We're on a mission to bake up joy with every bite—serving up delicious, lovingly made goodies that bring people together and make life a little sweeter.</p>
+      </div>
+
+      <p class="missionHeader">Mission</p>
+
       <div class="missionSection">
         <div class="missionLeft">
-          <p class="missionHeader">Mission</p>
           <div class="missionDescriptionMascots">
             <p class="missionDescription">Our mission is to expand ByteSize Delights into new communities, Serving as a guiding light for aspiring bakers, especially student bakers like us, in launching their own dessert businesses. Our goal is to offer delicious sweets while simultaneously showcasing creativity in the baking world.</p>
             <img src="images/pastillasTwo.png" alt="Pastillas Mascot">
@@ -203,10 +202,10 @@ session_start();
         </div>
       </div>
 
+      <p class="visionHeader">Vision</p>
       <div class="visionSection">
         <img src="images/visionPicture.jpg" alt="Customer Picture" class="visionPicture">
         <div class="visionRight">
-          <p class="visionHeader">Vision</p>
           <div class="visionDescriptionMascots">
             <p class="visionDescription">At ByteSize Delights, a community-centered company, we want to make it possible for everyone, especially students, to enjoy tasty, affordable bite-sized delights that satisfy cravings without burning a hole in their wallets.</p>
             <img src="images/cookieThree.png" alt="Cookie Mascot">

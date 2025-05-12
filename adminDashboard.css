@@ -349,11 +349,6 @@ section.active-section {
 #inventorySection{
     background-color: rgb(148, 211, 240);
     overflow: hidden;
-     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
 
 }
 #accountSection{
@@ -384,7 +379,6 @@ section.active-section {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     border-radius: 12px;                 
     position: relative;
-    padding-bottom: 30px;
 }
 
 
@@ -416,62 +410,8 @@ section.active-section {
     border: 2px solid black;
 
 }
-
 #loginTable{
     border: 2px solid black;
 }
 
-.ProductForm-Container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-     /* position: relative; */
-  width: 100%; /* Was 80%, this allows more space */
-  height: auto;
-  /* overflow-x: auto;  */
-  background-color: #FFFEDE;
-  padding: 1rem;
-  gap: 10px;
-  overflow-y:hidden;
-  margin-top: 30px;
-}
-
-
-
-
-#productTable{
-    /* background-color: wheat; */
-    width:100%;
-    height: 100%;
-   
-}
-/* .table-responsive {
-  overflow-x: auto;
-} */
-
-
-/* modal design */
-.modal {
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.5);
-}
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
-  text-align: center;
-}
-.close {
-  float: right;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
+/* for products */

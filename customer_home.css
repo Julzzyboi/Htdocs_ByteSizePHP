@@ -12,6 +12,7 @@
 body{
 background: linear-gradient(#fff7c6 21%, #ffc0cb 83%);
 height: auto;
+width: 100%;
 overflow-x: hidden;
 }
 /* UNIVERSAL */
@@ -249,7 +250,7 @@ flex: 1;
 }
 
 .bannerMascots img{
-height: 150px;
+height: 140px;
 position: absolute;
 visibility: hidden;
 
@@ -389,8 +390,20 @@ color: #91DB69;
 text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
 
 justify-self: center;
-margin-top: -300px;
+margin-top: -200px;
 }
+
+.ourProductsDescription{
+font-family: Candy;
+font-size: 15px;
+color: #2E222F;
+justify-self: center;
+text-align: center;
+
+width: 900px;
+margin-bottom: 30px;
+}
+
 /* for dynamic product description */
 .Product-Description-Main-Wrapper{
   /* width: 100%; */
@@ -400,31 +413,37 @@ margin-top: -300px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 100px;
   /* justify-content: space-around; */
   /* align-items: center; */
   overflow: hidden;
+  margin-top: -80px;
 
   /* border: pink 2px solid; */
 }
 
 .Description-Wrap{
 /* border: 2px solid blue; */
-width: 700px;
 display: flex;
 align-items: center;
 justify-content: center;
+
 margin: 0;
 padding: 0;
-
+position: relative;
 }
 
 .Product-Description{ 
   /* border: 3px solid red; */
   /* position: relative; */
-  width: 500px;
+
   height: 400px;
   margin-left: 20px;
   margin-right: 20px;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .Description{
@@ -461,11 +480,12 @@ padding: 0;
   font-size:  2rem;
   background: none;
   border-radius: 100px;
-  padding: 0px 15px;
+  padding: 2px 15px;
   cursor: pointer;
   margin: 0;
   transition: all ease-out 0.2s;
   border: 5px solid #2E222F;
+  position: relative;
 }
 
 .arrow:hover{
@@ -477,7 +497,7 @@ padding: 0;
 }
 
 .Product-1{
-  width: 100%;
+  width: 500px;
   height: 100%;
   background-image: url("HomePage/cookieDescriptionBackground.png");
   background-size: 400px;
@@ -489,7 +509,7 @@ padding: 0;
 }
 
 .Product-2{
-  width: 100%;
+  width: 500px;
   height: 100%;
   background-image: url("HomePage/pastillasDescriptionBackground.png");
   background-size: 400px;
@@ -501,7 +521,7 @@ padding: 0;
 }
 
 .Product-3{
-  width: 100%;
+  width: 500px;
   height: 100%;
   background-image: url("HomePage/grahamDescriptionBackground.png");
   background-size: 400px;
@@ -664,6 +684,7 @@ padding: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .allFacts{
@@ -737,20 +758,20 @@ margin-right: 480px
 
 .factTwo{
 background-color: #FFF9D4;
-margin-left: 480px;
+margin-left: 495px;
 margin-top: -110px;
 }
 
 .factThree{
 background-color: #FFF9D4;
 margin-right: 550px;
-margin-top: -45px;
+margin-top: -60px;
 } 
 
 .factFour{
 background-color: #FFF9E4;
 margin-left: 410px; 
-margin-top: -110px;
+margin-top: -90px;
 } 
 
 .factOneMascot{
@@ -767,7 +788,7 @@ animation-duration: 1.2s;
 } 
 
 .factTwoMascot{
-position: absolute;
+position: relative;
 height: 130px;
 margin-top: -170px;
 margin-left: 840px;
@@ -783,7 +804,7 @@ animation-duration: 1.2s;
 position: absolute;
 height: 130px;
 margin-top: -100px;
-margin-left: -10px;
+margin-left: -50px;
 
 animation-name: bounce;
 animation-delay: 1s;
@@ -795,7 +816,7 @@ animation-duration: 1.2s;
 .factFourMascotOne{
 position: absolute;
 height: 100px;
-margin-top: 23px;
+margin-top: 45px;
 margin-left: 545px;
 
 animation-name: bounceTwo;
@@ -808,7 +829,7 @@ animation-duration: 1.2s;
 .factFourMascotTwo{
 position: absolute;
 height: 100px;
-margin-top: 23px;
+margin-top: 45px;
 margin-left: 600px;
 
 animation-name: bounceTwo;
@@ -821,7 +842,7 @@ animation-duration: 1.2s;
 .factFourMascotThree{
 position: absolute;
 height: 100px;
-margin-top: 23px;
+margin-top: 45px;
 margin-left: 655px;
 
 animation-name: bounceTwo;
@@ -883,14 +904,59 @@ animation-delay: 0s, 1s;
 }
 }
 
+/* MISSION VISION HEADER */
+
+.missionVisionStart{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 100px; 
+}
+
+.missionVisionHeader{
+font-family: Back;
+font-size: 45px;
+color: #91DB69;
+text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
+
+justify-self: center;
+margin-top: 50px;
+}
+
+.misionVisionDescription{
+font-family: Candy;
+font-size: 15px;
+color: #2E222F;
+justify-self: center;
+text-align: center;
+
+width: 900px;
+margin-bottom: 30px;
+}
+
 /* MISSION SECTION */
+
+.missionHeader{
+text-align: center;
+font-family: Back;
+font-size: 35px;
+color: #FF9FC2;
+text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
+
+margin-top: 10px;
+margin-bottom: -10px;
+}
 
 .missionSection{
 display: flex;
 flex-direction: row;
 justify-content: center;
-gap: 100px;
-margin-top: 120px; 
+gap: 50px;
+margin-top: 20px;
+align-items: center;
+
 }
 
 .missionLeft{
@@ -904,13 +970,6 @@ border: #2E222F 8px solid; */
 border-radius: 40px;
 }
 
-.missionHeader{
-font-family: Back;
-font-size: 45px;
-color:#91DB69;
-text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
-}
-
 .missionDescription{
 font-family: Candy;
 font-size: 21px; 
@@ -918,10 +977,10 @@ color: #2E222F;
 text-align: center;
 
 background-color: #FFF9E4;
-border: 8px solid #2E222F;
+border: 7px solid #2E222F;
 border-radius: 20px;
 
-height: 350px;
+height: 365px;
 width: 400px;
 
 padding: 30px;
@@ -979,26 +1038,30 @@ animation-duration: 1.2s;
 
 /* VISION SECTION */
 
+.visionHeader{
+text-align: center;
+font-family: Back;
+font-size: 35px;
+color:#FF9FC2;
+text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
+
+margin-top: 50px;
+}
+
+
 .visionSection{
+margin-top: 20px;
 display: flex;
 flex-direction: row;
 justify-content: center;
-gap: 100px;
-margin-top: 120px; 
-margin-bottom: 150px;
+align-items: center;
+gap: 50px;
 }
 
 .visionPicture{
 border: #2E222F 8px solid;
 border-radius: 40px;
-height: 350px;
-}
-
-.visionHeader{
-font-family: Back;
-font-size: 45px;
-color:#91DB69;
-text-shadow: rgb(46, 34, 47) 4px 0px 0px, rgb(46, 34, 47) 3.87565px 0.989616px 0px, rgb(46, 34, 47) 3.51033px 1.9177px 0px, rgb(46, 34, 47) 2.92676px 2.72656px 0px, rgb(46, 34, 47) 2.16121px 3.36588px 0px, rgb(46, 34, 47) 1.26129px 3.79594px 0px, rgb(46, 34, 47) 0.282949px 3.98998px 0px, rgb(46, 34, 47) -0.712984px 3.93594px 0px, rgb(46, 34, 47) -1.66459px 3.63719px 0px, rgb(46, 34, 47) -2.51269px 3.11229px 0px, rgb(46, 34, 47) -3.20457px 2.39389px 0px, rgb(46, 34, 47) -3.69721px 1.52664px 0px, rgb(46, 34, 47) -3.95997px 0.56448px 0px, rgb(46, 34, 47) -3.97652px -0.432781px 0px, rgb(46, 34, 47) -3.74583px -1.40313px 0px, rgb(46, 34, 47) -3.28224px -2.28625px 0px, rgb(46, 34, 47) -2.61457px -3.02721px 0px, rgb(46, 34, 47) -1.78435px -3.57996px 0px, rgb(46, 34, 47) -0.843183px -3.91012px 0px, rgb(46, 34, 47) 0.150409px -3.99717px 0px, rgb(46, 34, 47) 1.13465px -3.8357px 0px, rgb(46, 34, 47) 2.04834px -3.43574px 0px, rgb(46, 34, 47) 2.83468px -2.82216px 0px, rgb(46, 34, 47) 3.44477px -2.03312px 0px, rgb(46, 34, 47) 3.84068px -1.11766px 0px, rgb(46, 34, 47) 3.9978px -0.132717px 0px;
+height: 365px;
 }
 
 .visionDescription{
@@ -1007,12 +1070,14 @@ font-size: 21px;
 color: #2E222F;
 text-align: center;
 
+display: flex;
+align-items: center;
 
 background-color: #FFF9E4;
 border: 7px solid #2E222F;
 border-radius: 20px;
 
-height: 300px;
+height: 365px;
 width: 400px;
 
 padding: 30px;
@@ -1033,10 +1098,11 @@ z-index: -1;
 }
 
 .visionDescriptionMascots img{
+position: absolute;
 height: 150px;
 z-index: 1;
 margin-top: -90px;
-
+margin-left: 300px;  
 
 animation-name: bounce;
 animation-delay: 3s;
@@ -1094,7 +1160,6 @@ footer{
   display: flex;
   justify-content: space-evenly;
   width:100%;
-  border: 2px solid green;
 }
 .F-logo{
   width: 250px;
@@ -1148,7 +1213,6 @@ footer{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 2px solid red;
   float: right;
 }
 .F-Mascots{
@@ -1161,13 +1225,13 @@ footer{
 }
 
 .M1{
-  left: 72%;
+  right: 19%;
 }
 .M2{
-  left: 78%;
+  right: 12%;
 }
 .M3{
-  left: 84%; 
+  right:5%; 
 }
 
 .FM{
@@ -1233,4 +1297,392 @@ margin-left: -6px;
 
 .Instagram p{
   margin-left: -5px;
+}
+
+/* RESPONSIVENESS */
+
+@media (max-width: 1050px) {
+
+  /* BANNER */
+  .bannerLogo {
+    width: 450px;
+  }
+
+  .bannerMascots img{
+    height: 120px; 
+  }
+
+  .bannerQuoteGroup{
+    font-size: 30px;
+    width: 700px;
+  }
+
+  .cookieMascotRight{
+    left: 82%;
+    top: 71%;
+  }
+
+  .grahamMascotLeft{
+    left: 3%;
+    top: 70%;
+  }
+
+  /* OUR PRODUCTS */
+
+  .ourProductsDescription{
+    width: 700px;
+  }
+
+  .arrow{
+    font-size: 25px;
+    padding: 0px 6px;
+  }
+
+  .left{
+    margin-left: 30px;
+  }
+
+  .Product-Description-Main-Wrapper{
+    gap: 10px;
+  }
+
+.Product-1{
+  width: 450px;
+}
+
+.Product-2{
+  width: 450px;
+}
+
+.Product-3{
+  width: 450px;
+}
+
+.Product-1 img{
+  height: 170x;
+  width: 230px;
+}
+
+.Product-2 img{
+  height: 170x;
+  width: 220px;
+}
+
+.Product-3 img{
+  height: 170x;
+  width: 200px;
+}
+
+.Product-1 p, .Product-2 p, .Product-3 p{
+  width: 350px;
+}
+
+.Product-1 button, .Product-2 button, .Product-3 button{
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+    .Mascot[data-index="2"] {
+      width: 130px;
+      height: 130px;
+      top: 70px;
+      left: 160px;
+    }
+
+    .Mascot[data-index="3"] {
+      width: 130px;
+      height: 130px;
+      top: 400px;
+      left: 160px;
+    }
+
+    /* TRIVIA */
+
+    .triviaDescriptionHeader{
+      width: 800px;
+    }
+
+    .allFacts{
+      gap: 30px;
+    }
+
+     .factOne{
+      margin-right: 100px
+    }
+
+    .factTwo{
+      margin-left: 100px;
+      margin-top: 0px;
+    }
+
+    .factThree{
+      margin-right: 100px;
+      margin-top: 0px;
+    } 
+
+    .factFour{
+      margin-left:100px; 
+      margin-top: 0px;
+    } 
+
+    /* .factOneMascot{
+      
+    }  */
+
+    .factTwoMascot{
+      margin-top: -50px;
+      margin-left: 470px;
+      position: absolute;
+    } 
+    
+    .factThreeMascot{
+      margin-top: -50px;
+    } 
+
+    .factFourMascotOne{
+      margin-top: 135px;
+      margin-left: 250px;
+    }
+
+    .factFourMascotTwo{
+      margin-top: 135px;
+      margin-left: 300px;
+    }
+
+    .factFourMascotThree{
+      margin-top: 135px;
+      margin-left: 350px;
+    }
+
+    /* MISSION AND VISION */
+    .misionVisionDescription{
+      width: 700px;
+    }
+
+    /* FOOTER */
+
+    .M1{
+      right: 16%;
+    }
+
+    .M2{
+      right: 9%;
+    }
+    
+    .M3{
+      right:1%; 
+    }
+}
+
+@media (max-width: 915px) {
+
+  /* BANNER */
+  .bannerLogo {
+    width: 450px;
+  }
+
+  .bannerMascots img{
+    height: 120px; 
+  }
+
+  .bannerQuoteGroup{
+    font-size: 25px;
+    width: 580px;
+  }
+
+  .cookieMascotRight{
+    left: 82%;
+    top: 71%;
+  }
+
+  .grahamMascotLeft{
+    left: 3%;
+    top: 70%;
+  }
+
+  /* OUR PRODUCTS */
+
+  .ourProductsHeader{
+    font-size: 40px;
+    margin-top: -150px; 
+  }
+
+  .ourProductsDescription{
+    width: 550px;
+  }
+
+  .arrow{
+    font-size: 20px;
+    padding: 0px 7px;
+  }
+
+  .Product-Description-Main-Wrapper{
+    gap: 20px;
+  }
+
+.Product-1, .Product-2, .Product-3{
+  width: 350px;
+  height: 370px;
+}
+
+.Product-1 img{
+  align-self: center;
+  margin-left: -50px; 
+  height: 160x;
+  width: 230px;
+}
+
+.Product-2 img{
+  align-self: center;
+  margin-left: -50px;
+  height: 170x;
+  width: 220px;
+}
+
+.Product-3 img{
+  align-self: center; 
+  margin-left: -50px;
+  height: 170x;
+  width: 200px;
+}
+
+.Product-1 p, .Product-2 p, .Product-3 p{
+  font-size: 15px;
+  width: 260px;
+}
+
+.Product-1 button, .Product-2 button, .Product-3 button{
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+    .Mascot[data-index="1"] {
+      width: 160px;
+      height: 160px;
+      top: 220px; 
+}
+
+    .Mascot[data-index="2"] {
+      width: 130px;
+      height: 130px;
+      top: 90px;
+      left: 130px;
+    }
+
+    .Mascot[data-index="3"] {
+      width: 130px;
+      height: 130px;
+      top: 380px;
+      left: 130px; 
+    }
+
+    /* TRIVIA */
+
+    .triviaDescriptionHeader{
+      width: 550px;
+    }
+
+    .triviaTitleHeader{
+      font-size: 40px;
+    }
+
+    .allFacts{
+      gap: 30px;
+    }
+
+     .factOne{
+      margin-right: 100px
+    }
+
+    .factTwo{
+      margin-left: 100px;
+      margin-top: 0px;
+    }
+
+    .factThree{
+      margin-right: 100px;
+      margin-top: 0px;
+    } 
+
+    .factFour{
+      margin-left:100px; 
+      margin-top: 0px;
+    } 
+
+    /* .factOneMascot{
+      
+    }  */
+
+    .factTwoMascot{
+      margin-top: -50px;
+      margin-left: 470px;
+      position: absolute;
+    } 
+    
+    .factThreeMascot{
+      margin-top: -50px;
+    } 
+
+    .factFourMascotOne{
+      margin-top: 135px;
+      margin-left: 250px;
+    }
+
+    .factFourMascotTwo{
+      margin-top: 135px;
+      margin-left: 300px;
+    }
+
+    .factFourMascotThree{
+      margin-top: 135px;
+      margin-left: 350px;
+    }
+
+    /* MISSION AND VISION */
+
+    .missionVisionHeader{
+      font-size: 40px;
+    }
+
+    .misionVisionDescription{
+      width: 550px;
+    }
+
+    .missionHeader{
+      font-size: 30px;
+    }
+
+    .visionHeader{
+      font-size: 30px;
+    }
+
+
+    .missionDescription, .visionDescription{
+      font-size: 18px;
+      width: 300px;
+    }
+
+    .visionDescriptionMascots img{
+      margin-top: -70px; 
+      margin-left: 80px; 
+      
+    }
+
+    /* FOOTER */
+
+    .M1{
+      right: 16%;
+    }
+
+    .M2{
+      right: 9%;
+    }
+    
+    .M3{
+      right:1%; 
+    }
 }
