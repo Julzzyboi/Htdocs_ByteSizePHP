@@ -69,6 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script> 
+    <!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
    
 </head>
 
@@ -222,7 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
           Product</button>
 
-        <!-- Modal -->
         <table class="table table-bordered table-striped table-hover" id="productTable"
           style="min-width: 1000px; width: 100%;">
           <thead class="table-dark text-center">
@@ -236,8 +239,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <th>Image</th>
               <th>Update</th>
               <th>Delete</th>
-
-
             </tr>
           </thead>
           <tbody class="text-center align-middle">
@@ -252,14 +253,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <td><?= $row['productCategory']; ?></td>
                   <td><?= $row['productName']; ?></td>
                   <td><?= $row['productDescription']; ?></td>
-                  <td><?= '₱' . number_format($row['productPrice'], 2); ?></td>
+                  <td><?= 'Php ' . number_format($row['productPrice'], 2); ?></td>
                   <td><?= $row['productStock']; ?></td>
                   <td>
                     <img src="<?= $row['productImage']; ?>" alt="Product Image"
                       style="max-width: 80px; height: auto; border-radius: 5px;">
                   </td>
-                  <td><a href="#" class="btn btn-success">Update</a></td>
-                  <td><a href="#" class="btn btn-danger">Delete</a></td>
+                 <td><a href="#" class="btn btn-success updateBtn" data-id="<?= $row['product_ID']; ?>">Update</a></td>
+                 <td><a href="#" class="btn btn-danger deleteBtn" data-id="<?= $row['product_ID']; ?>">Delete</a></td>
 
                 <?php
               }
@@ -267,6 +268,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
           </tbody>
         </table>
+        <!-- Update Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="updateForm" method="post" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="product_ID" id="edit_product_ID">
+          <!-- Add input fields for category, name, etc. -->
+          <div class="mb-3">
+            <label for="edit_productName" class="form-label">Product Name</label>
+            <input type="text" class="form-control" name="productName" id="edit_productName">
+          </div>
+          <!-- Repeat for description, price, stock, etc. -->
+        </div>
+        <div class="modal-footer">
+          <button type="submit" name="update_product" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
       </div>
     </section>
 
@@ -431,6 +457,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 
+  
+
 
   <script>
 
@@ -499,7 +527,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
         });
       });
-    });
+    
 
 
     // Datatables Products
@@ -512,8 +540,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     },
     order: [1, 'asc'],
     scrollX: true
-        
-        
+});
+
+$(document).ready(function () {
+  $('.updateBtn').on('click', function () {
+    let productId = $(this).data('id');
+
+    $.ajax({
+      url: 'fetch_product.php',
+      type: 'POST',
+      data: { product_ID: productId },
+      dataType: 'json',
+      success: function (data) {
+        $('#edit_product_ID').val(data.product_ID);
+        $('#edit_productName').val(data.productName);
+        // Fill in other fields...
+
+        $('#updateModal').modal('show');
+      }
+    });
+  });
+
+  $('.deleteBtn').on('click', function () {
+    let productId = $(this).data('id');
+    if (confirm("Are you sure you want to delete this product?")) {
+      $.ajax({
+        url: 'delete_product.php',
+        type: 'POST',
+        data: { product_ID: productId },
+        success: function (response) {
+          alert("Product deleted successfully!");
+          location.reload(); // Or remove row with JS
+        }
+      });
+    }
+  });
 });
 
 
