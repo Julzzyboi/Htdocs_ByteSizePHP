@@ -32,8 +32,8 @@
           <div class="paymentBoxGroup">
             <label for="payment">Payment Methods</label>
             <select id="payment">
-              <option>Cash</option>
-              <option>E-Payment</option>
+              <option value="cash">Cash</option>
+              <option value="e-payment">E-Payment</option>
             </select>
           </div>
 
@@ -61,14 +61,22 @@
   </div>
  </div>
 
+ <div id="modalOverlay">
+    <div id="modalContent"></div>
+  </div>
+
   <script>
+    
     const deliverySelect = document.getElementById("delivery");
     const addressGroup = document.getElementById("addressGroup");
     const confirmBtn = document.getElementById("confirmBtn");
     const paymentSelect = document.getElementById("payment");
     const addressInput = document.getElementById("address");
     const amountDisplay = document.getElementById("amountDisplay");
-
+    const select = document.getElementById('paymentMode');
+    const modal = document.getElementById('modalOverlay');
+    const modalContent = document.getElementById('modalContent');
+    
     deliverySelect.addEventListener("change", () => {
       if (deliverySelect.value === "Delivery") {
         addressGroup.style.display = "block";
@@ -109,6 +117,28 @@
     } else {
       amountDisplay.textContent = "Php 0.00"; 
     }
+
+    
+  
+    payment.addEventListener('change', () => {
+      if (payment.value === 'e-payment') {
+        fetch('modetopay.html')
+          .then(res => res.text())
+          .then(html => {
+            modalContent.innerHTML = html;
+            modal.classList.add('open');
+          });
+      } else {
+        modal.classList.remove('open');
+      }
+    });
+
+    modal.addEventListener('click', (e) => {
+      // only close if click is on the overlay, not the modal content
+      if (e.target === modal) {
+        modal.classList.remove('open');
+      }
+    });
   </script>
 
 </body>

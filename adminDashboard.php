@@ -239,8 +239,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th>Product ID</th>
                 <th>Category</th>
                 <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
                 <th>Stock</th>
                 <th>Image</th>
                 <th>Update</th>
@@ -258,8 +256,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td><?= $row['product_ID']; ?></td>
                     <td><?= $row['productCategory']; ?></td>
                     <td><?= $row['productName']; ?></td>
-                    <td><?= $row['productDescription']; ?></td>
-                    <td><?= 'Php ' . number_format($row['productPrice'], 2); ?></td>
+                    
+                    <!-- <td><?= 'Php ' . number_format($row['productPrice'], 2); ?></td> -->
                     <td><?= $row['productStock']; ?></td>
                     <td>
                       <img src="<?= $row['productImage']; ?>" alt="Product Image"
