@@ -1,3 +1,14 @@
+/* FONTS */
+@font-face {
+  font-family: Back;
+  src: url(fonts/Backso.ttf);
+}
+
+@font-face {
+  font-family: Candy;
+  src: url(fonts/CandyBeans.ttf);
+}
+
 body {
     font-family: 'Consolas', 'Courier New', monospace; 
   }
@@ -6,8 +17,8 @@ body {
 
     background: linear-gradient(to bottom, #FFF7C6, #FFC0CB);
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 6px solid #2E222F;
+    border-radius: 40px;
     width: 100%;
     max-width: 600px;
     position: fixed;
@@ -22,22 +33,26 @@ body {
     overflow: auto;
 }
 
-
-
 .pic img{
     width: 150px;
     height: auto;
 }
 
 .content_title{
-    font-family: 'Consolas', 'Courier New', monospace; 
+    font-family: Back; 
+    font-size: 25px;
+    color: #91DB69;
+    text-shadow: rgb(46, 34, 47) 3px 0px 0px, rgb(46, 34, 47) 2.83487px 0.981584px 0px, rgb(46, 34, 47) 2.35766px 1.85511px 0px, rgb(46, 34, 47) 1.62091px 2.52441px 0px, rgb(46, 34, 47) 0.705713px 2.91581px 0px, rgb(46, 34, 47) -0.287171px 2.98622px 0px, rgb(46, 34, 47) -1.24844px 2.72789px 0px, rgb(46, 34, 47) -2.07227px 2.16926px 0px, rgb(46, 34, 47) -2.66798px 1.37182px 0px, rgb(46, 34, 47) -2.96998px 0.42336px 0px, rgb(46, 34, 47) -2.94502px -0.571704px 0px, rgb(46, 34, 47) -2.59586px -1.50383px 0px, rgb(46, 34, 47) -1.96093px -2.27041px 0px, rgb(46, 34, 47) -1.11013px -2.78704px 0px, rgb(46, 34, 47) -0.137119px -2.99686px 0px, rgb(46, 34, 47) 0.850987px -2.87677px 0px, rgb(46, 34, 47) 1.74541px -2.43999px 0px, rgb(46, 34, 47) 2.44769px -1.73459px 0px, rgb(46, 34, 47) 2.88051px -0.838247px 0px;
     margin-bottom: 10px;
-    font-weight: bold;
     text-align: center;
 }
 
 .content{
   text-align: justify;
+  font-family: Candy;
+  color:#2E222F;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .button-container {
@@ -63,3 +78,27 @@ body {
   .close-btn:hover {
     color: red;
   }
+
+ @media screen and (max-width: 705px){
+  .banner{
+    width: 450px;
+  }
+
+  .content{
+    font-size: 14px;
+ }
+}
+
+  @media screen and (max-width: 470px){
+  .banner{
+    width: 320px;
+  }
+
+  .content_title{
+    font-size: 18px;
+  }
+
+  .content{
+    font-size: 12px;
+ }
+ }

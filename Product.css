@@ -756,7 +756,7 @@ footer{
   .F-Socials{
     display: flex;
     flex-direction: column;
-    font-family: candy;
+    font-family: Candy;
     justify-content: flex-end;
   }
   .SocialIcons{
