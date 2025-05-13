@@ -226,28 +226,38 @@ text-decoration: none;
   height: 100%;
 }
 
+/* YOUR CART */
 
 .cart-section{
   border: 2px solid pink;
   grid-area: addtocart;
  
 }
+
 .cart-container {
-  background-color: white;
-  border: 2px solid orange;
-  border-radius: 12px;
+  width: 250px;
+  background-color: #FFF9E4;
+  border: 4px solid #2E222F;
+  border-radius: 20px;
   padding: 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin: 15px;
 }
 
-
-.cart-container h2 {
-  font-family: 'Back', sans-serif;
-  color: #333;
+.yourCartHeader {
+  font-family: Back;
+  font-size: 25px;
+  color: #FF9FC2;
+  
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
   margin-bottom: 15px;
 }
 
+.emptyCart{
+  font-family: Candy;
+  font-size: 15px;
+  color: #2E222F;
+}
 
 .cart-item {
   background-color: #f0f0f0;
@@ -256,22 +266,53 @@ text-decoration: none;
   margin-bottom: 8px;
 }
 
+.list-group-item{
+  margin-left: 20px;
+}
 
-/* Checkout button */
-.checkout-button {
-  background-color: #92D472;
-  color: #333;
-  border: 2px solid #333;
-  border-radius: 20px;
-  padding: 8px 15px;
-  font-family: 'Back', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  display: block;
-  margin: 15px auto;
+.list-group-item::marker{
+  color: #2E222F;
+}
+
+.yourCartImage{
+  border: 2px solid red;
+  width: 30px;
+  height: 30px;
+}
+
+.flex-grow-1{
+  font-family: Candy;
+  font-size: 15px;
+  color:#2E222F;
+}
+
+.me-3{
+  font-family: Candy;
+  font-size: 15px;
+  color:#2E222F;
+}
+
+.removeFromCartBtn{
+  font-family: Candy;
+  color:#2E222F;
+  background-color: #FF9FC2;
+  border-radius: 100px;
+  border-width: 2px;
+  height: 19px;
+  width: 19px;
   text-align: center;
 }
 
+.text-end p{
+  font-family: Candy;
+  font-size: 16px;
+  font-weight: none;
+  color: #f6699c;
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
+
+  text-align: center;
+  margin-top: 20px;
+}
 
 /* Section buttons styling */
 .SecButton {
@@ -534,21 +575,6 @@ section.active-section {
   z-index: 10;
 }
 
-
-.cart-container {
-  background-color: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 15px;
-}
-.cart-container h2 {
-  font-family: 'Back', sans-serif;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-
 .cart-item {
   background-color: #f0f0f0;
   border-radius: 8px;
@@ -556,42 +582,22 @@ section.active-section {
   margin-bottom: 8px;
 }
 
-
 /* Checkout button */
 
-
-.cart-container h2 {
-  font-family: 'Back', sans-serif;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-
-.cart-item {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 8px;
-}
-
-
-/* Checkout button */
 .Checkout-btn {
   text-decoration: none;
   background-color: #92D472;
-  color: #333;
-  border: 2px solid #333;
+  color: #2E222F;
+  border: 3px solid #2E222F;
   border-radius: 20px;
   padding: 8px 15px;
-  font-family: 'Back', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
+  font-family: Candy;
+  font-size: 13px;
+
   display: block;
   margin: 15px auto;
   text-align: center;
 }
-
-
 
 
 @keyframes fadeIn {
@@ -644,14 +650,10 @@ section.active-section {
   height:100%;
 }
 
-
-.cart-container{
-  /* grid-row: 3/ 6;
-  grid-column: 5 ; */
- 
-   background-color: antiquewhite;
-   border: 2px solid black;
- }
+/* .cart-container{
+  grid-row: 3/ 6;
+  grid-column: 5 ;
+} */
  
 /* for footer */
 footer{
