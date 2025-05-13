@@ -8,12 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $deliveryMode = $_POST['delivery'] ?? 'Pick-up';
     $address = $deliveryMode === 'Delivery' ? trim($_POST['address'] ?? '') : 'N/A';
     $totalAmount = $_POST['totalAmount'] ?? '₱0.00';
-    $user_ID = $_SESSION['user_ID'] ?? null; // Assuming user ID is stored in the session
+    $user_ID = $_SESSION['user_ID'] ?? null; 
 
     if ($deliveryMode === 'Delivery' && empty($address)) {
         $error = "Please enter a delivery address.";
     } else {
-        // Insert order details into the tbl_payment_id table
+        // Insert order details
         $stmt = $conn->prepare("INSERT INTO tbl_payment_id (user_ID, paymentType_ID, paymentInfo, dateCreated, dateUpdated) VALUES (?, ?, ?, NOW(), NOW())");
         $stmt->bind_param("iss", $user_ID, $paymentMethod, $totalAmount);
 
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Fetch amount from session (assumed stored earlier in shopping cart step)
+
 $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
 ?>
 
@@ -105,7 +105,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
             </div>
 
             <div class="d-flex justify-content-between">
-              <a href="Product.html" class="backtoCartbtn">Back to Cart</a>
+              <a href="Product.php" class="backtoCartbtn">Back to Cart</a>
               <button class="confirmButton" id="confirmBtn">Confirm</button>
             </div>
 
