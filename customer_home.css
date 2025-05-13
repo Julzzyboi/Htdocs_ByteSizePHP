@@ -107,7 +107,14 @@ flex: 1;
 }
 
 /* HAMBURGER NAV */
+.homeNavContainer svg, .productsNavContainer svg, .faqsNavContainer svg{
+  visibility: hidden;
+  position: absolute;
+}
 
+.hamburgerLogo{
+  display: none;
+}
 
 .hamburger{
   position: relative;
@@ -187,8 +194,21 @@ flex: 1;
 
 
 @media (max-width: 810px){
+
+  .hamburgerLogo{
+    display: block;
+    position: absolute;
+    height: 150px;
+    bottom: 0;
+    left: 0;
+  }
+
   .navigationLogo{
     order: 2;
+  }
+
+  .navigationContents{
+    position: relative;
   }
 
   .userAccountNavigationSection{
@@ -206,13 +226,48 @@ flex: 1;
 
   .menuNav{
     display: block;
-    font-size: 30px;
+    font-size: 23px;
     font-family: Back;
     color:#91DB69;
     text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
   
     align-items: flex-start;
-    margin-top: -350px;
+    margin-top: -470px; 
+    margin-left: 30px;
+    margin-bottom: 60px; 
+  }
+
+  .homeNavContainer svg, .productsNavContainer svg, .faqsNavContainer svg{
+    visibility: visible;
+    height: 25px;
+  }
+
+  .homeNavContainer svg{
+    margin-left: -35px;
+    margin-top: -8px;
+  }
+
+  .productsNavContainer svg{
+    height: 35px;
+    margin-left: -38px;
+    margin-top: -8px;
+  }
+
+  .faqsNavContainer svg{
+    margin-left: -35px;
+    margin-top: -3px;
+  }
+
+  .homeNav{
+    margin-right: 20px;
+  }
+
+  .productsNav{
+    margin-right: -20px;
+  }
+
+  .faqsNav{
+    margin-right: 24px; 
   }
 
   .navigationContents li, .navigationContents a{
@@ -242,7 +297,7 @@ flex: 1;
   }
 
   .navigationContents li a:hover{
-  font-size: 20px;
+  font-size: 13px;
 }
 
 }
