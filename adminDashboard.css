@@ -312,6 +312,7 @@ section{
    width: 100%;
     min-height: 100vh;
     display: none;
+    padding-bottom: 50px;
  /* margin-top: 59.5px; */
 
 }

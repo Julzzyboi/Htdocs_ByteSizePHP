@@ -62,8 +62,8 @@
       </div> <!--Poster here-->
 
 
-       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Make sure Bootstrap JS is loaded if you want to use Bootstrap components -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <!-- Make sure Bootstrap JS is loaded if you want to use Bootstrap components -->
       <script>
 
         let slideIndex = 0;
@@ -87,59 +87,59 @@
         }
 
 
-         let cart = [];
+        let cart = [];
 
         // Add to Cart button click handler
         $(document).on('click', '.addToCartBtn', function () {
-            const productId = $(this).data('id');
-            const productName = $(this).data('name');
-            const productPrice = parseFloat($(this).data('price'));
-            const productImage = $(this).data('image');
+          const optionId = $(this).data('id');
+          const itemName = $(this).data('name');
+          const itemPrice = parseFloat($(this).data('price'));
+          const itemImage = $(this).data('image');
 
-            // Check if item already in cart
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    image: productImage,
-                    qty: 1
-                });
-            }
-            renderCart();
+          // Check if item already in cart
+          const existing = cart.find(item => item.id === optionId);
+          if (existing) {
+            existing.qty += 1;
+          } else {
+            cart.push({
+              id: optionId,
+              name: itemName,
+              price: itemPrice,
+              image: itemImage,
+              qty: 1
+            });
+          }
+          renderCart();
         });
 
         // Render cart items in the cart container
         function renderCart() {
-            let html = '';
-            if (cart.length === 0) {
-                html = '<p class="emptyCart">Your cart is empty!</p>';
-            } else {
-                html = '<ul class="list-group mb-3">';
-                cart.forEach((item, idx) => {
-                    html += `
-        <li class="list-group-item d-flex align-items-center">
-          <img class="yourCartImage" src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
-          <span class="flex-grow-1">${item.name} (x${item.qty})</span>
-          <span class="me-3">Php ${(item.price * item.qty).toFixed(2)}</span>
-          <button class="btn btn-danger btn-sm removeFromCartBtn" data-idx="${idx}">&times;</button>
-        </li>
-      `;
-                });
-                html += '</ul>';
-                html += `<div class="text-end"><p>Total: Php ${cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)}</p></div>`;
-            }
-            $('#cartContainer').html(html);
+          let html = '';
+          if (cart.length === 0) {
+            html = '<p class="emptyCart">Your cart is empty!</p>';
+          } else {
+            html = '<ul class="list-group mb-3">';
+            cart.forEach((item, idx) => {
+              html += `
+<li class="list-group-item d-flex align-items-center">
+  <img class="yourCartImage" src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
+  <span class="flex-grow-1">${item.name} (x${item.qty})</span>
+  <span class="me-3">Php ${(item.price * item.qty).toFixed(2)}</span>
+  <button class="btn btn-danger btn-sm removeFromCartBtn" data-idx="${idx}">&times;</button>
+</li>
+`;
+            });
+            html += '</ul>';
+            html += `<div class="text-end"><p>Total: Php ${cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)}</p></div>`;
+          }
+          $('#cartContainer').html(html);
         }
 
         // Remove from cart handler
         $(document).on('click', '.removeFromCartBtn', function () {
-            const idx = $(this).data('idx');
-            cart.splice(idx, 1);
-            renderCart();
+          const idx = $(this).data('idx');
+          cart.splice(idx, 1);
+          renderCart();
         });
       </script>
 
@@ -237,99 +237,154 @@
 
             <section id="first">
               <div class="Product-Wrap card1">
-                <!-- <div class="menuName">Cookies</div> -->
-                <div class="product-grid"></div>
-              </div>
-            </section>
-            <!--pastillas-->
-            <section id="second">
-              <div class="Product-Wrap card2">
-                <!-- <div class="menuName">Pastillas</div> -->
-
                 <div class="product-grid">
                   <?php
-                  // Make sure $conn is your open MySQLi connection
                   include 'Db_connection.php';
-                  $query = "SELECT * FROM `tbl_product_id`";
+                  $category = 'Cookies'; // Change for each section
+                  
+                  $query = "
+        SELECT 
+          o.option_ID,
+          o.productOption,
+          o.productPrice,
+          v.variation_Name,
+          v.product_Image,
+          p.productCategory
+        FROM tbl_variation_option_id o
+        JOIN tbl_product_variation_id v ON o.productVariation_ID = v.productVariation_ID
+        JOIN tbl_product_id p ON v.product_ID = p.product_ID
+        WHERE p.productCategory = '$category'
+      ";
                   $result = mysqli_query($conn, $query);
                   if ($result) {
                     while ($row = mysqli_fetch_assoc($result)) {
                       ?>
-
                       <div class="product-card">
                         <div class="card-Image">
-                          <img src="<?= $row['productImage']; ?>" class="card-img-top"
-                            alt="<?= htmlspecialchars($row['productName']); ?>">
-
-                          <div class="card-body">
-                            <p class="card-title"><?= htmlspecialchars($row['productName']); ?></p>
-                            </>
-                            <p class="card-text"><?= htmlspecialchars($row['productDescription']); ?></p>
-                            <p class="card-text"><strong>Php <?= number_format($row['productPrice'], 2); ?></strong></p>
-                            <button class="btn btn-primary addToCartBtn" data-id="<?= $row['product_ID']; ?>"
-                              data-name="<?= htmlspecialchars($row['productName']); ?>"
-                              data-price="<?= $row['productPrice']; ?>" data-image="<?= $row['productImage']; ?>">Add
-                              to Cart</button>
-                          </div>
+                          <img src="<?= htmlspecialchars($row['product_Image']); ?>" class="card-img-top"
+                            alt="<?= htmlspecialchars($row['variation_Name']); ?>">
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($row['variation_Name']); ?></h5>
+                          <p class="card-text"><strong>Option:</strong> <?= htmlspecialchars($row['productOption']); ?></p>
+                          <p class="card-text"><strong>Price:</strong> Php <?= number_format($row['productPrice'], 2); ?>
+                          </p>
+                          <button class="btn btn-primary addToCartBtn" data-id="<?= $row['option_ID']; ?>"
+                            data-name="<?= htmlspecialchars($row['variation_Name'] . ' - ' . $row['productOption']); ?>"
+                            data-price="<?= $row['productPrice']; ?>"
+                            data-image="<?= htmlspecialchars($row['product_Image']); ?>">
+                            Add to Cart
+                          </button>
                         </div>
                       </div>
                       <?php
                     }
                   }
                   ?>
-
                 </div>
+              </div>
             </section>
+
+
+            <!--pastillas-->
+            <section id="second">
+              <div class="Product-Wrap card2">
+                <div class="product-grid">
+                  <?php
+                  include 'Db_connection.php';
+                  $category = 'Pastillas';
+
+                  $query = "
+        SELECT 
+          o.option_ID,
+          o.productOption,
+          o.productPrice,
+          v.variation_Name,
+          v.product_Image
+        FROM tbl_variation_option_id o
+        JOIN tbl_product_variation_id v ON o.productVariation_ID = v.productVariation_ID
+        JOIN tbl_product_id p ON v.product_ID = p.product_ID
+        WHERE p.productCategory = '$category'
+      ";
+                  $result = mysqli_query($conn, $query);
+                  if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                      <div class="product-card">
+                        <div class="card-Image">
+                          <img src="<?= htmlspecialchars($row['product_Image']); ?>" class="card-img-top"
+                            alt="<?= htmlspecialchars($row['variation_Name']); ?>">
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($row['variation_Name']); ?></h5>
+                          <p class="card-text"><strong>Option:</strong> <?= htmlspecialchars($row['productOption']); ?></p>
+                          <p class="card-text"><strong>Price:</strong> Php <?= number_format($row['productPrice'], 2); ?>
+                          </p>
+                          <button class="btn btn-primary addToCartBtn" data-id="<?= $row['option_ID']; ?>"
+                            data-name="<?= htmlspecialchars($row['variation_Name'] . ' - ' . $row['productOption']); ?>"
+                            data-price="<?= $row['productPrice']; ?>"
+                            data-image="<?= htmlspecialchars($row['product_Image']); ?>">
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                      <?php
+                    }
+                  }
+                  ?>
+                </div>
+              </div>
+            </section>
+
+
             <!--graham-->
             <section id="third">
-              <div class="product-grid">
-                <div class="product-card">
-                  <div class="product-name">Chocolate Graham Balls</div>
-                  <div class="product-info">
-                    <div class="product-qty">
-                      <a href="?id=7">7pcs</a>
-                    </div>
-                    <div class="product-qty">
-                      <a href="?id=10">10pcs</a>
-                    </div>
-                  </div>
-                </div>
+              <div class="Product-Wrap card3">
+                <div class="product-grid">
+                  <?php
+                  include 'Db_connection.php';
+                  $category = 'Graham Balls';
 
-                <div class="product-card">
-                  <div class="product-name">Ube Graham Balls</div>
-                  <div class="product-info">
-                    <div class="product-qty">
-                      <a href="?id=7">7pcs</a>
-                    </div>
-                    <div class="product-qty">
-                      <a href="?id=10">10pcs</a>
-                    </div>
-                  </div>
+                  $query = "
+        SELECT 
+          o.option_ID,
+          o.productOption,
+          o.productPrice,
+          v.variation_Name,
+          v.product_Image
+        FROM tbl_variation_option_id o
+        JOIN tbl_product_variation_id v ON o.productVariation_ID = v.productVariation_ID
+        JOIN tbl_product_id p ON v.product_ID = p.product_ID
+        WHERE p.productCategory = '$category'
+      ";
+                  $result = mysqli_query($conn, $query);
+                  if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                      <div class="product-card">
+                        <div class="card-Image">
+                          <img src="<?= htmlspecialchars($row['product_Image']); ?>" class="card-img-top"
+                            alt="<?= htmlspecialchars($row['variation_Name']); ?>">
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($row['variation_Name']); ?></h5>
+                          <p class="card-text"><strong>Option:</strong> <?= htmlspecialchars($row['productOption']); ?></p>
+                          <p class="card-text"><strong>Price:</strong> Php <?= number_format($row['productPrice'], 2); ?>
+                          </p>
+                          <button class="btn btn-primary addToCartBtn" data-id="<?= $row['option_ID']; ?>"
+                            data-name="<?= htmlspecialchars($row['variation_Name'] . ' - ' . $row['productOption']); ?>"
+                            data-price="<?= $row['productPrice']; ?>"
+                            data-image="<?= htmlspecialchars($row['product_Image']); ?>">
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                      <?php
+                    }
+                  }
+                  ?>
                 </div>
-
-                <div class="product-card">
-                  <div class="product-name">Matcha Graham Balls</div>
-                  <div class="product-info">
-                    <div class="product-qty">
-                      <a href="?id=7">7pcs</a>
-                    </div>
-                    <div class="product-qty">
-                      <a href="?id=10">10pcs</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="product-card">
-                  <div class="product-name">Mango Graham Balls</div>
-                  <div class="product-info">
-                    <div class="product-qty">
-                      <a href="?id=7">7pcs</a>
-                    </div>
-                    <div class="product-qty">
-                      <a href="?id=10">10pcs</a>
-                    </div>
-                  </div>
-                </div>
+              </div>
             </section>
 
             <section id="fourth">
@@ -343,11 +398,11 @@
       <div class="cart-section">
         <div class="cart-container">
           <p class="yourCartHeader">Your Cart</p>
-           <div class="container">
+          <div class="container">
             <div id="cartContainer">
-                <p class="emptyCart">Your cart is empty!</p>
+              <p class="emptyCart">Your cart is empty!</p>
             </div>
-        </div>
+          </div>
           <a href="transaction.html" class="Checkout-btn">Proceed to checkout</a>
         </div>
       </div>

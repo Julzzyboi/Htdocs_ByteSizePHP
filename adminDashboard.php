@@ -49,6 +49,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $stmt_user->close();
 }
+
+
+$category = 'Cookies';
+$sql = "
+    UPDATE tbl_product_id p
+    JOIN (
+        SELECT v.product_ID, SUM(CAST(o.productStock AS UNSIGNED)) AS totalStock
+        FROM tbl_variation_option_id o
+        JOIN tbl_product_variation_id v ON o.productVariation_ID = v.productVariation_ID
+        JOIN tbl_product_id p2 ON v.product_ID = p2.product_ID
+        WHERE p2.productCategory = '$category'
+        GROUP BY v.product_ID
+    ) AS stockSum ON p.product_ID = stockSum.product_ID
+    SET p.productStock = stockSum.totalStock
+    WHERE p.productCategory = '$category'
+";
+mysqli_query($conn, $sql);
+
 ?>
 
 
@@ -215,12 +233,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Inventory Section -->
     <section id="inventorySection" class="Page-Section">
 
-      <div class="ProductForm-Container">
+      <div class="ProductForm-Container mb-4 p-3 bg-white rounded shadow-sm">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">Add
           Product</button>
 
-        <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
-          <table class="table table-bordered table-striped table-hover" id="productTable">
+        <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
+          <table class="table table-bordered table-striped table-hover" id="productTable" >
             <thead class="table-dark text-center">
               <tr>
                 <th>Product ID</th>
@@ -260,13 +278,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
 
-      <div class="variation-Container">
+      <div class="variation-Container mb-4 p-3 bg-white rounded shadow-sm" >
         <!-- Button to open modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#variationModal">
           Add Variation
         </button>
 
-        <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
+        <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
           <table class="table table-bordered table-striped table-hover" id="variationTable">
             <thead class="table-dark text-center">
               <tr>
@@ -286,13 +304,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
       <!-- Variation Option -->
-      <div class="option-Container">
+      <div class="option-Container mb-4 p-3 bg-white rounded shadow-sm">
         
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#optionModal">
           Add Option
         </button>
         
-        <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
+        <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
           <table class="table table-bordered table-striped table-hover" id="optionTable">
             <thead class="table-dark text-center">
               <tr>
@@ -303,6 +321,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th>Price</th>
                 <th>Date Created</th>
                 <th>Date Updated</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody class="text-center align-middle">
@@ -460,6 +479,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Add Option</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- update modal option variation  -->
+<div class="modal fade" id="updateOptionModal" tabindex="-1" aria-labelledby="updateOptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="updateOptionForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateOptionModalLabel">Update Option</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="option_ID" id="edit_option_ID">
+          <div class="mb-3">
+            <label for="edit_productOption" class="form-label">Option Name</label>
+            <input type="text" class="form-control" name="productOption" id="edit_productOption" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_productStock" class="form-label">Stock</label>
+            <input type="text" class="form-control" name="productStock" id="edit_productStock" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_productPrice" class="form-label">Price</label>
+            <input type="text" class="form-control" name="productPrice" id="edit_productPrice" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Update Option</button>
         </div>
       </div>
     </form>
@@ -981,7 +1033,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // for product option
-    var optionTable = $('#optionTable').DataTable({
+  var optionTable = $('#optionTable').DataTable({
   ajax: {
     url: 'list_options.php',
     dataSrc: 'data'
@@ -991,7 +1043,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     { 
       data: null,
       render: function(data, type, row) {
-        // Show both ID and name for clarity
         return row.productVariation_ID + ' - ' + (row.variation_Name || '');
       }
     },
@@ -999,12 +1050,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     { data: 'productStock' },
     { data: 'productPrice' },
     { data: 'dateCreated' },
-    { data: 'dateUpdated' }
+    { data: 'dateUpdated' },
+    {
+      data: null,
+      orderable: false,
+      render: function(data, type, row) {
+        return `
+          <button class="btn btn-success btn-sm updateOptionBtn" data-id="${row.option_ID}">Update</button>
+          <button class="btn btn-danger btn-sm deleteOptionBtn" data-id="${row.option_ID}">Delete</button>
+        `;
+      }
+    }
   ]
 });
-
-
-
     // Add Option
     $('#optionForm').on('submit', function (e) {
       e.preventDefault();
@@ -1029,10 +1087,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       });
     });
 
+// show update modal
+$('#optionTable').on('click', '.updateOptionBtn', function () {
+  var id = $(this).data('id');
+  $.ajax({
+    url: 'get_option.php',
+    type: 'POST',
+    data: { option_ID: id },
+    dataType: 'json',
+    success: function (data) {
+      $('#edit_option_ID').val(data.option_ID);
+      $('#edit_productOption').val(data.productOption);
+      $('#edit_productStock').val(data.productStock);
+      $('#edit_productPrice').val(data.productPrice);
+      $('#updateOptionModal').modal('show');
+    }
+  });
+});
 
+// update message option
+$('#updateOptionForm').on('submit', function (e) {
+  e.preventDefault();
+  var formData = $(this).serialize();
+  $.ajax({
+    url: 'update_option.php',
+    type: 'POST',
+    data: formData,
+    dataType: 'json',
+    success: function (res) {
+      $('#updateOptionModal').modal('hide');
+      $('#updateOptionForm')[0].reset();
+      optionTable.ajax.reload();
+      Swal.fire({
+        icon: res.success ? 'success' : 'error',
+        title: res.success ? 'Success' : 'Error',
+        text: res.message,
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+  });
+});
 
-
-
+// delete message option
+$('#optionTable').on('click', '.deleteOptionBtn', function () {
+  var id = $(this).data('id');
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This will permanently delete the option.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: 'delete_option.php',
+        type: 'POST',
+        data: { option_ID: id },
+        dataType: 'json',
+        success: function (res) {
+          optionTable.ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Deleted!' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+    }
+  });
+});
   </script>
 </body>
 

@@ -8,21 +8,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $deliveryMode = $_POST['delivery'] ?? 'Pick-up';
     $address = $deliveryMode === 'Delivery' ? trim($_POST['address'] ?? '') : 'N/A';
     $totalAmount = $_POST['totalAmount'] ?? '₱0.00';
+    $user_ID = $_SESSION['user_ID'] ?? null; // Assuming user ID is stored in the session
 
-    if ($deliveryMode === 'Delivery' && $address === '') {
+    if ($deliveryMode === 'Delivery' && empty($address)) {
         $error = "Please enter a delivery address.";
     } else {
-        // Save order details to session (or database)
-        $_SESSION['orderDetails'] = [
-            'paymentMethod' => $paymentMethod,
-            'deliveryMode' => $deliveryMode,
-            'address' => $address,
-            'totalAmount' => $totalAmount
-        ];
+        // Insert order details into the tbl_payment_id table
+        $stmt = $conn->prepare("INSERT INTO tbl_payment_id (user_ID, paymentType_ID, paymentInfo, dateCreated, dateUpdated) VALUES (?, ?, ?, NOW(), NOW())");
+        $stmt->bind_param("iss", $user_ID, $paymentMethod, $totalAmount);
 
-        // Redirect to receipt page
-        header("Location: receipt.php");
-        exit();
+        if ($stmt->execute()) {
+            $_SESSION['orderDetails'] = [
+                'paymentMethod' => $paymentMethod,
+                'deliveryMode' => $deliveryMode,
+                'address' => $address,
+                'totalAmount' => $totalAmount
+            ];
+
+            $stmt->close();
+            $conn->close();
+
+            header("Location: receipt.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
     }
 }
 
@@ -64,7 +74,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
             <div class="paymentBoxGroup">
               <label for="payment">Payment Methods</label>
               <select id="payment">
-                <option value="nonee">None</option>
+                <option value="nonee">Select payment method</option>
                 <option value="cash">Cash</option>
                 <option value="e-payment">E-Payment</option>
               </select>
@@ -83,7 +93,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
             <div class="paymentBoxGroup">
               <label for="delivery">Mode of Delivery</label>
               <select id="delivery">
-                <option value="None">None</option>
+                <option value="None">Select mode of delivery</option>
                 <option value="Pick-up">Pick-up</option>
                 <option value="Delivery">Delivery</option>
               </select>
@@ -119,12 +129,8 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
     const modeToPay = document.getElementById("modetopay");
 
     deliverySelect.addEventListener("change", () => {
-      if (deliverySelect.value === "Delivery") {
-        addressGroup.style.display = "block";
-      } else {
-        addressGroup.style.display = "none";
-        addressInput.value = ""; 
-      }
+      addressGroup.style.display = deliverySelect.value === "Delivery" ? "block" : "none";
+      if (deliverySelect.value !== "Delivery") addressInput.value = "";
     });
 
     confirmBtn.addEventListener("click", () => {
@@ -133,76 +139,28 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
       const address = addressInput.value.trim();
       const totalAmount = amountDisplay.textContent;
 
-      if ((paymentMethod === "nonee" || paymentMethod === "None") &&
-          (deliveryMode === "None")) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Missing details',
-          text: 'Please select a payment method and delivery mode!',
-        });
-        return;
-      }
-
-      if ((paymentMethod === "nonee" || paymentMethod === "None")) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'No payment method',
-          text: 'Please select a payment method',
-        });
-        return;
-      }
-
-      if ((deliveryMode === "None")) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'No delivery mode',
-          text: 'Please select a delivery mode',
-        });
+      if (paymentMethod === "nonee" || deliveryMode === "None") {
+        Swal.fire({ icon: 'warning', title: 'Missing details', text: 'Please select a payment method and delivery mode!' });
         return;
       }
 
       if (deliveryMode === "Delivery" && address === "") {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Missing Address',
-          text: 'Please enter a delivery address.',
-        });
+        Swal.fire({ icon: 'warning', title: 'Missing Address', text: 'Please enter a delivery address.' });
         return;
       }
 
-      const orderDetails = {
-        paymentMethod,
-        deliveryMode,
-        address: deliveryMode === "Delivery" ? address : "N/A",
-        totalAmount
-      };
-
+      const orderDetails = { paymentMethod, deliveryMode, address: deliveryMode === "Delivery" ? address : "N/A", totalAmount };
       localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
       window.location.href = "receipt.php";
     });
 
-    if (deliverySelect.value === "Pick-up") {
-      addressGroup.style.display = "none";
-    }
-
-    const totalAmount = localStorage.getItem("totalAmount");
-    if (totalAmount) {
-      amountDisplay.textContent = `Php ${parseFloat(totalAmount).toFixed(2)}`;
-    } else {
-      amountDisplay.textContent = "Php 0.00"; 
-    }
+    amountDisplay.textContent = "Php " + (localStorage.getItem("totalAmount") || "0.00");
 
     paymentSelect.addEventListener('change', function () {
-      if (this.value === 'e-payment') {
-        modeToPay.style.display = 'block';
-      } else {
-        modeToPay.style.display = 'none';
-      }
+      modeToPay.style.display = this.value === 'e-payment' ? 'block' : 'none';
     });
 
-    if (paymentSelect.value !== 'e-payment') {
-      modeToPay.style.display = 'none';
-    }
+    modeToPay.style.display = paymentSelect.value === 'e-payment' ? 'block' : 'none';
   </script>
 
 </body>

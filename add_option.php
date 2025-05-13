@@ -17,10 +17,10 @@ $option = $conn->real_escape_string($_POST['productOption']);
 $stock = $conn->real_escape_string($_POST['productStock']);
 $price = $conn->real_escape_string($_POST['productPrice']);
 
-$sql = "INSERT INTO tbl_variation_option (productVariation_ID, productOption, productStock, productPrice) VALUES ($variation_ID, '$option', '$stock', '$price')";
+$sql = "INSERT INTO tbl_variation_option_id (productVariation_ID, productOption, productStock, productPrice) VALUES ($variation_ID, '$option', '$stock', '$price')";
 if ($conn->query($sql)) {
     echo json_encode(['success' => true, 'message' => 'Option added!']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $conn->error . " | SQL: $sql"]);
+    echo json_encode(['success' => false, 'message' => 'Database error: ' . $conn->error]);
 }
 ?>
