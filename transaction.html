@@ -103,12 +103,31 @@
   const totalAmount = amountDisplay.textContent;
 
 
-   if ((paymentMethod === "nonee" || paymentMethod === "None") ||
+
+   if ((paymentMethod === "nonee" || paymentMethod === "None") &&
       (deliveryMode === "None")) {
     Swal.fire({
       icon: 'warning',
       title: 'Missing details',
       text: 'Please select a payment method and delivery mode!',
+    });
+    return;
+  }
+
+    if ((paymentMethod === "nonee" || paymentMethod === "None")) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No payment method',
+      text: 'Please select a payment method',
+    });
+    return;
+  }
+
+   if ((deliveryMode === "None")) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No delivery mode',
+      text: 'Please select a delivery mode',
     });
     return;
   }
