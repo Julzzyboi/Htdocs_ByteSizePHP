@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart JS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+
+    <div id="chartContainer" style="width: 600px; height: 600px;">
+        <canvas id="productStockChart"></canvas>
+        <canvas id="activeUsersChart"></canvas>
+        <canvas id="quantityChart"></canvas>
+        <canvas id="salesChart"></canvas>
+    </div>
+
+    <script>
+    // Fetch data from PHP
+    fetch('get_products.php')
+      .then(response => response.json())
+      .then(data => {
+        // Example: Use productCategory as label, productStock as value
+        const labels = data.map(row => row.productCategory);
+        const stocks = data.map(row => Number(row.productStock));
+
+        const ctx = document.getElementById('productStockChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Product Stock',
+              data: stocks,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+
+<script>
+    // ACTIVE CUSTOMER
+    fetch('get_dashboard_data.php')
+      .then(res => res.json())
+      .then(data => {
+        // 1. Active Users Chart
+        const activeLabels = data.activeUsers.map(row => row.date);
+        const activeData = data.activeUsers.map(row => Number(row.activeUsers));
+        new Chart(document.getElementById('activeUsersChart').getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: activeLabels,
+            datasets: [{
+              label: 'Active Users',
+              data: activeData,
+              borderColor: 'rgba(54, 162, 235, 1)',
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              fill: true,
+            }]
+          }
+        });
+      }); // <-- This closes the .then()
+</script>
+
+    <script>
+        //SALES
+      fetch('get_products.php')
+      .then(response => response.json())
+      .then(data => {
+        // Example: Use productCategory as label, productStock as value
+        const labels = data.map(row => row.productCategory);
+        const stocks = data.map(row => Number(row.productStock));
+
+        const ctx = document.getElementById('productStockChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Product Stock',
+              data: stocks,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+
+    <script>
+
+      fetch('get_products.php')
+      .then(response => response.json())
+      .then(data => {
+        // Example: Use productCategory as label, productStock as value
+        const labels = data.map(row => row.productCategory);
+        const stocks = data.map(row => Number(row.productStock));
+
+        const ctx = document.getElementById('productStockChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Product Stock',
+              data: stocks,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+          </script>
+
+
+    </script>
+</body>
+</html>

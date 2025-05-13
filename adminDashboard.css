@@ -17,7 +17,7 @@
 
 body{
     background-color: #FFFEDE;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 html, body{
@@ -355,8 +355,6 @@ section.active-section {
 #accountSection{
     background-color: rgb(169, 247, 159);
     overflow: hidden;
-
-
 }
 
 /* for products */
@@ -367,7 +365,7 @@ section.active-section {
 
 /* for accounts */
 
-.Account-Container {
+/* .Account-Container {
     width: 100%;
     min-height: 100vh;       
     background-color: yellowgreen;
@@ -381,7 +379,7 @@ section.active-section {
     border-radius: 12px;                 
     position: relative;
 }
-
+ */
 
 .Account-Container form{
     display: flex;
@@ -393,18 +391,12 @@ section.active-section {
     height: 500px;
     background-color: yellow;
 }
-#AdminForm{
-    width:300px;
-    height: 300px;
-    border: solid black;
-}
 
 
 /* DataTables */
 .tableAdmin{
     background-color: white;
     border: 2px solid black;
-    width: 70%;
 }
 .LoginAct{
    background-color: white;
@@ -416,8 +408,6 @@ section.active-section {
 }
 
 /* for products */
-
-
 .variation-Container{
     border: 2px solid red;
 }

@@ -1,56 +1,8 @@
 <?php
-// Include database connection
+
 include('Db_connection.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Collect form data safely
-  $firstName = $_POST['firstName'] ?? '';
-  $lastName = $_POST['lastName'] ?? '';
-  $emailAddress = $_POST['emailAddress'] ?? '';
-  $phoneNumber = $_POST['phoneNumber'] ?? '';
-  $gender = $_POST['Gender'] ?? '';
-  $password = $_POST['Password'] ?? '';
-  $confirmPassword = $_POST['ConfirmPass'] ?? '';
-
-  // Validate required fields
-  if (empty($firstName) || empty($lastName) || empty($emailAddress) || empty($phoneNumber) || empty($gender) || empty($password) || empty($confirmPassword)) {
-    die("All fields are required.");
-  }
-
-  // Validate password match
-  if ($password !== $confirmPassword) {
-    die("Passwords do not match.");
-  }
-
-  // Hash the password
-  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-  // Insert into tbl_user_id
-  $stmt_user = $conn->prepare("INSERT INTO tbl_user_id (firstName, lastName, emailAddress, contactNumber, gender, password_Hash, userRole) VALUES (?, ?, ?, ?, ?, ?, 'admin')");
-  $stmt_user->bind_param("ssssss", $firstName, $lastName, $emailAddress, $phoneNumber, $gender, $hashedPassword);
-
-  if ($stmt_user->execute()) {
-    $user_id = $stmt_user->insert_id;
-
-    // Insert into tbl_admin_id
-    $stmt_admin = $conn->prepare("INSERT INTO tbl_admin_id (user_id, adminPassword_Hash) VALUES (?, ?)");
-    $stmt_admin->bind_param("is", $user_id, $hashedPassword);
-
-    if ($stmt_admin->execute()) {
-      echo "Admin account created successfully.";
-    } else {
-      echo "Error creating admin record: " . $stmt_admin->error;
-    }
-
-    $stmt_admin->close();
-  } else {
-    echo "Error creating user: " . $stmt_user->error;
-  }
-
-  $stmt_user->close();
-}
-
-
+// Stock update in products table
 $category = 'Cookies';
 $sql = "
     UPDATE tbl_product_id p
@@ -58,15 +10,11 @@ $sql = "
         SELECT v.product_ID, SUM(CAST(o.productStock AS UNSIGNED)) AS totalStock
         FROM tbl_variation_option_id o
         JOIN tbl_product_variation_id v ON o.productVariation_ID = v.productVariation_ID
-        JOIN tbl_product_id p2 ON v.product_ID = p2.product_ID
-        WHERE p2.productCategory = '$category'
         GROUP BY v.product_ID
     ) AS stockSum ON p.product_ID = stockSum.product_ID
     SET p.productStock = stockSum.totalStock
-    WHERE p.productCategory = '$category'
 ";
 mysqli_query($conn, $sql);
-
 ?>
 
 
@@ -238,7 +186,7 @@ mysqli_query($conn, $sql);
           Product</button>
 
         <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
-          <table class="table table-bordered table-striped table-hover" id="productTable" >
+          <table class="table table-bordered table-striped table-hover" id="productTable">
             <thead class="table-dark text-center">
               <tr>
                 <th>Product ID</th>
@@ -278,7 +226,7 @@ mysqli_query($conn, $sql);
       </div>
 
 
-      <div class="variation-Container mb-4 p-3 bg-white rounded shadow-sm" >
+      <div class="variation-Container mb-4 p-3 bg-white rounded shadow-sm">
         <!-- Button to open modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#variationModal">
           Add Variation
@@ -305,11 +253,11 @@ mysqli_query($conn, $sql);
 
       <!-- Variation Option -->
       <div class="option-Container mb-4 p-3 bg-white rounded shadow-sm">
-        
+
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#optionModal">
           Add Option
         </button>
-        
+
         <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
           <table class="table table-bordered table-striped table-hover" id="optionTable">
             <thead class="table-dark text-center">
@@ -405,10 +353,57 @@ mysqli_query($conn, $sql);
     </div>
   </div>
 
+</section>
 
+  <!-- Account section -->
+  <section id="accountSection" class="Page-Section">
+
+
+    <div class="Account-Container">
+
+
+     
+
+      <div class="tableAdmin">
+        <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
+          <table id="adminTable" class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Gender</th>
+                <th>User Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Login Activity -->
+      <div class="LoginAct">
+        <!-- <h2>Login Activity</h2> -->
+        <table id="loginTable" class="display">
+          <thead>
+            <tr>
+              <th>login_ID</th>
+              <th>user_ID</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Login Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
   </section>
+</div>
 
-  <!-- update modal variation -->
+<!-- update modal variation -->
   <div class="modal fade" id="updateVariationModal" tabindex="-1" aria-labelledby="updateVariationModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -438,21 +433,21 @@ mysqli_query($conn, $sql);
     </div>
   </div>
 
-   <!-- Add Option Modal -->
-<div class="modal fade" id="optionModal" tabindex="-1" aria-labelledby="optionModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form id="optionForm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="optionModalLabel">Add Variation Option</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="productVariation_ID" class="form-label">Variation</label>
-            <select class="form-control" name="productVariation_ID" id="productVariation_ID" required>
-              <option value="">Select Variation</option>
-              <?php
+  <!-- Add Option Modal -->
+  <div class="modal fade" id="optionModal" tabindex="-1" aria-labelledby="optionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="optionForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="optionModalLabel">Add Variation Option</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="productVariation_ID" class="form-label">Variation</label>
+              <select class="form-control" name="productVariation_ID" id="productVariation_ID" required>
+                <option value="">Select Variation</option>
+                <?php
                 $varQuery = "SELECT productVariation_ID, variation_Name FROM tbl_product_variation_id";
                 $varResult = mysqli_query($conn, $varQuery);
                 if ($varResult) {
@@ -460,58 +455,114 @@ mysqli_query($conn, $sql);
                     echo '<option value="' . $var['productVariation_ID'] . '">' . $var['productVariation_ID'] . ' - ' . htmlspecialchars($var['variation_Name']) . '</option>';
                   }
                 }
-              ?>
-            </select>
+                ?>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="productOption" class="form-label">Option Name</label>
+              <input type="text" class="form-control" name="productOption" id="productOption" required>
+            </div>
+            <div class="mb-3">
+              <label for="productStock" class="form-label">Stock</label>
+              <input type="text" class="form-control" name="productStock" id="productStock" required>
+            </div>
+            <div class="mb-3">
+              <label for="productPrice" class="form-label">Price</label>
+              <input type="text" class="form-control" name="productPrice" id="productPrice" required>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="productOption" class="form-label">Option Name</label>
-            <input type="text" class="form-control" name="productOption" id="productOption" required>
-          </div>
-          <div class="mb-3">
-            <label for="productStock" class="form-label">Stock</label>
-            <input type="text" class="form-control" name="productStock" id="productStock" required>
-          </div>
-          <div class="mb-3">
-            <label for="productPrice" class="form-label">Price</label>
-            <input type="text" class="form-control" name="productPrice" id="productPrice" required>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Option</button>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Option</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 
-<!-- update modal option variation  -->
-<div class="modal fade" id="updateOptionModal" tabindex="-1" aria-labelledby="updateOptionModalLabel" aria-hidden="true">
+  <!-- update modal option variation  -->
+  <div class="modal fade" id="updateOptionModal" tabindex="-1" aria-labelledby="updateOptionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="updateOptionForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateOptionModalLabel">Update Option</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="option_ID" id="edit_option_ID">
+            <div class="mb-3">
+              <label for="edit_productOption" class="form-label">Option Name</label>
+              <input type="text" class="form-control" name="productOption" id="edit_productOption" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_productStock" class="form-label">Stock</label>
+              <input type="text" class="form-control" name="productStock" id="edit_productStock" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_productPrice" class="form-label">Price</label>
+              <input type="text" class="form-control" name="productPrice" id="edit_productPrice" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update Option</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+ <!-- Add Admin Modal -->
+<div class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form id="updateOptionForm">
+    <form id="addAdminForm">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateOptionModalLabel">Update Option</h5>
+          <h5 class="modal-title" id="addAdminModalLabel">Add Admin</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" name="option_ID" id="edit_option_ID">
           <div class="mb-3">
-            <label for="edit_productOption" class="form-label">Option Name</label>
-            <input type="text" class="form-control" name="productOption" id="edit_productOption" required>
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" name="firstName" id="firstName" required>
           </div>
           <div class="mb-3">
-            <label for="edit_productStock" class="form-label">Stock</label>
-            <input type="text" class="form-control" name="productStock" id="edit_productStock" required>
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="lastName" id="lastName" required>
           </div>
           <div class="mb-3">
-            <label for="edit_productPrice" class="form-label">Price</label>
-            <input type="text" class="form-control" name="productPrice" id="edit_productPrice" required>
+            <label for="emailAddress" class="form-label">Email</label>
+            <input type="email" class="form-control" name="emailAddress" id="emailAddress" required>
+          </div>
+          <div class="mb-3">
+            <label for="contactNumber" class="form-label">Contact Number</label>
+            <input type="text" class="form-control" name="contactNumber" id="contactNumber" required>
+          </div>
+          <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-control" name="gender" id="gender" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" class="form-control" name="Password" id="Password" required>
+          </div>
+          <div class="mb-3">
+            <label for="ConfirmPass" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="ConfirmPass" id="ConfirmPass" required>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Update Option</button>
+          <button type="submit" class="btn btn-primary">Add Admin</button>
         </div>
       </div>
     </form>
@@ -519,107 +570,11 @@ mysqli_query($conn, $sql);
 </div>
 
 
+<!-- Button to open modal -->
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAdminModal">Add Admin</button>
 
-
-  <!-- Account section -->
-  <section id="accountSection" class="Page-Section">
-    <div class="Account-Container">
-      <form id="AdminForm" method="POST" action="adminDashboard.php">
-        <div class="Fname-Container">
-          <input type="text" class="inputFN" id="Fname" name="firstName" placeholder="First Name (ex. Juan)"
-            maxlength="50" />
-        </div>
-        <div class="Lname-Container">
-          <input type="text" class="inputLN" id="Lname" name="lastName" placeholder="Last Name (ex. Dela Cruz)"
-            maxlength="50" />
-        </div>
-
-        <div class="emailAddress-Container">
-          <input type="email" class="inputEmailSignUp" id="email" name="emailAddress"
-            placeholder="Email (ex. juandelacruz@gmail.com)" />
-        </div>
-        <div class="phoneNum-Container">
-          <input type="number" class="inputPhoneNum" id="Phone" name="phoneNumber"
-            placeholder="Phone Number (09991234567)" oninput="this.value=this.value.slice(0,11)" />
-        </div>
-
-        <div class="Gender-Container">
-          <label for="Gender">Gender:</label>
-          <input type="radio" id="Male" name="Gender" value="Male" />
-          <label for="Male">Male</label>
-          <input type="radio" id="Female" name="Gender" value="Female" />
-          <label for="Female">Female</label>
-        </div>
-
-        <div class="adminPassword-Container">
-          <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password" />
-        </div>
-
-        <div class="confirmPass-Container">
-          <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass"
-            placeholder="Confirm Password" />
-        </div>
-
-        <button type="submit">Create Admin</button>
-      </form>
-
-
-      <div class="tableAdmin">
-        <table id="adminTable" class="display">
-
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Contact Number</th>
-              <th>Gender</th>
-              <th>User Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            // Include your DB connection
-            include('Db_connection.php');
-            $sql = "SELECT * FROM tbl_user_id WHERE userRole = 'admin'";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['user_ID']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['firstName']) . " " . htmlspecialchars($row['lastName']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['emailAddress']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['contactNumber']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['userRole']) . "</td>";
-                echo "</tr>";
-              }
-            }
-            ?>
-          </tbody>
-        </table>
-      </div>
-      <!-- Login Activity -->
-      <div class="LoginAct">
-        <!-- <h2>Login Activity</h2> -->
-        <table id="loginTable" class="display">
-          <thead>
-            <tr>
-              <th>login_ID</th>
-              <th>user_ID</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Login Time</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-  </div>
-
+<!-- Button to open modal -->
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAdminModal">Add Admin</button>
 
   <!-- add product modal -->
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
@@ -689,45 +644,78 @@ mysqli_query($conn, $sql);
 
 
     // for admin creation DataTables
-    // $(document).ready(function () {
-    //   $('#adminTable').DataTable();
-    // });
+  $('#adminTable').DataTable({
+  ajax: 'fetch_admins.php',
+  columns: [
+    { data: 'user_ID' },
+    { data: 'fullName' },
+    { data: 'emailAddress' },
+    { data: 'contactNumber' },
+    { data: 'gender' },
+    { data: 'userRole' },
+    { data: 'actions', orderable: false, searchable: false }
+  ]
+});
+   $('#addAdminForm').on('submit', function(e) {
+  e.preventDefault();
+  $.ajax({
+    url: 'add_admin.php',
+    type: 'POST',
+    data: $(this).serialize(),
+    dataType: 'json',
+    success: function(res) {
+      $('#addAdminModal').modal('hide');
+      $('#addAdminForm')[0].reset();
+      $('#adminTable').DataTable().ajax.reload();
+      Swal.fire({
+        icon: res.success ? 'success' : 'error',
+        title: res.success ? 'Success' : 'Error',
+        text: res.message,
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+  });
+});
 
 
-    // $(document).ready(function () {
-    //   var loginTable = $('#loginTable').DataTable({
-    //     ajax: 'fetch_Login.php',
-    //     columns: [
-    //       { data: 'login_ID' },
-    //       { data: 'user_ID' },
-    //       { data: 'emailAddress' },
-    //       { data: 'userRole' },
-    //       { data: 'loginTime' }
-    //     ]
-    //   });
 
-    // Optionally reload table after form submission
-    $('#adminForm').on('submit', function (e) {
-      e.preventDefault();
-
-      $.ajax({
-        type: 'POST',
-        url: 'adminDashboard.php',
-        data: $(this).serialize(),
-        dataType: 'json',
-        success: function (response) {
-          if (response.success) {
-            Swal.fire('Success', response.message, 'success');
-            loginTable.ajax.reload(); // 🔁 Refresh login data
-            $('#adminForm')[0].reset(); // clear form
-          } else {
-            Swal.fire('Error', response.message, 'error');
-          }
-        }
+    $(document).ready(function () {
+      $('#loginTable').DataTable({
+        ajax: 'fetch_Login.php',
+        columns: [
+          { data: 'login_ID' },
+          { data: 'user_ID' },
+          { data: 'emailAddress' },
+          { data: 'userRole' },
+          { data: 'loginTime' }
+        ]
       });
     });
 
 
+    // Optionally reload table after form submission
+ $('#addAdminForm').on('submit', function(e) {
+  e.preventDefault();
+  $.ajax({
+    url: 'add_admin.php',
+    type: 'POST',
+    data: $(this).serialize(),
+    dataType: 'json',
+    success: function(res) {
+      $('#addAdminModal').modal('hide');
+      $('#addAdminForm')[0].reset();
+      $('#adminTable').DataTable().ajax.reload();
+      Swal.fire({
+        icon: res.success ? 'success' : 'error',
+        title: res.success ? 'Success' : 'Error',
+        text: res.message,
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+  });
+});
 
     // for products 
 
@@ -1033,36 +1021,36 @@ mysqli_query($conn, $sql);
 
 
     // for product option
-  var optionTable = $('#optionTable').DataTable({
-  ajax: {
-    url: 'list_options.php',
-    dataSrc: 'data'
-  },
-  columns: [
-    { data: 'option_ID' },
-    { 
-      data: null,
-      render: function(data, type, row) {
-        return row.productVariation_ID + ' - ' + (row.variation_Name || '');
-      }
-    },
-    { data: 'productOption' },
-    { data: 'productStock' },
-    { data: 'productPrice' },
-    { data: 'dateCreated' },
-    { data: 'dateUpdated' },
-    {
-      data: null,
-      orderable: false,
-      render: function(data, type, row) {
-        return `
+    var optionTable = $('#optionTable').DataTable({
+      ajax: {
+        url: 'list_options.php',
+        dataSrc: 'data'
+      },
+      columns: [
+        { data: 'option_ID' },
+        {
+          data: null,
+          render: function (data, type, row) {
+            return row.productVariation_ID + ' - ' + (row.variation_Name || '');
+          }
+        },
+        { data: 'productOption' },
+        { data: 'productStock' },
+        { data: 'productPrice' },
+        { data: 'dateCreated' },
+        { data: 'dateUpdated' },
+        {
+          data: null,
+          orderable: false,
+          render: function (data, type, row) {
+            return `
           <button class="btn btn-success btn-sm updateOptionBtn" data-id="${row.option_ID}">Update</button>
           <button class="btn btn-danger btn-sm deleteOptionBtn" data-id="${row.option_ID}">Delete</button>
         `;
-      }
-    }
-  ]
-});
+          }
+        }
+      ]
+    });
     // Add Option
     $('#optionForm').on('submit', function (e) {
       e.preventDefault();
@@ -1087,80 +1075,80 @@ mysqli_query($conn, $sql);
       });
     });
 
-// show update modal
-$('#optionTable').on('click', '.updateOptionBtn', function () {
-  var id = $(this).data('id');
-  $.ajax({
-    url: 'get_option.php',
-    type: 'POST',
-    data: { option_ID: id },
-    dataType: 'json',
-    success: function (data) {
-      $('#edit_option_ID').val(data.option_ID);
-      $('#edit_productOption').val(data.productOption);
-      $('#edit_productStock').val(data.productStock);
-      $('#edit_productPrice').val(data.productPrice);
-      $('#updateOptionModal').modal('show');
-    }
-  });
-});
-
-// update message option
-$('#updateOptionForm').on('submit', function (e) {
-  e.preventDefault();
-  var formData = $(this).serialize();
-  $.ajax({
-    url: 'update_option.php',
-    type: 'POST',
-    data: formData,
-    dataType: 'json',
-    success: function (res) {
-      $('#updateOptionModal').modal('hide');
-      $('#updateOptionForm')[0].reset();
-      optionTable.ajax.reload();
-      Swal.fire({
-        icon: res.success ? 'success' : 'error',
-        title: res.success ? 'Success' : 'Error',
-        text: res.message,
-        timer: 1500,
-        showConfirmButton: false
-      });
-    }
-  });
-});
-
-// delete message option
-$('#optionTable').on('click', '.deleteOptionBtn', function () {
-  var id = $(this).data('id');
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "This will permanently delete the option.",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
+    // show update modal
+    $('#optionTable').on('click', '.updateOptionBtn', function () {
+      var id = $(this).data('id');
       $.ajax({
-        url: 'delete_option.php',
+        url: 'get_option.php',
         type: 'POST',
         data: { option_ID: id },
         dataType: 'json',
+        success: function (data) {
+          $('#edit_option_ID').val(data.option_ID);
+          $('#edit_productOption').val(data.productOption);
+          $('#edit_productStock').val(data.productStock);
+          $('#edit_productPrice').val(data.productPrice);
+          $('#updateOptionModal').modal('show');
+        }
+      });
+    });
+
+    // update message option
+    $('#updateOptionForm').on('submit', function (e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+      $.ajax({
+        url: 'update_option.php',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
         success: function (res) {
+          $('#updateOptionModal').modal('hide');
+          $('#updateOptionForm')[0].reset();
           optionTable.ajax.reload();
           Swal.fire({
             icon: res.success ? 'success' : 'error',
-            title: res.success ? 'Deleted!' : 'Error',
+            title: res.success ? 'Success' : 'Error',
             text: res.message,
             timer: 1500,
             showConfirmButton: false
           });
         }
       });
-    }
-  });
-});
+    });
+
+    // delete message option
+    $('#optionTable').on('click', '.deleteOptionBtn', function () {
+      var id = $(this).data('id');
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete the option.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'delete_option.php',
+            type: 'POST',
+            data: { option_ID: id },
+            dataType: 'json',
+            success: function (res) {
+              optionTable.ajax.reload();
+              Swal.fire({
+                icon: res.success ? 'success' : 'error',
+                title: res.success ? 'Deleted!' : 'Error',
+                text: res.message,
+                timer: 1500,
+                showConfirmButton: false
+              });
+            }
+          });
+        }
+      });
+    });
   </script>
 </body>
 
