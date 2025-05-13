@@ -237,10 +237,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <thead class="table-dark text-center">
               <tr>
                 <th>Product ID</th>
-                <th>Category</th>
-                <th>Name</th>
+                <th>Product Category</th>
+                <!-- <th>Name</th> -->
                 <th>Stock</th>
-                <th>Image</th>
+                <!-- <th>Image</th> -->
                 <th>Update</th>
                 <th>Delete</th>
               </tr>
@@ -255,14 +255,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <tr>
                     <td><?= $row['product_ID']; ?></td>
                     <td><?= $row['productCategory']; ?></td>
-                    <td><?= $row['productName']; ?></td>
+                    <!-- <td><?= $row['productName']; ?></td> -->
                     
                     <!-- <td><?= 'Php ' . number_format($row['productPrice'], 2); ?></td> -->
                     <td><?= $row['productStock']; ?></td>
-                    <td>
+                    <!-- <td>
                       <img src="<?= $row['productImage']; ?>" alt="Product Image"
                         style="max-width: 80px; height: auto; border-radius: 5px;">
-                    </td>
+                    </td> -->
                     <td><a href="#" class="btn btn-success updateBtn" data-id="<?= $row['product_ID']; ?>">Update</a></td>
                     <td><a href="#" class="btn btn-danger deleteBtn" data-id="<?= $row['product_ID']; ?>">Delete</a></td>
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="product-card">
+                        <div class="card-Image">
+                          <img src="<?= $row['productImage']; ?>" class="card-img-top"
+                            alt="<?= htmlspecialchars($row['productName']); ?>">
+
+                          <div class="card-body">
+                            <p class="card-title"><?= htmlspecialchars($row['productName']); ?></p>
+                            </>
+                            <p class="card-text"><?= htmlspecialchars($row['productDescription']); ?></p>
+                            <p class="card-text"><strong>Php <?= number_format($row['productPrice'], 2); ?></strong></p>
+                            <button class="btn btn-primary addToCartBtn" data-id="<?= $row['product_ID']; ?>"
+                              data-name="<?= htmlspecialchars($row['productName']); ?>"
+                              data-price="<?= $row['productPrice']; ?>" data-image="<?= $row['productImage']; ?>">Add
+                              to Cart</button>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+
+                       <li class="list-group-item d-flex align-items-center">
+          <img src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
+          <span class="flex-grow-1">${item.name} (x${item.qty})</span>
+          <span class="me-3">Php ${(item.price * item.qty).toFixed(2)}</span>
+          <button class="btn btn-danger btn-sm removeFromCartBtn" data-idx="${idx}">&times;</button>
+        </li>
+</body>
+</html>
