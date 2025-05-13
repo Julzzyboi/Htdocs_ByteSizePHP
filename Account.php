@@ -278,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div id="tmodalTerms" class="modal">
                 <div class="modal-content">
                   <span class="close" onclick="closeModal('tmodalTerms')">&times;</span>
-                  <iframe src="terms.html" width="100%" height="400px"></iframe>
+                  <iframe class="iFrameTerms" src="terms.html" width="100%" height="400px"></iframe>
                 </div>
               </div>
 
@@ -286,7 +286,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div id="tmodalPrivacy" class="modal">
                 <div class="modal-content">
                   <span class="close" onclick="closeModal('tmodalPrivacy')">&times;</span>
-                  <iframe src="privacy.html" width="100%" height="400px"></iframe>
+                  <iframe class="iFramePrivacy" src="privacy.html" width="100%" height="400px"></iframe>
                 </div>
               </div>
 

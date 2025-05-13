@@ -590,12 +590,13 @@ button:active{
 .modal-content {
   background-color: transparent;
   margin: 10% auto;
-  padding: 20px;
+  /* padding: 20px; */
   width: 80%;
   max-width: 600px;
-  border-radius: 10px;
+  border-radius: 100px;
   position: relative;
   z-index: 10000; 
+
 }
 
 
@@ -865,8 +866,6 @@ button:active{
 
 /* MODAL TEMS AND PRIVACY*/
 
-.modal{
-    border: 6px solid #2e222f;
-    width: 600px;
-    height: 600px;
+.model-content{
+    overflow-x: hidden;
 }
