@@ -258,24 +258,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </table>
         </div>
       </div>
-        
+
 
       <div class="variation-Container">
-         <!-- Button to open modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#variationModal">
-        Add Variation
-      </button>
+        <!-- Button to open modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#variationModal">
+          Add Variation
+        </button>
 
-         <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
-         <table class="table table-bordered table-striped table-hover" id="variationTable">
+        <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
+          <table class="table table-bordered table-striped table-hover" id="variationTable">
             <thead class="table-dark text-center">
               <tr>
-                <th>Variation ID</th>
                 <th>Product ID</th>
                 <th>Variation Name</th>
                 <th>Image</th>
                 <th>Date Created</th>
                 <th>Date Updated</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody class="text-center align-middle">
@@ -286,165 +286,209 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
 
-        <!-- Update Modal -->
-        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form id="updateForm" method="post" enctype="multipart/form-data" action="update_product.php">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Update Product</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                  <input type="hidden" name="product_ID" id="edit_product_ID">
-
-                  <div class="mb-3">
-                    <label for="edit_productCategory" class="form-label">Product Category</label>
-                    <input type="text" class="form-control" name="productCategory" id="edit_productCategory">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" name="update_product" class="btn btn-primary">Update</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-      </div>
-
-     
-
-      <!-- Modal for adding variation -->
-      <div class="modal fade" id="variationModal" tabindex="-1" aria-labelledby="variationModalLabel"
-        aria-hidden="true">
+      <!-- Update Modal -->
+      <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <form id="variationForm" enctype="multipart/form-data">
+          <form id="updateForm" method="post" enctype="multipart/form-data" action="update_product.php">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="variationModalLabel">Add Variation</h5>
+                <h5 class="modal-title">Update Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-                <input type="hidden" name="product_ID" id="product_ID" value="<!-- set this dynamically -->">
+                <input type="hidden" name="product_ID" id="edit_product_ID">
+
                 <div class="mb-3">
-                  <label for="variation_Name" class="form-label">Variation Name</label>
-                  <input type="text" class="form-control" name="variation_Name" id="variation_Name" required>
-                </div>
-                <div class="mb-3">
-                  <label for="product_Image" class="form-label">Variation Image (optional)</label>
-                  <input type="file" class="form-control" name="product_Image" id="product_Image">
+                  <label for="edit_productCategory" class="form-label">Product Category</label>
+                  <input type="text" class="form-control" name="productCategory" id="edit_productCategory">
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add Variation</button>
+                <button type="submit" name="update_product" class="btn btn-primary">Update</button>
               </div>
             </div>
           </form>
         </div>
       </div>
-    </section>
+
+  </div>
 
 
 
-    <!-- Account section -->
-    <section id="accountSection" class="Page-Section">
-      <div class="Account-Container">
-        <form id="AdminForm" method="POST" action="adminDashboard.php">
-          <div class="Fname-Container">
-            <input type="text" class="inputFN" id="Fname" name="firstName" placeholder="First Name (ex. Juan)"
-              maxlength="50" />
+  <!-- Modal for adding variation -->
+  <div class="modal fade" id="variationModal" tabindex="-1" aria-labelledby="variationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="variationForm" enctype="multipart/form-data">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="variationModalLabel">Add Variation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
-          <div class="Lname-Container">
-            <input type="text" class="inputLN" id="Lname" name="lastName" placeholder="Last Name (ex. Dela Cruz)"
-              maxlength="50" />
-          </div>
-
-          <div class="emailAddress-Container">
-            <input type="email" class="inputEmailSignUp" id="email" name="emailAddress"
-              placeholder="Email (ex. juandelacruz@gmail.com)" />
-          </div>
-          <div class="phoneNum-Container">
-            <input type="number" class="inputPhoneNum" id="Phone" name="phoneNumber"
-              placeholder="Phone Number (09991234567)" oninput="this.value=this.value.slice(0,11)" />
-          </div>
-
-          <div class="Gender-Container">
-            <label for="Gender">Gender:</label>
-            <input type="radio" id="Male" name="Gender" value="Male" />
-            <label for="Male">Male</label>
-            <input type="radio" id="Female" name="Gender" value="Female" />
-            <label for="Female">Female</label>
-          </div>
-
-          <div class="adminPassword-Container">
-            <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password" />
-          </div>
-
-          <div class="confirmPass-Container">
-            <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass"
-              placeholder="Confirm Password" />
-          </div>
-
-          <button type="submit">Create Admin</button>
-        </form>
-
-
-        <div class="tableAdmin">
-          <table id="adminTable" class="display">
-
-            <thead>
-              <tr>
-                <th>User ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Gender</th>
-                <th>User Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-              // Include your DB connection
-              include('Db_connection.php');
-              $sql = "SELECT * FROM tbl_user_id WHERE userRole = 'admin'";
-              $result = $conn->query($sql);
-
-              if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                  echo "<tr>";
-                  echo "<td>" . htmlspecialchars($row['user_ID']) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['firstName']) . " " . htmlspecialchars($row['lastName']) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['emailAddress']) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['contactNumber']) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['userRole']) . "</td>";
-                  echo "</tr>";
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="product_ID" class="form-label">Product</label>
+              <select class="form-control" name="product_ID" id="product_ID" required>
+                <option value="">Select Product</option>
+                <?php
+                $productQuery = "SELECT product_ID, productCategory FROM tbl_product_id";
+                $productResult = mysqli_query($conn, $productQuery);
+                if ($productResult) {
+                  while ($prod = mysqli_fetch_assoc($productResult)) {
+                    echo '<option value="' . $prod['product_ID'] . '">' . $prod['product_ID'] . ' - ' . htmlspecialchars($prod['productCategory']) . '</option>';
+                  }
                 }
+                ?>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="variation_Name" class="form-label">Variation Name</label>
+              <input type="text" class="form-control" name="variation_Name" id="variation_Name" required>
+            </div>
+            <div class="mb-3">
+              <label for="product_Image" class="form-label">Variation Image (optional)</label>
+              <input type="file" class="form-control" name="product_Image" id="product_Image">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Variation</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  </section>
+
+  <!-- update modal variation -->
+  <div class="modal fade" id="updateVariationModal" tabindex="-1" aria-labelledby="updateVariationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="updateVariationForm" enctype="multipart/form-data">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateVariationModalLabel">Update Variation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="productVariation_ID" id="edit_productVariation_ID">
+            <div class="mb-3">
+              <label for="edit_variation_Name" class="form-label">Variation Name</label>
+              <input type="text" class="form-control" name="variation_Name" id="edit_variation_Name" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_product_Image" class="form-label">Variation Image (optional)</label>
+              <input type="file" class="form-control" name="product_Image" id="edit_product_Image">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update Variation</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Account section -->
+  <section id="accountSection" class="Page-Section">
+    <div class="Account-Container">
+      <form id="AdminForm" method="POST" action="adminDashboard.php">
+        <div class="Fname-Container">
+          <input type="text" class="inputFN" id="Fname" name="firstName" placeholder="First Name (ex. Juan)"
+            maxlength="50" />
+        </div>
+        <div class="Lname-Container">
+          <input type="text" class="inputLN" id="Lname" name="lastName" placeholder="Last Name (ex. Dela Cruz)"
+            maxlength="50" />
+        </div>
+
+        <div class="emailAddress-Container">
+          <input type="email" class="inputEmailSignUp" id="email" name="emailAddress"
+            placeholder="Email (ex. juandelacruz@gmail.com)" />
+        </div>
+        <div class="phoneNum-Container">
+          <input type="number" class="inputPhoneNum" id="Phone" name="phoneNumber"
+            placeholder="Phone Number (09991234567)" oninput="this.value=this.value.slice(0,11)" />
+        </div>
+
+        <div class="Gender-Container">
+          <label for="Gender">Gender:</label>
+          <input type="radio" id="Male" name="Gender" value="Male" />
+          <label for="Male">Male</label>
+          <input type="radio" id="Female" name="Gender" value="Female" />
+          <label for="Female">Female</label>
+        </div>
+
+        <div class="adminPassword-Container">
+          <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password" />
+        </div>
+
+        <div class="confirmPass-Container">
+          <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass"
+            placeholder="Confirm Password" />
+        </div>
+
+        <button type="submit">Create Admin</button>
+      </form>
+
+
+      <div class="tableAdmin">
+        <table id="adminTable" class="display">
+
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Gender</th>
+              <th>User Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            // Include your DB connection
+            include('Db_connection.php');
+            $sql = "SELECT * FROM tbl_user_id WHERE userRole = 'admin'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row['user_ID']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['firstName']) . " " . htmlspecialchars($row['lastName']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['emailAddress']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['contactNumber']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['userRole']) . "</td>";
+                echo "</tr>";
               }
-              ?>
-            </tbody>
-          </table>
-        </div>
-        <!-- Login Activity -->
-        <div class="LoginAct">
-          <!-- <h2>Login Activity</h2> -->
-          <table id="loginTable" class="display">
-            <thead>
-              <tr>
-                <th>login_ID</th>
-                <th>user_ID</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Login Time</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+            }
+            ?>
+          </tbody>
+        </table>
       </div>
-    </section>
+      <!-- Login Activity -->
+      <div class="LoginAct">
+        <!-- <h2>Login Activity</h2> -->
+        <table id="loginTable" class="display">
+          <thead>
+            <tr>
+              <th>login_ID</th>
+              <th>user_ID</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Login Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
   </div>
 
 
@@ -476,10 +520,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-   <!-- sweetalert2 -->
+  <!-- sweetalert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- scripts -->
-   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 
   <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
@@ -726,49 +770,143 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // for variation
-  $(document).ready(function () {
-  var table = $('#variationTable').DataTable({
-    ajax: {
-      url: 'list_variations.php',
-      dataSrc: 'data'
-    },
-    columns: [
-      { data: 'productVariation_ID' },
-      { data: 'variation_Name' },
-      {
-        data: 'product_Image',
-        render: function (data) {
-          return data ? `<img src="${data}" style="max-width:60px;">` : '';
-        }
+
+    var table = $('#variationTable').DataTable({
+      ajax: {
+        url: 'list_variations.php',
+        dataSrc: 'data'
       },
-      { data: 'dateCreated' },
-      { data: 'dateUpdated' }
-    ]
-  });
-
-
-
-      // Handle form submit
-      $('#variationForm').on('submit', function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-          url: 'add_variation.php',
-          type: 'POST',
-          data: formData,
-          contentType: false,
-          processData: false,
-          dataType: 'json',
-          success: function (res) {
-            $('#variationModal').modal('hide');
-            $('#variationForm')[0].reset();
-            table.ajax.reload();
-            alert(res.message);
+      columns: [
+        { data: 'product_ID' },
+        { data: 'variation_Name' },
+        {
+          data: 'product_Image',
+          render: function (data) {
+            return data ? `<img src="${data}" style="max-width:60px;">` : '';
           }
-        });
+        },
+        { data: 'dateCreated' },
+        { data: 'dateUpdated' },
+        {
+          data: null,
+          orderable: false,
+          render: function (data, type, row) {
+            return `
+          <button class="btn btn-success btn-sm updateVariationBtn" data-id="${row.productVariation_ID}">Update</button>
+          <button class="btn btn-danger btn-sm deleteVariationBtn" data-id="${row.productVariation_ID}">Delete</button>
+        `;
+          }
+        }
+      ]
+    });
+
+
+    $('#variationForm').on('submit', function (e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      $.ajax({
+        url: 'add_variation.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function (res) {
+          $('#variationModal').modal('hide');
+          $('#variationForm')[0].reset();
+          table.ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Success' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
       });
     });
 
+
+
+    // Update Variation
+    $('#variationTable').on('click', '.updateVariationBtn', function () {
+      var id = $(this).data('id');
+      $.ajax({
+        url: 'get_variation.php',
+        type: 'POST',
+        data: { productVariation_ID: id },
+        dataType: 'json',
+        success: function (data) {
+          $('#edit_productVariation_ID').val(data.productVariation_ID);
+          $('#edit_variation_Name').val(data.variation_Name);
+          $('#updateVariationModal').modal('show');
+        }
+      });
+    });
+
+    $('#updateVariationForm').on('submit', function (e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      $.ajax({
+        url: 'update_variation.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function (res) {
+          $('#updateVariationModal').modal('hide');
+          $('#updateVariationForm')[0].reset();
+          table.ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Success' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+    });
+
+    // Delete Variation
+    $('#variationTable').on('click', '.deleteVariationBtn', function () {
+      var id = $(this).data('id');
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete the variation.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'delete_variation.php',
+            type: 'POST',
+            data: { productVariation_ID: id },
+            dataType: 'json',
+            success: function (res) {
+              table.ajax.reload();
+              Swal.fire({
+                icon: res.success ? 'success' : 'error',
+                title: res.success ? 'Deleted!' : 'Error',
+                text: res.message,
+                timer: 1500,
+                showConfirmButton: false
+              });
+            }
+          });
+        }
+      });
+    });
+
+
+    // for product option
+
+
+    
   </script>
 </body>
 

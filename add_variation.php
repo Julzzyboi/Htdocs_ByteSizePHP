@@ -26,7 +26,7 @@ if (isset($_FILES['product_Image']) && $_FILES['product_Image']['error'] == 0) {
     }
 }
 
-$sql = "INSERT INTO tbl_product_variation_id (product_ID, product_Image, variation_Name) VALUES ($product_ID, '$product_Image', '$variation_Name')";
+$sql = "INSERT INTO tbl_product_variation_id (product_ID, variation_Name, product_Image) VALUES ($product_ID, '$variation_Name', '$product_Image')";
 
 if ($conn->query($sql)) {
     echo json_encode(['success' => true, 'message' => 'Variation added!']);

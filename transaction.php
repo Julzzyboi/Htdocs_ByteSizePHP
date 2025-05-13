@@ -64,7 +64,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
             <div class="paymentBoxGroup">
               <label for="payment">Payment Methods</label>
               <select id="payment">
-                <option value="nonee">None</option>
+                <option value="nonee">Select payment method</option>
                 <option value="cash">Cash</option>
                 <option value="e-payment">E-Payment</option>
               </select>
@@ -83,7 +83,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
             <div class="paymentBoxGroup">
               <label for="delivery">Mode of Delivery</label>
               <select id="delivery">
-                <option value="None">None</option>
+                <option value="None">Select mode of delivery</option>
                 <option value="Pick-up">Pick-up</option>
                 <option value="Delivery">Delivery</option>
               </select>
