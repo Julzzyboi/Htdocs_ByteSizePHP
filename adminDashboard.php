@@ -275,6 +275,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th>Image</th>
                 <th>Date Created</th>
                 <th>Date Updated</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody class="text-center align-middle">
@@ -315,36 +316,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      
 
       <!-- Modal for adding variation -->
-      <div class="modal fade" id="variationModal" tabindex="-1" aria-labelledby="variationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-          <form id="variationForm" enctype="multipart/form-data">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="variationModalLabel">Add Variation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                <input type="hidden" name="product_ID" id="product_ID" value="<!-- set this dynamically -->">
-                <div class="mb-3">
-                  <label for="variation_Name" class="form-label">Variation Name</label>
-                  <input type="text" class="form-control" name="variation_Name" id="variation_Name" required>
-                </div>
-                <div class="mb-3">
-                  <label for="product_Image" class="form-label">Variation Image (optional)</label>
-                  <input type="file" class="form-control" name="product_Image" id="product_Image">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add Variation</button>
-              </div>
-            </div>
-          </form>
+     <div class="modal fade" id="variationModal" tabindex="-1" aria-labelledby="variationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="variationForm" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="variationModalLabel">Add Variation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="product_ID" class="form-label">Product</label>
+            <select class="form-control" name="product_ID" id="product_ID" required>
+              <option value="">Select Product</option>
+              <?php
+                $productQuery = "SELECT product_ID, productCategory FROM tbl_product_id";
+                $productResult = mysqli_query($conn, $productQuery);
+                if ($productResult) {
+                  while ($prod = mysqli_fetch_assoc($productResult)) {
+                    echo '<option value="' . $prod['product_ID'] . '">' . $prod['product_ID'] . ' - ' . htmlspecialchars($prod['productCategory']) . '</option>';
+                  }
+                }
+              ?>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="variation_Name" class="form-label">Variation Name</label>
+            <input type="text" class="form-control" name="variation_Name" id="variation_Name" required>
+          </div>
+          <div class="mb-3">
+            <label for="product_Image" class="form-label">Variation Image (optional)</label>
+            <input type="file" class="form-control" name="product_Image" id="product_Image">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Variation</button>
         </div>
       </div>
+    </form>
+  </div>
+</div>
+
+
     </section>
 
+    <!-- update modal variation -->
+    <div class="modal fade" id="updateVariationModal" tabindex="-1" aria-labelledby="updateVariationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="updateVariationForm" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateVariationModalLabel">Update Variation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="productVariation_ID" id="edit_productVariation_ID">
+          <div class="mb-3">
+            <label for="edit_variation_Name" class="form-label">Variation Name</label>
+            <input type="text" class="form-control" name="variation_Name" id="edit_variation_Name" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_product_Image" class="form-label">Variation Image (optional)</label>
+            <input type="file" class="form-control" name="product_Image" id="edit_product_Image">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Update Variation</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
 
     <!-- Account section -->
@@ -725,48 +769,150 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // for variation
-   $(document).ready(function () {
+  // $(document).ready(function () {
+  // var table = $('#variationTable').DataTable({
+  //   ajax: {
+  //     url: 'list_variations.php',
+  //     dataSrc: 'data'
+  //   },
+  //   columns: [
+  //     { data: 'product_ID' },
+  //     { data: 'variation_Name' },
+  //     {
+  //       data: 'product_Image',
+  //       render: function (data) {
+  //         return data ? `<img src="${data}" style="max-width:60px;">` : '';
+  //       }
+  //     },
+  //     { data: 'dateCreated' },
+  //     { data: 'dateUpdated' }
+  //   ]
+  // });
+
   var table = $('#variationTable').DataTable({
-    ajax: {
-      url: 'list_variations.php',
-      dataSrc: 'data'
+  ajax: {
+    url: 'list_variations.php',
+    dataSrc: 'data'
+  },
+  columns: [
+    { data: 'product_ID' },
+    { data: 'variation_Name' },
+    {
+      data: 'product_Image',
+      render: function (data) {
+        return data ? `<img src="${data}" style="max-width:60px;">` : '';
+      }
     },
-    columns: [
-      { data: 'productVariation_ID' },
-      { data: 'variation_Name' },
-      {
-        data: 'product_Image',
-        render: function (data) {
-          return data ? `<img src="${data}" style="max-width:60px;">` : '';
-        }
-      },
-      { data: 'dateCreated' },
-      { data: 'dateUpdated' }
-    ]
+    { data: 'dateCreated' },
+    { data: 'dateUpdated' },
+    {
+      data: null,
+      orderable: false,
+      render: function (data, type, row) {
+        return `
+          <button class="btn btn-success btn-sm updateVariationBtn" data-id="${row.productVariation_ID}">Update</button>
+          <button class="btn btn-danger btn-sm deleteVariationBtn" data-id="${row.productVariation_ID}">Delete</button>
+        `;
+      }
+    }
+  ]
+});
+
+
+  $('#variationForm').on('submit', function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+      url: 'add_variation.php',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function (res) {
+        $('#variationModal').modal('hide');
+        $('#variationForm')[0].reset();
+        table.ajax.reload();
+        alert(res.message);
+      }
+    });
   });
 
 
-      // Handle form submit
-      $('#variationForm').on('submit', function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-          url: 'add_variation.php',
-          type: 'POST',
-          data: formData,
-          contentType: false,
-          processData: false,
-          dataType: 'json',
-          success: function (res) {
-            $('#variationModal').modal('hide');
-            $('#variationForm')[0].reset();
-            table.ajax.reload();
-            alert(res.message);
-          }
-        });
-      });
-    });
 
+// Update Variation
+$('#variationTable').on('click', '.updateVariationBtn', function () {
+  var id = $(this).data('id');
+  $.ajax({
+    url: 'get_variation.php',
+    type: 'POST',
+    data: { productVariation_ID: id },
+    dataType: 'json',
+    success: function (data) {
+      $('#edit_productVariation_ID').val(data.productVariation_ID);
+      $('#edit_variation_Name').val(data.variation_Name);
+      $('#updateVariationModal').modal('show');
+    }
+  });
+});
+
+$('#updateVariationForm').on('submit', function (e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+  $.ajax({
+    url: 'update_variation.php',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function (res) {
+      $('#updateVariationModal').modal('hide');
+      $('#updateVariationForm')[0].reset();
+      table.ajax.reload();
+      Swal.fire({
+        icon: res.success ? 'success' : 'error',
+        title: res.success ? 'Success' : 'Error',
+        text: res.message,
+        timer: 1500,
+        showConfirmButton: false
+      });
+    }
+  });
+});
+
+// Delete Variation
+$('#variationTable').on('click', '.deleteVariationBtn', function () {
+  var id = $(this).data('id');
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This will permanently delete the variation.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: 'delete_variation.php',
+        type: 'POST',
+        data: { productVariation_ID: id },
+        dataType: 'json',
+        success: function (res) {
+          table.ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Deleted!' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+    }
+  });
+});
   </script>
 </body>
 
