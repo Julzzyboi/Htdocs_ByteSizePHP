@@ -36,73 +36,174 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Transaction</title>
-  <link rel="stylesheet" href="transaction.css" />
-  <style>.hidden { display: none; }</style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="transaction.css"/>
 </head>
 <body>
 
-<div class="modal-overlay active" id="checkoutModal">
-  <section class="checkoutContainer">
-    <h1>CHECKOUT</h1>
-    <h3>Order Details:</h3>
+  <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#checkoutModal" id="launchModalBtn">
+    Launch Checkout
+  </button>
 
-    <?php if (!empty($error)): ?>
-      <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-    <?php endif; ?>
+  <!-- Bootstrap Modal -->
+  <div class="modal fade show d-block" id="checkoutModal" tabindex="-1" aria-modal="true" role="dialog" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-0">
+        <div class="checkoutContainer">
+          <div class="modal-body">
 
-    <div class="amount">
-      <p>Total Amount to Pay: <span id="amountDisplay">₱<?php echo number_format($totalAmount, 2); ?></span></p>
+            <h1>CHECKOUT</h1>
+            <h3>Order Details:</h3>
+
+            <div class="amount">
+              <p>Total Amount to Pay: <span id="amountDisplay">Php 0.00</span></p>
+            </div>
+
+            <div class="paymentBoxGroup">
+              <label for="payment">Payment Methods</label>
+              <select id="payment">
+                <option value="nonee">None</option>
+                <option value="cash">Cash</option>
+                <option value="e-payment">E-Payment</option>
+              </select>
+            </div>
+
+            <div class="paymentBoxGroup" id="modetopay">
+              <label for="payment">E-Payment Method</label>
+              <select id="e-paymentm">
+                <option value="GCash">GCash</option>
+                <option value="maya">Maya</option>
+                <option value="GoTyme">GoTyme</option>
+                <option value="QR Ph">QR Ph</option>
+              </select>
+            </div>
+
+            <div class="paymentBoxGroup">
+              <label for="delivery">Mode of Delivery</label>
+              <select id="delivery">
+                <option value="None">None</option>
+                <option value="Pick-up">Pick-up</option>
+                <option value="Delivery">Delivery</option>
+              </select>
+            </div>
+
+            <div class="paymentBoxGroup" id="addressGroup">
+              <label for="address">Delivery Address</label>
+              <input type="text" id="address" placeholder="Ex.: 123 M.H Del Pilar St., Espana, Manila" />
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="Product.html" class="backtoCartbtn">Back to Cart</a>
+              <button class="confirmButton" id="confirmBtn">Confirm</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <form method="POST" action="transaction.php">
-      <input type="hidden" name="totalAmount" value="<?php echo number_format($totalAmount, 2); ?>">
+  <div id="modalOverlay">
+    <div id="modalContent"></div>
+  </div>
 
-      <div class="paymentBoxGroup">
-        <label for="payment">Payment Methods</label>
-        <select id="payment" name="payment">
-          <option value="Cash">Cash</option>
-          <option value="E-Payment">E-Payment</option>
-        </select>
-      </div>
+  <script>
+    const deliverySelect = document.getElementById("delivery");
+    const addressGroup = document.getElementById("addressGroup");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const paymentSelect = document.getElementById("payment");
+    const addressInput = document.getElementById("address");
+    const amountDisplay = document.getElementById("amountDisplay");
+    const modeToPay = document.getElementById("modetopay");
 
-      <div class="paymentBoxGroup">
-        <label for="delivery">Mode of Delivery</label>
-        <select id="delivery" name="delivery">
-          <option value="Pick-up">Pick-up</option>
-          <option value="Delivery">Delivery</option>
-        </select>
-      </div>
+    deliverySelect.addEventListener("change", () => {
+      if (deliverySelect.value === "Delivery") {
+        addressGroup.style.display = "block";
+      } else {
+        addressGroup.style.display = "none";
+        addressInput.value = ""; 
+      }
+    });
 
-      <div class="paymentBoxGroup" id="addressGroup">
-        <label for="address">Delivery Address</label>
-        <input type="text" id="address" name="address" placeholder="UST" />
-      </div>
+    confirmBtn.addEventListener("click", () => {
+      const paymentMethod = paymentSelect.value;
+      const deliveryMode = deliverySelect.value;
+      const address = addressInput.value.trim();
+      const totalAmount = amountDisplay.textContent;
 
-      <a href="Product.php" class="backtoCartbtn">Back to Cart</a>
-      <button type="submit" class="confirmButton">Confirm</button>
-    </form>
-  </section>
-</div>
+      if ((paymentMethod === "nonee" || paymentMethod === "None") &&
+          (deliveryMode === "None")) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Missing details',
+          text: 'Please select a payment method and delivery mode!',
+        });
+        return;
+      }
 
-<script>
-  const deliverySelect = document.getElementById("delivery");
-  const addressGroup = document.getElementById("addressGroup");
-  const addressInput = document.getElementById("address");
+      if ((paymentMethod === "nonee" || paymentMethod === "None")) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No payment method',
+          text: 'Please select a payment method',
+        });
+        return;
+      }
 
-  deliverySelect.addEventListener("change", () => {
-    if (deliverySelect.value === "Delivery") {
-      addressGroup.style.display = "block";
-    } else {
+      if ((deliveryMode === "None")) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No delivery mode',
+          text: 'Please select a delivery mode',
+        });
+        return;
+      }
+
+      if (deliveryMode === "Delivery" && address === "") {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Missing Address',
+          text: 'Please enter a delivery address.',
+        });
+        return;
+      }
+
+      const orderDetails = {
+        paymentMethod,
+        deliveryMode,
+        address: deliveryMode === "Delivery" ? address : "N/A",
+        totalAmount
+      };
+
+      localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+      window.location.href = "receipt.php";
+    });
+
+    if (deliverySelect.value === "Pick-up") {
       addressGroup.style.display = "none";
-      addressInput.value = "";
     }
-  });
 
-  // Initial visibility check
-  if (deliverySelect.value === "Pick-up") {
-    addressGroup.style.display = "none";
-  }
-</script>
+    const totalAmount = localStorage.getItem("totalAmount");
+    if (totalAmount) {
+      amountDisplay.textContent = `Php ${parseFloat(totalAmount).toFixed(2)}`;
+    } else {
+      amountDisplay.textContent = "Php 0.00"; 
+    }
+
+    paymentSelect.addEventListener('change', function () {
+      if (this.value === 'e-payment') {
+        modeToPay.style.display = 'block';
+      } else {
+        modeToPay.style.display = 'none';
+      }
+    });
+
+    if (paymentSelect.value !== 'e-payment') {
+      modeToPay.style.display = 'none';
+    }
+  </script>
 
 </body>
 </html>
