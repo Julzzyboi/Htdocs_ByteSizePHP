@@ -285,8 +285,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
       </div>
 
+      <!-- Variation Option -->
+      <div class="option-Container">
+        
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#optionModal">
+          Add Option
+        </button>
+        
+        <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
+          <table class="table table-bordered table-striped table-hover" id="optionTable">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>Option ID</th>
+                <th>Variation ID</th>
+                <th>Option Name</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Date Created</th>
+                <th>Date Updated</th>
+              </tr>
+            </thead>
+            <tbody class="text-center align-middle">
+              <!-- DataTables will fill this -->
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-      <!-- Update Modal -->
+
+
+      <!-- Update Modal Products -->
       <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <form id="updateForm" method="post" enctype="multipart/form-data" action="update_product.php">
@@ -390,6 +418,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </form>
     </div>
   </div>
+
+   <!-- Add Option Modal -->
+<div class="modal fade" id="optionModal" tabindex="-1" aria-labelledby="optionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="optionForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="optionModalLabel">Add Variation Option</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="productVariation_ID" class="form-label">Variation</label>
+            <select class="form-control" name="productVariation_ID" id="productVariation_ID" required>
+              <option value="">Select Variation</option>
+              <?php
+                $varQuery = "SELECT productVariation_ID, variation_Name FROM tbl_product_variation_id";
+                $varResult = mysqli_query($conn, $varQuery);
+                if ($varResult) {
+                  while ($var = mysqli_fetch_assoc($varResult)) {
+                    echo '<option value="' . $var['productVariation_ID'] . '">' . $var['productVariation_ID'] . ' - ' . htmlspecialchars($var['variation_Name']) . '</option>';
+                  }
+                }
+              ?>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="productOption" class="form-label">Option Name</label>
+            <input type="text" class="form-control" name="productOption" id="productOption" required>
+          </div>
+          <div class="mb-3">
+            <label for="productStock" class="form-label">Stock</label>
+            <input type="text" class="form-control" name="productStock" id="productStock" required>
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Price</label>
+            <input type="text" class="form-control" name="productPrice" id="productPrice" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Option</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 
 
   <!-- Account section -->
@@ -904,9 +981,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // for product option
+    var optionTable = $('#optionTable').DataTable({
+  ajax: {
+    url: 'list_options.php',
+    dataSrc: 'data'
+  },
+  columns: [
+    { data: 'option_ID' },
+    { 
+      data: null,
+      render: function(data, type, row) {
+        // Show both ID and name for clarity
+        return row.productVariation_ID + ' - ' + (row.variation_Name || '');
+      }
+    },
+    { data: 'productOption' },
+    { data: 'productStock' },
+    { data: 'productPrice' },
+    { data: 'dateCreated' },
+    { data: 'dateUpdated' }
+  ]
+});
 
 
-    
+
+    // Add Option
+    $('#optionForm').on('submit', function (e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+      $.ajax({
+        url: 'add_option.php',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function (res) {
+          $('#optionModal').modal('hide');
+          $('#optionForm')[0].reset();
+          optionTable.ajax.reload(); // Refresh the DataTable
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Success' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+    });
+
+
+
+
+
   </script>
 </body>
 

@@ -420,3 +420,6 @@ section.active-section {
 .variation-Container{
     border: 2px solid red;
 }
+.option-Container{
+    border: 2px solid purple;
+}
