@@ -770,25 +770,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // for variation
-    // $(document).ready(function () {
-    // var table = $('#variationTable').DataTable({
-    //   ajax: {
-    //     url: 'list_variations.php',
-    //     dataSrc: 'data'
-    //   },
-    //   columns: [
-    //     { data: 'product_ID' },
-    //     { data: 'variation_Name' },
-    //     {
-    //       data: 'product_Image',
-    //       render: function (data) {
-    //         return data ? `<img src="${data}" style="max-width:60px;">` : '';
-    //       }
-    //     },
-    //     { data: 'dateCreated' },
-    //     { data: 'dateUpdated' }
-    //   ]
-    // });
 
     var table = $('#variationTable').DataTable({
       ajax: {
@@ -920,6 +901,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       });
     });
+
+
+    // for product option
+
+
+    
   </script>
 </body>
 
