@@ -116,13 +116,13 @@
         function renderCart() {
             let html = '';
             if (cart.length === 0) {
-                html = '<p>Your cart is empty.</p>';
+                html = '<p class="emptyCart">Your cart is empty!</p>';
             } else {
                 html = '<ul class="list-group mb-3">';
                 cart.forEach((item, idx) => {
                     html += `
         <li class="list-group-item d-flex align-items-center">
-          <img src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
+          <img class="yourCartImage" src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
           <span class="flex-grow-1">${item.name} (x${item.qty})</span>
           <span class="me-3">Php ${(item.price * item.qty).toFixed(2)}</span>
           <button class="btn btn-danger btn-sm removeFromCartBtn" data-idx="${idx}">&times;</button>
@@ -130,7 +130,7 @@
       `;
                 });
                 html += '</ul>';
-                html += `<div class="text-end"><strong>Total: Php ${cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)}</strong></div>`;
+                html += `<div class="text-end"><p>Total: Php ${cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)}</p></div>`;
             }
             $('#cartContainer').html(html);
         }
@@ -342,11 +342,10 @@
 
       <div class="cart-section">
         <div class="cart-container">
-          <h2>Your Cart</h2>
+          <p class="yourCartHeader">Your Cart</p>
            <div class="container">
-            <h3>Your Cart</h3>
             <div id="cartContainer">
-                <p>Your cart is empty.</p>
+                <p class="emptyCart">Your cart is empty!</p>
             </div>
         </div>
           <a href="transaction.html" class="Checkout-btn">Proceed to checkout</a>
