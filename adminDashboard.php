@@ -270,7 +270,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          <table class="table table-bordered table-striped table-hover" id="variationTable">
             <thead class="table-dark text-center">
               <tr>
-                <th>Variation ID</th>
                 <th>Product ID</th>
                 <th>Variation Name</th>
                 <th>Image</th>
@@ -487,32 +486,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script>
 
     document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".nav-link a");
-  const sections = document.querySelectorAll("section");
+      const links = document.querySelectorAll(".nav-link a");
+      const sections = document.querySelectorAll("section");
 
-  // Function to show the correct section
-  function showSectionByHash() {
-    const hash = window.location.hash || "#dashboardSection";
-    sections.forEach(section => section.style.display = "none");
-    const targetSection = document.querySelector(hash);
-    if (targetSection) targetSection.style.display = "block";
-  }
+      // Hide all sections initially
+      sections.forEach(section => section.style.display = "none");
 
-  // Show the correct section on page load
-  showSectionByHash();
+      // Show dashboard by default
+      const defaultSection = document.querySelector("#dashboardSection");
+      if (defaultSection) defaultSection.style.display = "block";
 
-  // Show the correct section when a nav link is clicked
-  links.forEach(link => {
-    link.addEventListener("click", function (e) {
-      // Update the hash in the URL
-      window.location.hash = this.getAttribute("href");
-      showSectionByHash();
+      links.forEach(link => {
+        link.addEventListener("click", function (e) {
+          // e.preventDefault();
+
+          // Hide all sections
+          sections.forEach(section => section.style.display = "none");
+
+          // Get the target section from href
+          const targetId = this.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+
+          // Show the selected section
+          if (targetSection) targetSection.style.display = "block";
+        });
+      });
     });
-  });
 
-  // Also handle back/forward navigation
-  window.addEventListener("hashchange", showSectionByHash);
-});
+
     // for admin creation DataTables
     // $(document).ready(function () {
     //   $('#adminTable').DataTable();
@@ -724,23 +725,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // for variation
- $('#variationTable').DataTable({
-  ajax: {
-    url: 'list_variations.php',
-    dataSrc: 'data'
-  },
-  columns: [
-    { data: 'productVariation_ID', title: 'ID' },
-    { data: 'product_ID', title: 'Product ID' },
-    { data: 'variation_Name', title: 'Variation Name' },
-    { data: 'product_Image', title: 'Image', render: function(data) {
-        return data ? `<img src="${data}" style="max-width:60px;">` : '';
-      }
+   $(document).ready(function () {
+  var table = $('#variationTable').DataTable({
+    ajax: {
+      url: 'list_variations.php',
+      dataSrc: 'data'
     },
-    { data: 'dateCreated', title: 'Date Created' },
-    { data: 'dateUpdated', title: 'Date Updated' }
-  ]
-});
+    columns: [
+      { data: 'productVariation_ID' },
+      { data: 'variation_Name' },
+      {
+        data: 'product_Image',
+        render: function (data) {
+          return data ? `<img src="${data}" style="max-width:60px;">` : '';
+        }
+      },
+      { data: 'dateCreated' },
+      { data: 'dateUpdated' }
+    ]
+  });
 
 
       // Handle form submit
