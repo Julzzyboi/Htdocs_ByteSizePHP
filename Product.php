@@ -122,9 +122,15 @@
             cart.forEach((item, idx) => {
               html += `
 <li class="list-group-item d-flex align-items-center">
+  <div class="cartProduct">
+  <div class="cartLeft">
   <img class="yourCartImage" src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;">
+  </div>
+  <div class="cartRight">
   <span class="flex-grow-1">${item.name} (x${item.qty})</span>
   <span class="me-3">Php ${(item.price * item.qty).toFixed(2)}</span>
+  </div>
+  </div>
   <button class="btn btn-danger btn-sm removeFromCartBtn" data-idx="${idx}">&times;</button>
 </li>
 `;

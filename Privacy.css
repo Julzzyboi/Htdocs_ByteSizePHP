@@ -14,7 +14,7 @@ body {
   }
   
 .banner{
-
+    margin-top: -20px;
     background: linear-gradient(to bottom, #FFF7C6, #FFC0CB);
     padding: 20px;
     width: 100%;
@@ -77,14 +77,19 @@ body {
     color: red;
   }
 
- @media screen and (max-width: 705px){
+ @media screen and (max-width: 800px){
 
   .content{
     font-size: 14px;
  }
+
+ .pic img{
+    width: 110px;
+    height: auto;
+}
 }
 
-  @media screen and (max-width: 470px){
+  @media screen and (max-width: 500px){
   .content_title{
     font-size: 18px;
   }
@@ -95,6 +100,6 @@ body {
 }
 
   .content{
-    font-size: 12px;
+    font-size: 13px;
  }
- }
+}

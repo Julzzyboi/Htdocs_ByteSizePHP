@@ -286,9 +286,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div id="tmodalPrivacy" class="modal">
                 <div class="modal-content">
                   <span class="close" onclick="closeModal('tmodalPrivacy')">&times;</span>
-                  <iframe class="iFramePrivacy" src="privacy.html" width="100%" height="400px"></iframe>
+                  <iframe class="iFramePrivacy" src="privacy.html" width="100%" height="350px"></iframe>
                 </div>
-              </div>
+              </div> 
 
   <script src="Account.js"></script>
   <script>

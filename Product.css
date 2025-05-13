@@ -266,8 +266,9 @@ text-decoration: none;
   margin-bottom: 8px;
 }
 
+
 .list-group-item{
-  margin-left: 20px;
+   list-style-type: none;
 }
 
 .list-group-item::marker{
@@ -276,8 +277,8 @@ text-decoration: none;
 
 .yourCartImage{
   border: 2px solid red;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
 
 .flex-grow-1{
@@ -292,14 +293,25 @@ text-decoration: none;
   color:#2E222F;
 }
 
+.cartRight{
+  display: flex;
+  flex-direction: column;;
+}
+
+.cartProduct{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .removeFromCartBtn{
   font-family: Candy;
   color:#2E222F;
-  background-color: #FF9FC2;
+  background-color: #ff4d6e;
   border-radius: 100px;
   border-width: 2px;
   height: 19px;
-  width: 19px;
+  width: 30px;
   text-align: center;
 }
 
