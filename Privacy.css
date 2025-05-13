@@ -17,8 +17,6 @@ body {
 
     background: linear-gradient(to bottom, #FFF7C6, #FFC0CB);
     padding: 20px;
-    border: 6px solid #2E222F;
-    border-radius: 40px;
     width: 100%;
     max-width: 600px;
     position: fixed;
@@ -80,9 +78,6 @@ body {
   }
 
  @media screen and (max-width: 705px){
-  .banner{
-    width: 450px;
-  }
 
   .content{
     font-size: 14px;
@@ -90,13 +85,14 @@ body {
 }
 
   @media screen and (max-width: 470px){
-  .banner{
-    width: 320px;
-  }
-
   .content_title{
     font-size: 18px;
   }
+
+  .pic img{
+    width: 100px;
+    height: auto;
+}
 
   .content{
     font-size: 12px;

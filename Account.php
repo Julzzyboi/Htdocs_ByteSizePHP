@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 include 'Db_connection.php'; // DB connection
 
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
 
 
-?>
+?> -->
 
 
 <!DOCTYPE html>
@@ -129,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      <!-- Sign Up -->
      <div class="SignUp">
         <form action="Account.php" method="POST" onsubmit="validateForm(event)">
-          <p class="Title Form1">Sign Up</p>
+          <p class="Title Form1 signUpTitle">Sign Up</p>
           <p>
             Already have an account?
             <span><a href="#" onclick="showLogin()">Login</a></span>
@@ -177,49 +177,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="Password">
               <input type="password" class="inputSignUpPass" id="password" name="Password" placeholder="Password" />
-              <svg class="visiblePassword" onclick="togglePasswordVisibility()" id="visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="visible">
-                        <path d="m20.9 9.9-2-1.4c-4.2-2.8-9.5-2.8-13.7 0l-2 1.4C2.4 10.4 2 11.1 2 12s.4 1.6 1.1 2.1l2 1.4c2.1 1.4 4.5 2.1 6.8 2.1s4.8-.7 6.8-2.1l2-1.4c.7-.5 1.1-1.3 1.1-2.1s-.2-1.6-.9-2.1zM8.8 15c-.9-.3-1.7-.7-2.5-1.2l-2-1.4c-.3-.1-.3-.3-.3-.4s0-.3.2-.5l2-1.4c.9-.4 1.7-.8 2.6-1.1-.7.8-1.2 1.9-1.2 3 0 1.2.5 2.2 1.2 3zm3.2-.6c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4zm7.8-1.9-2 1.4c-.8.5-1.6.9-2.5 1.2.7-.8 1.2-1.9 1.2-3 0-1.2-.5-2.2-1.2-3 .9.3 1.7.7 2.5 1.2l2 1.4c.2 0 .2.2.2.3s0 .3-.2.5z" fill="#2e222f" class="color000000 svgShape"></path>
-                    </svg>
-                    <svg class="invisiblePassword" onclick="togglePasswordVisibility()" id="hidden" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" id="Hidden">
+              <svg class="visiblePassword" onclick="togglePasswordVisibility()" id="visible" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" id="visible">
                         <g id="_icons" fill="#2e222f" class="color000000 svgShape">
                           <path d="M21.0303 9.8164c-.5518-.541-1.1211-1.0146-1.6934-1.4092-.4541-.3135-1.0771-.1992-1.3906.2559-.3135.4541-.1992 1.0771.2559 1.3906.4775.3291.958.7305 1.4492 1.2109l.1113.1025C19.9111 11.5117 20 11.748 20 12s-.0889.4883-.2188.6152l-.1514.1406c-1.4482 1.4219-3.1992 2.4307-5.0576 2.915-1.1475.2939-2.3047.3936-3.4453.293-.5391-.0479-1.0342.3594-1.083.9092-.0479.5498.3584 1.0352.9092 1.083.3447.0303.6914.0459 1.0381.0449 1.0254 0 2.0576-.1309 3.0811-.3936 2.2012-.5742 4.2607-1.7578 5.9365-3.4033l.1484-.1377C21.6924 13.5469 22 12.793 22 12s-.3076-1.5469-.8613-2.084L21.0303 9.8164zM5.293 17.293C5.0977 17.4883 5 17.7441 5 18s.0977.5117.293.707S5.7441 19 6 19s.5117-.0977.707-.293l1.8096-1.8096 8.3809-8.3809L18.707 6.707C18.9023 6.5117 19 6.2559 19 6s-.0977-.5117-.293-.707c-.3906-.3906-1.0234-.3906-1.4141 0l-1.377 1.377c-.2809-.0948-.5518-.2024-.8457-.2773-2.0156-.5215-4.123-.5215-6.1426 0C6.7266 6.9668 4.667 8.1504 2.9912 9.7959L2.8428 9.9336C2.3076 10.4531 2 11.207 2 12s.3076 1.5469.8613 2.084l.1074.0986c.9468.9313 1.9971 1.6994 3.129 2.3055L5.293 17.293zM4.2373 12.6328C4.0889 12.4883 4 12.252 4 12s.0889-.4883.2188-.6152l.1514-.1406c1.4482-1.4219 3.1992-2.4307 5.0596-2.916C10.2744 8.1104 11.1387 8 12 8c.7754 0 1.5537.0898 2.3184.2666l-1.0339 1.0339C12.8943 9.1138 12.4622 9 12 9c-1.66 0-3 1.34-3 3 0 .4622.1138.8943.3005 1.2844L7.582 15.0029c-1.1738-.5488-2.2539-1.3047-3.2334-2.2676L4.2373 12.6328z" fill="#2e222f" class="color000000 svgShape"></path>
                         </g>
                       </svg>
+                    <svg class=" invisiblePassword" onclick="togglePasswordVisibility()" id="hidden" id="Hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+                        <path d="m20.9 9.9-2-1.4c-4.2-2.8-9.5-2.8-13.7 0l-2 1.4C2.4 10.4 2 11.1 2 12s.4 1.6 1.1 2.1l2 1.4c2.1 1.4 4.5 2.1 6.8 2.1s4.8-.7 6.8-2.1l2-1.4c.7-.5 1.1-1.3 1.1-2.1s-.2-1.6-.9-2.1zM8.8 15c-.9-.3-1.7-.7-2.5-1.2l-2-1.4c-.3-.1-.3-.3-.3-.4s0-.3.2-.5l2-1.4c.9-.4 1.7-.8 2.6-1.1-.7.8-1.2 1.9-1.2 3 0 1.2.5 2.2 1.2 3zm3.2-.6c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4zm7.8-1.9-2 1.4c-.8.5-1.6.9-2.5 1.2.7-.8 1.2-1.9 1.2-3 0-1.2-.5-2.2-1.2-3 .9.3 1.7.7 2.5 1.2l2 1.4c.2 0 .2.2.2.3s0 .3-.2.5z" fill="#2e222f" class="color000000 svgShape"></path>
+                    </svg>
             </div>
             <span id="errorpassword" class="error-message"></span>
 
             <div class="ConfirmPass">
               <input type="password" class="inputSignUpCPass" id="Cpass" name="ConfirmPass"
                 placeholder="Confirm Password" />
-                <svg class="visibleConfirmPassword" onclick="toggleConfirmPasswordVisibility()" id="visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="visible">
+                <svg class="visibleConfirmPassword" onclick="toggleConfirmPasswordVisibility()" id="visible" id="visible"xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" >
+                    <g id="_icons" fill="#2e222f" class="color000000 svgShape">
+                      <path d="M21.0303 9.8164c-.5518-.541-1.1211-1.0146-1.6934-1.4092-.4541-.3135-1.0771-.1992-1.3906.2559-.3135.4541-.1992 1.0771.2559 1.3906.4775.3291.958.7305 1.4492 1.2109l.1113.1025C19.9111 11.5117 20 11.748 20 12s-.0889.4883-.2188.6152l-.1514.1406c-1.4482 1.4219-3.1992 2.4307-5.0576 2.915-1.1475.2939-2.3047.3936-3.4453.293-.5391-.0479-1.0342.3594-1.083.9092-.0479.5498.3584 1.0352.9092 1.083.3447.0303.6914.0459 1.0381.0449 1.0254 0 2.0576-.1309 3.0811-.3936 2.2012-.5742 4.2607-1.7578 5.9365-3.4033l.1484-.1377C21.6924 13.5469 22 12.793 22 12s-.3076-1.5469-.8613-2.084L21.0303 9.8164zM5.293 17.293C5.0977 17.4883 5 17.7441 5 18s.0977.5117.293.707S5.7441 19 6 19s.5117-.0977.707-.293l1.8096-1.8096 8.3809-8.3809L18.707 6.707C18.9023 6.5117 19 6.2559 19 6s-.0977-.5117-.293-.707c-.3906-.3906-1.0234-.3906-1.4141 0l-1.377 1.377c-.2809-.0948-.5518-.2024-.8457-.2773-2.0156-.5215-4.123-.5215-6.1426 0C6.7266 6.9668 4.667 8.1504 2.9912 9.7959L2.8428 9.9336C2.3076 10.4531 2 11.207 2 12s.3076 1.5469.8613 2.084l.1074.0986c.9468.9313 1.9971 1.6994 3.129 2.3055L5.293 17.293zM4.2373 12.6328C4.0889 12.4883 4 12.252 4 12s.0889-.4883.2188-.6152l.1514-.1406c1.4482-1.4219 3.1992-2.4307 5.0596-2.916C10.2744 8.1104 11.1387 8 12 8c.7754 0 1.5537.0898 2.3184.2666l-1.0339 1.0339C12.8943 9.1138 12.4622 9 12 9c-1.66 0-3 1.34-3 3 0 .4622.1138.8943.3005 1.2844L7.582 15.0029c-1.1738-.5488-2.2539-1.3047-3.2334-2.2676L4.2373 12.6328z" fill="#2e222f" class="color000000 svgShape"></path>
+                    </g>
+                </svg>
+                    <svg class="invisibleConfirmPassword" onclick="toggleConfirmPasswordVisibility()" id="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Hidden">
                         <path d="m20.9 9.9-2-1.4c-4.2-2.8-9.5-2.8-13.7 0l-2 1.4C2.4 10.4 2 11.1 2 12s.4 1.6 1.1 2.1l2 1.4c2.1 1.4 4.5 2.1 6.8 2.1s4.8-.7 6.8-2.1l2-1.4c.7-.5 1.1-1.3 1.1-2.1s-.2-1.6-.9-2.1zM8.8 15c-.9-.3-1.7-.7-2.5-1.2l-2-1.4c-.3-.1-.3-.3-.3-.4s0-.3.2-.5l2-1.4c.9-.4 1.7-.8 2.6-1.1-.7.8-1.2 1.9-1.2 3 0 1.2.5 2.2 1.2 3zm3.2-.6c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4zm7.8-1.9-2 1.4c-.8.5-1.6.9-2.5 1.2.7-.8 1.2-1.9 1.2-3 0-1.2-.5-2.2-1.2-3 .9.3 1.7.7 2.5 1.2l2 1.4c.2 0 .2.2.2.3s0 .3-.2.5z" fill="#2e222f" class="color000000 svgShape"></path>
                     </svg>
-                    <svg class="invisibleConfirmPassword" onclick="toggleConfirmPasswordVisibility()" id="hidden" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" id="Hidden">
-                        <g id="_icons" fill="#2e222f" class="color000000 svgShape">
-                          <path d="M21.0303 9.8164c-.5518-.541-1.1211-1.0146-1.6934-1.4092-.4541-.3135-1.0771-.1992-1.3906.2559-.3135.4541-.1992 1.0771.2559 1.3906.4775.3291.958.7305 1.4492 1.2109l.1113.1025C19.9111 11.5117 20 11.748 20 12s-.0889.4883-.2188.6152l-.1514.1406c-1.4482 1.4219-3.1992 2.4307-5.0576 2.915-1.1475.2939-2.3047.3936-3.4453.293-.5391-.0479-1.0342.3594-1.083.9092-.0479.5498.3584 1.0352.9092 1.083.3447.0303.6914.0459 1.0381.0449 1.0254 0 2.0576-.1309 3.0811-.3936 2.2012-.5742 4.2607-1.7578 5.9365-3.4033l.1484-.1377C21.6924 13.5469 22 12.793 22 12s-.3076-1.5469-.8613-2.084L21.0303 9.8164zM5.293 17.293C5.0977 17.4883 5 17.7441 5 18s.0977.5117.293.707S5.7441 19 6 19s.5117-.0977.707-.293l1.8096-1.8096 8.3809-8.3809L18.707 6.707C18.9023 6.5117 19 6.2559 19 6s-.0977-.5117-.293-.707c-.3906-.3906-1.0234-.3906-1.4141 0l-1.377 1.377c-.2809-.0948-.5518-.2024-.8457-.2773-2.0156-.5215-4.123-.5215-6.1426 0C6.7266 6.9668 4.667 8.1504 2.9912 9.7959L2.8428 9.9336C2.3076 10.4531 2 11.207 2 12s.3076 1.5469.8613 2.084l.1074.0986c.9468.9313 1.9971 1.6994 3.129 2.3055L5.293 17.293zM4.2373 12.6328C4.0889 12.4883 4 12.252 4 12s.0889-.4883.2188-.6152l.1514-.1406c1.4482-1.4219 3.1992-2.4307 5.0596-2.916C10.2744 8.1104 11.1387 8 12 8c.7754 0 1.5537.0898 2.3184.2666l-1.0339 1.0339C12.8943 9.1138 12.4622 9 12 9c-1.66 0-3 1.34-3 3 0 .4622.1138.8943.3005 1.2844L7.582 15.0029c-1.1738-.5488-2.2539-1.3047-3.2334-2.2676L4.2373 12.6328z" fill="#2e222f" class="color000000 svgShape"></path>
-                        </g>
-                      </svg>
 
             </div>
             <span id="errorCpass" class="error-message"></span>
           </div>
 
               <div>
-                <input type="checkbox" id="termsCheckbox">
-                <label for="termsCheckbox">
+                <input type="checkbox" id="termsCheckbox" class="termsCheckboxClass">
+                <label for="termsCheckbox" class="termsCheckbox">
                   I agree to the <a href="#" onclick="openModal('tmodalTerms')">Terms and Conditions</a>
                 </label>
               </div>
+              <span id="errortermsCheckbox" class="error-message errortermsCheckbox"></span>
               <div>
-                <input type="checkbox" id="privacyCheckbox">
-                <label for="privacyCheckbox">
+                <input type="checkbox" id="privacyCheckbox" class="privacyCheckboxClass">
+                <label for="privacyCheckbox" class="privacyCheckbox">
                   I agree to the <a href="#" onclick="openModal('tmodalPrivacy')">Privacy Policy</a>
                 </label>
               </div>
 
-              <span id="errortermsCheckbox" class="error-message"></span>
-              <span id="errorprivacyCheckbox" class="error-message"></span>
-
+              <span id="errorprivacyCheckbox" class="error-message errorprivacyCheckbox"></span>
+              
 
 
           <button type="submit" id="SignUp-Button">Register</button>
@@ -278,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div id="tmodalTerms" class="modal">
                 <div class="modal-content">
                   <span class="close" onclick="closeModal('tmodalTerms')">&times;</span>
-                  <iframe src="terms.html" width="100%" height="400px"></iframe>
+                  <iframe class="iFrameTerms" src="terms.html" width="100%" height="400px"></iframe>
                 </div>
               </div>
 
@@ -286,7 +286,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div id="tmodalPrivacy" class="modal">
                 <div class="modal-content">
                   <span class="close" onclick="closeModal('tmodalPrivacy')">&times;</span>
-                  <iframe src="privacy.html" width="100%" height="400px"></iframe>
+                  <iframe class="iFramePrivacy" src="privacy.html" width="100%" height="400px"></iframe>
                 </div>
               </div>
 
