@@ -420,3 +420,6 @@ section.active-section {
 }
 
 
+#productTable th, #productTable td {
+  white-space: nowrap;
+}

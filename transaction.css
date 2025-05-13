@@ -112,6 +112,9 @@ html, body {
   background-color: #FF9FC2;
 }
 
+  
+
+
 @media screen and (max-width: 450px) {
   .checkoutContainer h1 {
     font-size: 35px;
