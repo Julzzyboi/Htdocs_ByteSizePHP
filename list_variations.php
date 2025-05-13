@@ -1,9 +1,12 @@
 <?php
+require_once 'Db_connection.php';
 header('Content-Type: application/json');
-include('Db_connection.php');
-$result = mysqli_query($conn, "SELECT * FROM tbl_product_variation_id");
+
+$sql = "SELECT productVariation_ID, product_ID, variation_Name, product_Image, dateCreated, dateUpdated FROM tbl_product_variation_id";
+$result = $conn->query($sql);
+
 $data = [];
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
     $data[] = $row;
 }
 echo json_encode(['data' => $data]);
