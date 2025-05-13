@@ -37,6 +37,16 @@
             </select>
           </div>
 
+           <div class="paymentBoxGroup" id="modetopay">
+            <label for="payment">E-Payment Method</label>
+            <select id="e-paymentm">
+              <option value="GCash">GCash</option>
+              <option value="maya">Maya</option>
+              <option value="GoTyme">GoTyme</option>
+              <option value="QR Ph">QR Ph</option>
+            </select>
+          </div>
+
           <div class="paymentBoxGroup">
             <label for="delivery">Mode of Delivery</label>
             <select id="delivery">
@@ -73,9 +83,7 @@
     const paymentSelect = document.getElementById("payment");
     const addressInput = document.getElementById("address");
     const amountDisplay = document.getElementById("amountDisplay");
-    const select = document.getElementById('paymentMode');
-    const modal = document.getElementById('modalOverlay');
-    const modalContent = document.getElementById('modalContent');
+    const modeToPay = document.getElementById('modetopay');
     
     deliverySelect.addEventListener("change", () => {
       if (deliverySelect.value === "Delivery") {
@@ -113,32 +121,24 @@
 
     const totalAmount = localStorage.getItem("totalAmount");
     if (totalAmount) {
-      amountDisplay.textContent = `Php ${parseFloat(totalAmount).toFixed(2)}`;
+      amountDisplay.textContent = Php `${parseFloat(totalAmount).toFixed(2)}`;
     } else {
       amountDisplay.textContent = "Php 0.00"; 
     }
 
-    
-  
-    payment.addEventListener('change', () => {
-      if (payment.value === 'e-payment') {
-        fetch('modetopay.html')
-          .then(res => res.text())
-          .then(html => {
-            modalContent.innerHTML = html;
-            modal.classList.add('open');
-          });
-      } else {
-        modal.classList.remove('open');
-      }
-    });
+      paymentSelect.addEventListener('change', function () {
+    if (this.value === 'e-payment') {
+      modeToPay.style.display = 'block';
+    } else {
+      modeToPay.style.display = 'none';
+    }
+  });
 
-    modal.addEventListener('click', (e) => {
-      // only close if click is on the overlay, not the modal content
-      if (e.target === modal) {
-        modal.classList.remove('open');
-      }
-    });
+
+  if (paymentSelect.value !== 'e-payment') {
+    modeToPay.style.display = 'none';
+  }
+
   </script>
 
 </body>
