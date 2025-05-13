@@ -27,38 +27,43 @@ html, body {
 }
 
 /* CHECKOUT CONTAINER */
-.checkoutContainer {
-  background-color: #FFC5D3;
-  border-radius: 10px;
-  padding: 40px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  text-align: center;
+
+.modal-content {
+  background-color: transparent;
   border: none;
 }
 
+.checkoutContainer {
+  background-color: #FFC5D3;
+  border-radius: 40px;
+  padding: 40px;
+  text-align: center;
+  border: 7px solid #2e222f;
+}
 
 .checkoutContainer h1 {
-  font-size: 48px;
-  color: black;
-  margin-bottom: 10px;
+  font-family: Back;
+  font-size: 45px;
+  color: #91DB69;
+  text-shadow: rgb(46, 34, 47) 3px 0px 0px, rgb(46, 34, 47) 2.83487px 0.981584px 0px, rgb(46, 34, 47) 2.35766px 1.85511px 0px, rgb(46, 34, 47) 1.62091px 2.52441px 0px, rgb(46, 34, 47) 0.705713px 2.91581px 0px, rgb(46, 34, 47) -0.287171px 2.98622px 0px, rgb(46, 34, 47) -1.24844px 2.72789px 0px, rgb(46, 34, 47) -2.07227px 2.16926px 0px, rgb(46, 34, 47) -2.66798px 1.37182px 0px, rgb(46, 34, 47) -2.96998px 0.42336px 0px, rgb(46, 34, 47) -2.94502px -0.571704px 0px, rgb(46, 34, 47) -2.59586px -1.50383px 0px, rgb(46, 34, 47) -1.96093px -2.27041px 0px, rgb(46, 34, 47) -1.11013px -2.78704px 0px, rgb(46, 34, 47) -0.137119px -2.99686px 0px, rgb(46, 34, 47) 0.850987px -2.87677px 0px, rgb(46, 34, 47) 1.74541px -2.43999px 0px, rgb(46, 34, 47) 2.44769px -1.73459px 0px, rgb(46, 34, 47) 2.88051px -0.838247px 0px;
 }
 
 .checkoutContainer h3 {
-  font-size: 28px;
-  color: #2e222f;
-  margin-bottom: 20px;
+  font-family: Candy;
+  font-size: 25px;
+  color: #FF9FC2;
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
 }
 
-
 .amount {
-  margin: 20px 0;
+  font-family: Candy;
   font-size: 20px;
+  color: #2e222f;
   font-weight: bold;
 }
 
-
 .paymentBoxGroup {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -66,8 +71,9 @@ html, body {
   display: block;
   font-size: 18px;
   margin-bottom: 8px;
-  color: #2e222f;
-  font-family: Alatsi;
+  color: #FF69A0;
+  font-family: Candy;
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
 }
 
 .paymentBoxGroup select,
@@ -75,43 +81,66 @@ html, body {
   width: 100%;
   padding: 12px 20px;
   border-radius: 20px;
-  border: 1px solid black;
-  background-color: #FFF4BD;
+  border: 3px solid #2e222f;
+  background-color: #FFF9E4;
   font-size: 16px;
-  font-family: Alatsi;
+  font-family: Candy;
 }
 
 /* BUTTONS */
-.confirmButton {
+
+.confirmButton, .backtoCartbtn{
   text-decoration: none;
   background-color: #91DB69;
-  color: black;
-  padding: 15px 40px;
-  border-radius: 30px;
-  border: 3px solid black;
+  color: #2e222f;
+  height: 50px;
+  width: 150px;
+
+  border-radius: 20px;
+  border: 3px solid #2e222f;
   font-size: 20px;
-  font-family: Alatsi;
+  font-family: Candy;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px;
 }
 
-.backtoCartbtn {
-  text-decoration: none;
-  background-color: #91DB69;
-  color: black;
-  padding: 15px 30px;
-  border-radius: 30px;
-  border: 3px solid black;
-  font-size: 20px;
-  font-family: Alatsi;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
+.backtoCartbtn{
+  padding-top: 7px;
 }
 
-.confirmButton:hover {
-  background-color: #91DB69;
+.confirmButton:hover, .backtoCartbtn:hover {
+  background-color: #FF9FC2;
 }
 
+@media screen and (max-width: 450px) {
+  .checkoutContainer h1 {
+    font-size: 35px;
+  }
 
+  .checkoutContainer h3 {
+    font-size: 20px;
+  }
+
+  .amount {
+    font-size: 15px;
+  }
+
+  .paymentBoxGroup label{
+    font-size: 15px;
+  }
+
+  .paymentBoxGroup select, .paymentBoxGroup input[type="text"] {
+    height: 40px;
+    padding: 0;
+  }
+
+  .confirmButton, .backtoCartbtn{
+    font-size: 13px;
+    height: 40px;
+    width: 100px;
+  }
+
+  .backtoCartbtn{
+    padding-top: 8px;
+  }
+}
