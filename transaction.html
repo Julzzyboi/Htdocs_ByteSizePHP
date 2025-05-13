@@ -32,6 +32,7 @@
           <div class="paymentBoxGroup">
             <label for="payment">Payment Methods</label>
             <select id="payment">
+              <option value="nonee">None</option>
               <option value="cash">Cash</option>
               <option value="e-payment">E-Payment</option>
             </select>
@@ -49,7 +50,8 @@
 
           <div class="paymentBoxGroup">
             <label for="delivery">Mode of Delivery</label>
-            <select id="delivery">
+            <select id="delivery">"
+              <option value="None">None</option>
               <option value="Pick-up">Pick-up</option>
               <option value="Delivery">Delivery</option>
             </select>
@@ -57,7 +59,7 @@
 
           <div class="paymentBoxGroup" id="addressGroup">
             <label for="address">Delivery Address</label>
-            <input type="text" id="address" placeholder="UST" />
+            <input type="text" id="address" placeholder="Ex.: " />
           </div>
 
           <div class="d-flex justify-content-between">
@@ -76,57 +78,63 @@
   </div>
 
   <script>
-    
-    const deliverySelect = document.getElementById("delivery");
-    const addressGroup = document.getElementById("addressGroup");
-    const confirmBtn = document.getElementById("confirmBtn");
-    const paymentSelect = document.getElementById("payment");
-    const addressInput = document.getElementById("address");
-    const amountDisplay = document.getElementById("amountDisplay");
-    const modeToPay = document.getElementById('modetopay');
-    
-    deliverySelect.addEventListener("change", () => {
-      if (deliverySelect.value === "Delivery") {
-        addressGroup.style.display = "block";
-      } else {
-        addressGroup.style.display = "none";
-        addressInput.value = ""; 
-      }
-    });
+  const deliverySelect = document.getElementById("delivery");
+  const addressGroup = document.getElementById("addressGroup");
+  const confirmBtn = document.getElementById("confirmBtn");
+  const paymentSelect = document.getElementById("payment");
+  const addressInput = document.getElementById("address");
+  const amountDisplay = document.getElementById("amountDisplay");
+  const modeToPay = document.getElementById("modetopay");
 
-    confirmBtn.addEventListener("click", () => {
-      const paymentMethod = paymentSelect.value;
-      const deliveryMode = deliverySelect.value;
-      const address = addressInput.value.trim();
-      const totalAmount = amountDisplay.textContent;
-
-      if (deliveryMode === "Delivery" && address === "") {
-        alert("Please enter a delivery address.");
-        return;
-      }
-
-      const orderDetails = {
-        paymentMethod,
-        deliveryMode,
-        address: deliveryMode === "Delivery" ? address : "N/A",
-        totalAmount
-      };
-      localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-      window.location.href = "receipt.html";
-    });
-
-    if (deliverySelect.value === "Pick-up") {
-      addressGroup.style.display = "none";
-    }
-
-    const totalAmount = localStorage.getItem("totalAmount");
-    if (totalAmount) {
-      amountDisplay.textContent = Php `${parseFloat(totalAmount).toFixed(2)}`;
+  deliverySelect.addEventListener("change", () => {
+    if (deliverySelect.value === "Delivery") {
+      addressGroup.style.display = "block";
     } else {
-      amountDisplay.textContent = "Php 0.00"; 
+      addressGroup.style.display = "none";
+      addressInput.value = ""; 
+    }
+  });
+
+  confirmBtn.addEventListener("click", () => {
+    const paymentMethod = paymentSelect.value;
+    const deliveryMode = deliverySelect.value;
+    const address = addressInput.value.trim();
+    const totalAmount = amountDisplay.textContent;
+
+    // Custom validation: prevent form submission if all are 'None'
+    if ((paymentMethod === "nonee" || paymentMethod === "None") &&
+        (deliveryMode === "None")) {
+      alert("Please select a valid Payment Method and Delivery Mode.");
+      return;
     }
 
-      paymentSelect.addEventListener('change', function () {
+    if (deliveryMode === "Delivery" && address === "") {
+      alert("Please enter a delivery address.");
+      return;
+    }
+
+    const orderDetails = {
+      paymentMethod,
+      deliveryMode,
+      address: deliveryMode === "Delivery" ? address : "N/A",
+      totalAmount
+    };
+    localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+    window.location.href = "receipt.html";
+  });
+
+  if (deliverySelect.value === "Pick-up") {
+    addressGroup.style.display = "none";
+  }
+
+  const totalAmount = localStorage.getItem("totalAmount");
+  if (totalAmount) {
+    amountDisplay.textContent = `Php ${parseFloat(totalAmount).toFixed(2)}`;
+  } else {
+    amountDisplay.textContent = "Php 0.00"; 
+  }
+
+  paymentSelect.addEventListener('change', function () {
     if (this.value === 'e-payment') {
       modeToPay.style.display = 'block';
     } else {
@@ -134,12 +142,11 @@
     }
   });
 
-
   if (paymentSelect.value !== 'e-payment') {
     modeToPay.style.display = 'none';
   }
+</script>
 
-  </script>
 
 </body>
 </html>
