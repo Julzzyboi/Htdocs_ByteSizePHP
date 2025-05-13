@@ -306,7 +306,60 @@ mysqli_query($conn, $sql);
         </div>
       </div>
 
-  </div>
+
+    </section>
+
+
+    <section id="accountSection" class="Page-Section">
+
+
+      <div class="Account-Container">
+
+
+
+        <!-- Button to open modal -->
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAdminModal">Add Admin</button>
+        <div class="tableAdmin">
+          <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
+            <table id="adminTable" class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Contact Number</th>
+                  <th>Gender</th>
+                  <th>User Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Login Activity -->
+        <div class="LoginAct">
+
+          <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
+            <table id="loginTable" class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>login_ID</th>
+                  <th>user_ID</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Login Time</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+    </section>
+
+  </div> <!--main content end-->
 
 
 
@@ -353,57 +406,9 @@ mysqli_query($conn, $sql);
     </div>
   </div>
 
-</section>
-
-  <!-- Account section -->
-  <section id="accountSection" class="Page-Section">
 
 
-    <div class="Account-Container">
-
-
-     
-
-      <div class="tableAdmin">
-        <div class="table-responsive" style="max-height: calc(100vh - 150px); overflow-y: auto;">
-          <table id="adminTable" class="table table-bordered table-striped table-hover">
-            <thead>
-              <tr>
-                <th>User ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Gender</th>
-                <th>User Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Login Activity -->
-      <div class="LoginAct">
-        <!-- <h2>Login Activity</h2> -->
-        <table id="loginTable" class="display">
-          <thead>
-            <tr>
-              <th>login_ID</th>
-              <th>user_ID</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Login Time</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- update modal variation -->
+  <!-- update modal variation -->
   <div class="modal fade" id="updateVariationModal" tabindex="-1" aria-labelledby="updateVariationModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -517,64 +522,107 @@ mysqli_query($conn, $sql);
 
 
 
- <!-- Add Admin Modal -->
-<div class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form id="addAdminForm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addAdminModalLabel">Add Admin</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <!-- Add Admin Modal -->
+  <div class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="addAdminForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addAdminModalLabel">Add Admin</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" name="firstName" id="firstName" required>
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="lastName" id="lastName" required>
+            </div>
+            <div class="mb-3">
+              <label for="emailAddress" class="form-label">Email</label>
+              <input type="email" class="form-control" name="emailAddress" id="emailAddress" required>
+            </div>
+            <div class="mb-3">
+              <label for="contactNumber" class="form-label">Contact Number</label>
+              <input type="number" class="form-control" name="contactNumber" id="contactNumber" maxlength="11" required>
+            </div>
+            <div class="mb-3">
+              <label for="gender" class="form-label">Gender</label>
+              <select class="form-control" name="gender" id="gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="Password" class="form-label">Password</label>
+              <input type="password" class="form-control" name="Password" id="Password" required>
+            </div>
+            <div class="mb-3">
+              <label for="ConfirmPass" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" name="ConfirmPass" id="ConfirmPass" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Admin</button>
+          </div>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" name="firstName" id="firstName" required>
-          </div>
-          <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" name="lastName" id="lastName" required>
-          </div>
-          <div class="mb-3">
-            <label for="emailAddress" class="form-label">Email</label>
-            <input type="email" class="form-control" name="emailAddress" id="emailAddress" required>
-          </div>
-          <div class="mb-3">
-            <label for="contactNumber" class="form-label">Contact Number</label>
-            <input type="text" class="form-control" name="contactNumber" id="contactNumber" required>
-          </div>
-          <div class="mb-3">
-            <label for="gender" class="form-label">Gender</label>
-            <select class="form-control" name="gender" id="gender" required>
-              <option value="">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="Password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="Password" id="Password" required>
-          </div>
-          <div class="mb-3">
-            <label for="ConfirmPass" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="ConfirmPass" id="ConfirmPass" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Admin</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 
-
-<!-- Button to open modal -->
-<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAdminModal">Add Admin</button>
-
-<!-- Button to open modal -->
-<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAdminModal">Add Admin</button>
+  <!-- Update Admin Modal -->
+  <div class="modal fade" id="updateAdminModal" tabindex="-1" aria-labelledby="updateAdminModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="updateAdminForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateAdminModalLabel">Update Admin</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="user_ID" id="edit_user_ID">
+            <div class="mb-3">
+              <label for="edit_firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" name="firstName" id="edit_firstName" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="lastName" id="edit_lastName" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_emailAddress" class="form-label">Email</label>
+              <input type="email" class="form-control" name="emailAddress" id="edit_emailAddress" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_contactNumber" class="form-label">Contact Number</label>
+              <input type="text" class="form-control" name="contactNumber" id="edit_contactNumber" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_gender" class="form-label">Gender</label>
+              <select class="form-control" name="gender" id="edit_gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="edit_userRole" class="form-label">User Role</label>
+              <input type="text" class="form-control" name="userRole" id="edit_userRole" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update Admin</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- add product modal -->
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
@@ -644,78 +692,147 @@ mysqli_query($conn, $sql);
 
 
     // for admin creation DataTables
-  $('#adminTable').DataTable({
-  ajax: 'fetch_admins.php',
-  columns: [
-    { data: 'user_ID' },
-    { data: 'fullName' },
-    { data: 'emailAddress' },
-    { data: 'contactNumber' },
-    { data: 'gender' },
-    { data: 'userRole' },
-    { data: 'actions', orderable: false, searchable: false }
-  ]
-});
-   $('#addAdminForm').on('submit', function(e) {
-  e.preventDefault();
-  $.ajax({
-    url: 'add_admin.php',
-    type: 'POST',
-    data: $(this).serialize(),
-    dataType: 'json',
-    success: function(res) {
-      $('#addAdminModal').modal('hide');
-      $('#addAdminForm')[0].reset();
-      $('#adminTable').DataTable().ajax.reload();
-      Swal.fire({
-        icon: res.success ? 'success' : 'error',
-        title: res.success ? 'Success' : 'Error',
-        text: res.message,
-        timer: 1500,
-        showConfirmButton: false
+    $('#adminTable').DataTable({
+      ajax: 'fetch_admins.php',
+      columns: [
+        { data: 'user_ID' },
+        { data: 'fullName' },
+        { data: 'emailAddress' },
+        { data: 'contactNumber' },
+        { data: 'gender' },
+        { data: 'userRole' },
+        { data: 'actions', orderable: false, searchable: false }
+      ]
+    });
+    $('#addAdminForm').on('submit', function (e) {
+      e.preventDefault();
+      $.ajax({
+        url: 'add_admin.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (res) {
+          $('#addAdminModal').modal('hide');
+          $('#addAdminForm')[0].reset();
+          $('#adminTable').DataTable().ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Success' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
       });
-    }
-  });
-});
+    });
 
+    // Show update modal and fill with data
+    $('#adminTable').on('click', '.updateAdminBtn', function () {
+      var userId = $(this).data('user-id');
+      $.ajax({
+        url: 'get_admin.php',
+        type: 'POST',
+        data: { user_ID: userId },
+        dataType: 'json',
+        success: function (data) {
+          $('#edit_user_ID').val(data.user_ID);
+          $('#edit_firstName').val(data.firstName);
+          $('#edit_lastName').val(data.lastName);
+          $('#edit_emailAddress').val(data.emailAddress);
+          $('#edit_contactNumber').val(data.contactNumber);
+          $('#edit_gender').val(data.gender);
+          $('#edit_userRole').val(data.userRole);
+          $('#updateAdminModal').modal('show');
+        }
+      });
+    });
 
-
-    $(document).ready(function () {
-      $('#loginTable').DataTable({
-        ajax: 'fetch_Login.php',
-        columns: [
-          { data: 'login_ID' },
-          { data: 'user_ID' },
-          { data: 'emailAddress' },
-          { data: 'userRole' },
-          { data: 'loginTime' }
-        ]
+    $('#updateAdminForm').on('submit', function (e) {
+      e.preventDefault();
+      $.ajax({
+        url: 'update_admin.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (res) {
+          $('#updateAdminModal').modal('hide');
+          $('#adminTable').DataTable().ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Success' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+    });
+    // Delete admin
+    $('#adminTable').on('click', '.deleteAdminBtn', function () {
+      var adminId = $(this).data('admin-id');
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete the admin.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'delete_admin.php',
+            type: 'POST',
+            data: { admin_ID: adminId },
+            dataType: 'json',
+            success: function (res) {
+              $('#adminTable').DataTable().ajax.reload();
+              Swal.fire({
+                icon: res.success ? 'success' : 'error',
+                title: res.success ? 'Deleted!' : 'Error',
+                text: res.message,
+                timer: 1500,
+                showConfirmButton: false
+              });
+            }
+          });
+        }
       });
     });
 
 
+    $('#loginTable').DataTable({
+      ajax: 'fetch_Login.php',
+      columns: [
+        { data: 'login_ID' },
+        { data: 'user_ID' },
+        { data: 'emailAddress' },
+        { data: 'userRole' },
+        { data: 'loginTime' }
+      ]
+    });
     // Optionally reload table after form submission
- $('#addAdminForm').on('submit', function(e) {
-  e.preventDefault();
-  $.ajax({
-    url: 'add_admin.php',
-    type: 'POST',
-    data: $(this).serialize(),
-    dataType: 'json',
-    success: function(res) {
-      $('#addAdminModal').modal('hide');
-      $('#addAdminForm')[0].reset();
-      $('#adminTable').DataTable().ajax.reload();
-      Swal.fire({
-        icon: res.success ? 'success' : 'error',
-        title: res.success ? 'Success' : 'Error',
-        text: res.message,
-        timer: 1500,
-        showConfirmButton: false
+    $('#addAdminForm').on('submit', function (e) {
+      e.preventDefault();
+      $.ajax({
+        url: 'add_admin.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (res) {
+          $('#addAdminModal').modal('hide');
+          $('#addAdminForm')[0].reset();
+          $('#adminTable').DataTable().ajax.reload();
+          Swal.fire({
+            icon: res.success ? 'success' : 'error',
+            title: res.success ? 'Success' : 'Error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
       });
-    }
-  });
-});
+    });
 
     // for products 
 

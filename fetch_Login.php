@@ -1,32 +1,32 @@
 <?php
-// Enable error reporting (remove in production)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-// DB connection
-require_once 'Db_connection.php';
-
-// Force JSON header
 header('Content-Type: application/json');
 
-// Query to join login and user tables
-$sql = "SELECT *
-        FROM tbl_login_id 
-        ORDER BY loginTime DESC";
+include('Db_connection.php');
 
-$result = $conn->query($sql);
+// Join login and user tables to get email and role
+$query = "
+  SELECT 
+    l.login_ID, 
+    l.user_ID, 
+    u.emailAddress, 
+    u.userRole, 
+    l.loginTime
+  FROM tbl_login_id
+  LEFT JOIN tbl_user_id u ON l.user_ID = u.user_ID
+  ORDER BY l.loginTime DESC
+";
+
+$result = mysqli_query($conn, $query);
 
 $data = [];
-
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-    echo json_encode(['data' => $data]);
-} else {
-    echo json_encode(['data' => [], 'error' => $conn->error]);
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
 }
 
-$conn->close();
+echo json_encode([
+    "data" => $data
+]);
 ?>
