@@ -60,26 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link rel="stylesheet" href="adminDashboard.css">
+
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
+
+  <!-- Sweetalert2 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <!-- scripts -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
 </head>
 
 <body>
@@ -238,9 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <tr>
                 <th>Product ID</th>
                 <th>Product Category</th>
-                <!-- <th>Name</th> -->
                 <th>Stock</th>
-                <!-- <th>Image</th> -->
                 <th>Update</th>
                 <th>Delete</th>
               </tr>
@@ -256,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td><?= $row['product_ID']; ?></td>
                     <td><?= $row['productCategory']; ?></td>
                     <!-- <td><?= $row['productName']; ?></td> -->
-                    
+
                     <!-- <td><?= 'Php ' . number_format($row['productPrice'], 2); ?></td> -->
                     <td><?= $row['productStock']; ?></td>
                     <!-- <td>
@@ -265,15 +250,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </td> -->
                     <td><a href="#" class="btn btn-success updateBtn" data-id="<?= $row['product_ID']; ?>">Update</a></td>
                     <td><a href="#" class="btn btn-danger deleteBtn" data-id="<?= $row['product_ID']; ?>">Delete</a></td>
-
                     <?php
                 }
               }
               ?>
             </tbody>
           </table>
-
         </div>
+      </div>
+        
+
+      <div class="variation-Container">
+         <!-- Button to open modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#variationModal">
+        Add Variation
+      </button>
+
+         <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
+         <table class="table table-bordered table-striped table-hover" id="variationTable">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>Variation ID</th>
+                <th>Product ID</th>
+                <th>Variation Name</th>
+                <th>Image</th>
+                <th>Date Created</th>
+                <th>Date Updated</th>
+              </tr>
+            </thead>
+            <tbody class="text-center align-middle">
+              <!-- Rows will be added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
         <!-- Update Modal -->
         <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -285,32 +297,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="modal-body">
                   <input type="hidden" name="product_ID" id="edit_product_ID">
-                  <!-- Add input fields for category, name, etc. -->
+
                   <div class="mb-3">
-                    <label for="edit_productCategory" class="form-label">Category</label>
+                    <label for="edit_productCategory" class="form-label">Product Category</label>
                     <input type="text" class="form-control" name="productCategory" id="edit_productCategory">
                   </div>
-                  <div class="mb-3">
-                    <label for="edit_productName" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" name="productName" id="edit_productName">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productDescription" class="form-label">Description</label>
-                    <input type="text" class="form-control" name="productDescription" id="edit_productDescription">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productPrice" class="form-label">Price</label>
-                    <input type="number" class="form-control" name="productPrice" id="edit_productPrice">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productStock" class="form-label">Stock</label>
-                    <input type="number" class="form-control" name="productStock" id="edit_productStock">
-                  </div>
-                  <div class="mb-3">
-                    <label for="edit_productImage" class="form-label">Image</label>
-                    <input type="file" class="form-control" name="productImage" id="edit_productImage">
-                  </div>
-                  <!-- Repeat for description, price, stock, etc. -->
                 </div>
                 <div class="modal-footer">
                   <button type="submit" name="update_product" class="btn btn-primary">Update</button>
@@ -320,6 +311,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </div>
 
+      </div>
+
+     
+
+      <!-- Modal for adding variation -->
+      <div class="modal fade" id="variationModal" tabindex="-1" aria-labelledby="variationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <form id="variationForm" enctype="multipart/form-data">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="variationModalLabel">Add Variation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="product_ID" id="product_ID" value="<!-- set this dynamically -->">
+                <div class="mb-3">
+                  <label for="variation_Name" class="form-label">Variation Name</label>
+                  <input type="text" class="form-control" name="variation_Name" id="variation_Name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="product_Image" class="form-label">Variation Image (optional)</label>
+                  <input type="file" class="form-control" name="product_Image" id="product_Image">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add Variation</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -438,35 +461,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           <div class="modal-body">
             <!-- Product Category -->
-            <label for="productCategory" name="productCategory">Category: </label>
+            <label for="productCategory" name="productCategory">Product Category: </label>
             <input type="text" name="productCategory" id="productCategory" class="form-control">
             <span class="error-msg text-danger" id="productCategoryError"></span>
-
-            <!-- Product Name -->
-            <label for="productName" name="productName">Product Name: </label>
-            <input type="text" name="productName" id="productName" class="form-control">
-            <span class="error-msg text-danger" id="productNameError"></span>
-
-            <!-- Product Description -->
-            <label for="productCategory" name="productCategory">Description: </label>
-            <input type="text" name="productDescription" id="productDescription" class="form-control">
-            <span class="error-msg text-danger" id="productDescriptionError"></span>
-
-            <!-- Product Price -->
-            <label for="productCategory" name="productCategory">Price: </label>
-            <input type="number" name="productPrice" id="productPrice" class="form-control">
-            <span class="error-msg text-danger" id="productPriceError"></span>
-
-            <!-- Stock Quantity -->
-            <label for="productCategory" name="productCategory">Stock: </label>
-            <input type="number" name="productStock" id="productStock" class="form-control">
-            <span class="error-msg text-danger" id="productStockError"></span>
-
-            <!-- Product Image -->
-            <label for="productCategory" name="productCategory">Product Image: </label>
-            <input type="file" name="productImage" id="productImage" class="form-control" required>
-            <span class="error-msg text-danger" id="productImageError"></span>
-
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -477,36 +474,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 
-  <!-- Success Modal -->
-  <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Success</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <p id="successMessage">Product added successfully!</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Error Modal -->
-  <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title">Error</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <p id="errorMessage"></p>
-        </div>
-      </div>
-    </div>
-  </div>
 
+   <!-- sweetalert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- scripts -->
+   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
   <script>
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -536,7 +513,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
       });
     });
-    
+
 
     // for admin creation DataTables
     // $(document).ready(function () {
@@ -579,9 +556,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
+    // for products 
+
     // Datatables Products
     new DataTable('#productTable', {
-      responsive:true,
+      responsive: true,
       scrollX: true,
       paging: true
     });
@@ -636,6 +615,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       });
     });
+
+
 
     // 1. When clicking the update button, fetch product data and show modal
     $(document).on('click', '.updateBtn', function () {
@@ -701,6 +682,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       });
     });
 
+
+
     $(document).on('click', '.deleteBtn', function () {
       let productId = $(this).data('id');
       Swal.fire({
@@ -740,6 +723,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       });
     });
 
+
+
+    // for variation
+  $(document).ready(function () {
+  var table = $('#variationTable').DataTable({
+    ajax: {
+      url: 'list_variations.php',
+      dataSrc: 'data'
+    },
+    columns: [
+      { data: 'productVariation_ID' },
+      { data: 'variation_Name' },
+      {
+        data: 'product_Image',
+        render: function (data) {
+          return data ? `<img src="${data}" style="max-width:60px;">` : '';
+        }
+      },
+      { data: 'dateCreated' },
+      { data: 'dateUpdated' }
+    ]
+  });
+
+
+
+      // Handle form submit
+      $('#variationForm').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+          url: 'add_variation.php',
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          dataType: 'json',
+          success: function (res) {
+            $('#variationModal').modal('hide');
+            $('#variationForm')[0].reset();
+            table.ajax.reload();
+            alert(res.message);
+          }
+        });
+      });
+    });
 
   </script>
 </body>
