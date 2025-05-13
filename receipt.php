@@ -55,13 +55,13 @@ if ($ref) {
          </div>
        </div>
 
-        <p id="countdownText">Redirecting in 4000 seconds...</p>
+        <p id="countdownText">Redirecting in 4 seconds...</p>
       </div>
     </section>
   </div>
 
   <script>
-    let seconds = 4000;
+    let seconds = 4;
     const countdownText = document.getElementById("countdownText");
 
     const interval = setInterval(() => {
