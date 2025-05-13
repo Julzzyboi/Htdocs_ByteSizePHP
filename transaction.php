@@ -105,7 +105,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
             </div>
 
             <div class="d-flex justify-content-between">
-              <a href="Product.html" class="backtoCartbtn">Back to Cart</a>
+              <a href="Product.php" class="backtoCartbtn">Back to Cart</a>
               <button class="confirmButton" id="confirmBtn">Confirm</button>
             </div>
 
