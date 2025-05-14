@@ -62,11 +62,11 @@
 <script>
     // ACTIVE CUSTOMER
     fetch('get_dashboard_data.php')
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
         // 1. Active Users Chart
-        const activeLabels = data.activeUsers.map(row => row.date);
-        const activeData = data.activeUsers.map(row => Number(row.activeUsers));
+        const activeLabels = data.map(row => row.date);
+        const activeData = data.map(row => Number(row.activeUsers));
         new Chart(document.getElementById('activeUsersChart').getContext('2d'), {
           type: 'line',
           data: {
@@ -74,8 +74,18 @@
             datasets: [{
               label: 'Active Users',
               data: activeData,
-              borderColor: 'rgba(54, 162, 235, 1)',
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: [
+               'rgba(54, 162, 235, 1)',
+               'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',],
+              backgroundColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+              ],
               fill: true,
             }]
           }
@@ -89,14 +99,14 @@
       .then(response => response.json())
       .then(data => {
         // Example: Use productCategory as label, productStock as value
-        const labels = data.map(row => row.productCategory);
-        const stocks = data.map(row => Number(row.productStock));
+        const salesDay = data.sales.map(row => row.productCategory);
+        const salesData = data.sales.map(row => Number(row.productStock));
 
-        const ctx = document.getElementById('productStockChart').getContext('2d');
+        const ctx = document.getElementById('productSalesChart').getContext('2d');
         new Chart(ctx, {
           type: 'pie',
           data: {
-            labels: labels,
+            labels: sales,
             datasets: [{
               label: 'Product Stock',
               data: stocks,
@@ -139,7 +149,7 @@
         new Chart(ctx, {
           type: 'line',
           data: {
-            labels: labels,
+            labels: linelabels,
             datasets: [{
               label: 'Product Stock',
               data: stocks,
