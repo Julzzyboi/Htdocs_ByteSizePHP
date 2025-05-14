@@ -128,6 +128,11 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
     const amountDisplay = document.getElementById("amountDisplay");
     const modeToPay = document.getElementById("modetopay");
 
+     deliverySelect.addEventListener("change", () => {
+      addressGroup.style.display = deliverySelect.value === "None" ? "none" : "block";
+      if (deliverySelect.value !== "None") addressInput.value = "none";
+    });
+
     deliverySelect.addEventListener("change", () => {
       addressGroup.style.display = deliverySelect.value === "Delivery" ? "block" : "none";
       if (deliverySelect.value !== "Delivery") addressInput.value = "";
