@@ -18,11 +18,11 @@
       <div class="navButton">
         <ul class="navigationContents">
           <h1>|</h1>
-          <li><a href="customer_home.html" class="activeNav" ;>Home</a></li>
+          <li><a href="customer_home.php" class="activeNav" ;>Home</a></li>
           <h1>|</h1>
-          <li><a href="Product.html">Products</a></li>
+          <li><a href="Product.php">Products</a></li>
           <h1>|</h1>
-          <li><a href="#">FAQs</a></li>
+          <li><a href="Faqs.php">FAQs</a></li>
           <h1>|</h1>
         </ul>
       </div>
@@ -271,8 +271,8 @@
                             alt="<?= htmlspecialchars($row['variation_Name']); ?>">
                         </div>
                         <div class="card-body">
-                          <h5 class="card-title"><?= htmlspecialchars($row['variation_Name']); ?></h5>
-                          <p class="card-text"><strong>Option:</strong> <?= htmlspecialchars($row['productOption']); ?></p>
+                          <p class="card-title"><?= htmlspecialchars($row['variation_Name']); ?></p>
+                          <p class="card-text"><?= htmlspecialchars($row['productOption']); ?></p>
                           <p class="card-text"><strong>Price:</strong> Php <?= number_format($row['productPrice'], 2); ?>
                           </p>
                           <button class="btn btn-primary addToCartBtn" data-id="<?= $row['option_ID']; ?>"
@@ -409,7 +409,7 @@
               <p class="emptyCart">Your cart is empty!</p>
             </div>
           </div>
-          <a href="transaction.html" class="Checkout-btn">Proceed to checkout</a>
+          <a href="transaction.php" class="Checkout-btn">Proceed to checkout</a>
         </div>
       </div>
     </div>

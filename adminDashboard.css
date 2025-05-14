@@ -251,7 +251,21 @@ input:checked ~ .sideBar{
     transform: translateX(160px);
 } */
 
+/* LOGOUT */
+
+.userAccountNavigationSection img{
+  height: 40px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10000;
+
+  margin-top: -280px;
+  margin-left: 1465px;
+}
+
+
 /* OVERVIEW */
+
 
 .mainContent{
     margin-left: 200px;
@@ -281,31 +295,6 @@ input:checked ~ .sideBar{
     
 }
 
-.customerOverview, .orderOverview, .inventoryOverview, .salesOverview{
-    height: 150px;
-    width: 250px;
-
-    margin-top: 100px;
-
-    border: 4px solid #2E222F;
-    border-radius: 30px;
-}
-
-.customerOverview{
-    background-color: #FEE5EB;
-}
-
-.orderOverview{
-    background-color: #FFB3C7;
-}
-
-.inventoryOverview{
-    background-color: #FE8FAA;
-}
-
-.salesOverview{
-    background-color: #FB6F92;
-}
 
 section{
     /* border: 2px solid brown; */
@@ -339,7 +328,7 @@ section.active-section {
 
 
 #dashboardSection{
-    background-color: rgb(252, 100, 125);
+    background-color: white;
     overflow: hidden;
 }
 #orderSection{

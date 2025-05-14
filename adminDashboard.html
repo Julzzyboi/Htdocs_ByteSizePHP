@@ -33,6 +33,10 @@ mysqli_query($conn, $sql);
 
   <!-- Sweetalert2 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <!-- Chart -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -147,32 +151,83 @@ mysqli_query($conn, $sql);
           </li>
         </ul>
       </div>
-
+      <div class="userAccountNavigationSection">
+            <img src="images/userIcon.png" id="userPopUp" alt="User Icon">
+        </div>
+      <div class="accountDropDown">
+      <p class="welcomeUser">Welcome!</p>
+      <div class="logOutSection">
+        <a href="logout.php?logout">Log Out</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="logout">
+          <path fill="#ff69a0" fill-rule="evenodd" d="M3 13H15V11H3V13Z" clip-rule="evenodd" class="color90caea svgShape"></path>
+          <path fill="#ff69a0" fill-rule="evenodd" d="M5.79282 7.79291L2.29282 11.2929C1.90229 11.6834 1.90229 12.3166 2.29282 12.7071L5.79282 16.2071L7.20703 14.7929L4.41414 12L7.20703 9.20712L5.79282 7.79291Z" clip-rule="evenodd" class="color90caea svgShape"></path>
+          <path fill="#2e222f" fill-rule="evenodd" d="M8 4C8 3.44772 8.44772 3 9 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H9C8.44772 21 8 20.5523 8 20V17H10V19H20V5H10V7H8V4Z" clip-rule="evenodd" class="color3747d6 svgShape"></path>
+        </svg>
+      </div>
+    </div>
+        
       <img class="logoSideNav" src="images/bannerLogo.png" alt="ByteSize Logo">
     </nav>
   </label>
 
   <!-- for main content checkerts and charts -->
   <div class="mainContent">
+
+  <!-- <div id="chartContainer" style="width: 600px; height: 600px;">
+            <canvas id="productStockChart"></canvas>
+            </div> -->
+
     <section id="dashboardSection" class="Page-Section">
-      <div class="summaryOverview">
-        <div class="customerOverview">
+      
+  <div id="chartContainer" style="width: 600px; height: 600px;">
+            <canvas id="productStockChart"></canvas>
+            </div>
 
-        </div>
+             <script>
+    // Fetch data from PHP
+    fetch('get_products.php')
+      .then(response => response.json())
+      .then(data => {
+        // Example: Use productCategory as label, productStock as value
+        const labels = data.map(row => row.productCategory);
+        const stocks = data.map(row => Number(row.productStock));
 
-        <div class="orderOverview">
-
-        </div>
-
-        <div class="inventoryOverview">
-
-        </div>
-
-        <div class="salesOverview">
-
-        </div>
-      </div>
+        const ctx = document.getElementById('productStockChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Product Stock',
+              data: stocks,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+    
     </section>
+    
 
     <section id="orderSection" class="Page-Section">
       <h1>Tapusin</h1>

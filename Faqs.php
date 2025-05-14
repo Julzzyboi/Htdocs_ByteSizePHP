@@ -15,11 +15,11 @@
             <div class="navButton">
                 <ul class="navigationContents">
                     <h1>|</h1>
-                    <li><a href="#customer_home.html" class="activeNav";>Home</a></li>
+                    <li><a href="customer_home.php" class="activeNav";>Home</a></li>
                     <h1>|</h1>
-                    <li><a href="#">Products</a></li>
+                    <li><a href="Product.php">Products</a></li>
                     <h1>|</h1>
-                    <li><a href="#Faqs.html" class="activeNav";>FAQs</a></li>
+                    <li><a href="Faqs.php" class="activeNav";>FAQs</a></li>
                     <h1>|</h1>
                 </ul>
             </div>
