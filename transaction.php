@@ -7,33 +7,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $paymentMethod = $_POST['payment'] ?? 'Cash';
     $deliveryMode = $_POST['delivery'] ?? 'Pick-up';
     $address = $deliveryMode === 'Delivery' ? trim($_POST['address'] ?? '') : 'N/A';
-    $totalAmount = $_POST['totalAmount'] ?? '₱0.00';
-    $user_ID = $_SESSION['user_ID'] ?? null; 
+$totalAmountRaw = $_POST['totalAmount'] ?? '₱0.00';
+$totalAmount = floatval(preg_replace('/[^\d.]/', '', $totalAmountRaw));
+$user_ID = $_SESSION['user_ID'] ?? null;
 
-    if ($deliveryMode === 'Delivery' && empty($address)) {
-        $error = "Please enter a delivery address.";
+if ($deliveryMode === 'Delivery' && empty($address)) {
+    $error = "Please enter a delivery address.";
+} else {
+    // Insert into tbl_payment_id
+    $stmt = $conn->prepare("INSERT INTO tbl_payment_id (user_ID, paymentType_ID, paymentInfo, dateCreated, dateUpdated) VALUES (?, ?, ?, NOW(), NOW())");
+    $stmt->bind_param("iss", $user_ID, $paymentMethod, $totalAmountRaw);
+
+    if ($stmt->execute()) {
+        // Insert amount into cart
+        $stmt_cart = $conn->prepare("INSERT INTO cart (user_ID, amount) VALUES (?, ?)");
+        $stmt_cart->bind_param("id", $user_ID, $totalAmount);
+        $stmt_cart->execute();
+        $stmt_cart->close();
+
+        $_SESSION['orderDetails'] = [
+            'paymentMethod' => $paymentMethod,
+            'deliveryMode' => $deliveryMode,
+            'address' => $address,
+            'totalAmount' => $totalAmountRaw
+        ];
+
+        $stmt->close();
+        $conn->close();
+
+        header("Location: receipt.php");
+        exit();
     } else {
-        // Insert order details
-        $stmt = $conn->prepare("INSERT INTO tbl_payment_id (user_ID, paymentType_ID, paymentInfo, dateCreated, dateUpdated) VALUES (?, ?, ?, NOW(), NOW())");
-        $stmt->bind_param("iss", $user_ID, $paymentMethod, $totalAmount);
-
-        if ($stmt->execute()) {
-            $_SESSION['orderDetails'] = [
-                'paymentMethod' => $paymentMethod,
-                'deliveryMode' => $deliveryMode,
-                'address' => $address,
-                'totalAmount' => $totalAmount
-            ];
-
-            $stmt->close();
-            $conn->close();
-
-            header("Location: receipt.php");
-            exit();
-        } else {
-            echo "Error: " . $stmt->error;
-        }
+        echo "Error: " . $stmt->error;
     }
+}
 }
 
 
@@ -202,7 +209,7 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
 
   const totalAmount = localStorage.getItem("totalAmount");
   if (totalAmount) {
-    amountDisplay.textContent = `Php ${parseFloat(totalAmount).toFixed(2)}`;
+    amountDisplay.textContent = Php ${parseFloat(totalAmount).toFixed(2)};
   } else {
     amountDisplay.textContent = "Php 0.00"; 
   }
