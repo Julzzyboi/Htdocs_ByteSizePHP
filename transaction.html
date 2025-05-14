@@ -151,6 +151,10 @@
   window.location.href = "receipt.html";
 });
 
+  if (deliverySelect.value === "None") {
+    addressGroup.style.display = "none";
+  }
+
   if (deliverySelect.value === "Pick-up") {
     addressGroup.style.display = "none";
   }
