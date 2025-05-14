@@ -119,54 +119,107 @@ $totalAmount = $_SESSION['totalAmount'] ?? 0.00;
     <div id="modalContent"></div>
   </div>
 
-  <script>
-    const deliverySelect = document.getElementById("delivery");
-    const addressGroup = document.getElementById("addressGroup");
-    const confirmBtn = document.getElementById("confirmBtn");
-    const paymentSelect = document.getElementById("payment");
-    const addressInput = document.getElementById("address");
-    const amountDisplay = document.getElementById("amountDisplay");
-    const modeToPay = document.getElementById("modetopay");
+ <script>
+  const deliverySelect = document.getElementById("delivery");
+  const addressGroup = document.getElementById("addressGroup");
+  const confirmBtn = document.getElementById("confirmBtn");
+  const paymentSelect = document.getElementById("payment");
+  const addressInput = document.getElementById("address");
+  const amountDisplay = document.getElementById("amountDisplay");
+  const modeToPay = document.getElementById("modetopay");
 
-     deliverySelect.addEventListener("change", () => {
-      addressGroup.style.display = deliverySelect.value === "None" ? "none" : "block";
-      if (deliverySelect.value !== "None") addressInput.value = "none";
+  deliverySelect.addEventListener("change", () => {
+    if (deliverySelect.value === "Delivery") {
+      addressGroup.style.display = "block";
+    } else {
+      addressGroup.style.display = "none";
+      addressInput.value = ""; 
+    }
+  });
+
+  confirmBtn.addEventListener("click", () => {
+  const paymentMethod = paymentSelect.value;
+  const deliveryMode = deliverySelect.value;
+  const address = addressInput.value.trim();
+  const totalAmount = amountDisplay.textContent;
+
+
+
+   if ((paymentMethod === "nonee" || paymentMethod === "None") &&
+      (deliveryMode === "None")) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Missing details',
+      text: 'Please select a payment method and delivery mode!',
     });
+    return;
+  }
 
-    deliverySelect.addEventListener("change", () => {
-      addressGroup.style.display = deliverySelect.value === "Delivery" ? "block" : "none";
-      if (deliverySelect.value !== "Delivery") addressInput.value = "";
+    if ((paymentMethod === "nonee" || paymentMethod === "None")) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No payment method',
+      text: 'Please select a payment method',
     });
+    return;
+  }
 
-    confirmBtn.addEventListener("click", () => {
-      const paymentMethod = paymentSelect.value;
-      const deliveryMode = deliverySelect.value;
-      const address = addressInput.value.trim();
-      const totalAmount = amountDisplay.textContent;
-
-      if (paymentMethod === "nonee" || deliveryMode === "None") {
-        Swal.fire({ icon: 'warning', title: 'Missing details', text: 'Please select a payment method and delivery mode!' });
-        return;
-      }
-
-      if (deliveryMode === "Delivery" && address === "") {
-        Swal.fire({ icon: 'warning', title: 'Missing Address', text: 'Please enter a delivery address.' });
-        return;
-      }
-
-      const orderDetails = { paymentMethod, deliveryMode, address: deliveryMode === "Delivery" ? address : "N/A", totalAmount };
-      localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-      window.location.href = "receipt.php";
+   if ((deliveryMode === "None")) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No delivery mode',
+      text: 'Please select a delivery mode',
     });
+    return;
+  }
 
-    amountDisplay.textContent = "Php " + (localStorage.getItem("totalAmount") || "0.00");
-
-    paymentSelect.addEventListener('change', function () {
-      modeToPay.style.display = this.value === 'e-payment' ? 'block' : 'none';
+  if (deliveryMode === "Delivery" && address === "") {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Missing Address',
+      text: 'Please enter a delivery address.',
     });
+    return;
+  }
 
-    modeToPay.style.display = paymentSelect.value === 'e-payment' ? 'block' : 'none';
-  </script>
+  const orderDetails = {
+    paymentMethod,
+    deliveryMode,
+    address: deliveryMode === "Delivery" ? address : "N/A",
+    totalAmount
+  };
+  localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+  window.location.href = "receipt.html";
+});
+
+  if (deliverySelect.value === "None") {
+    addressGroup.style.display = "none";
+  }
+
+  if (deliverySelect.value === "Pick-up") {
+    addressGroup.style.display = "none";
+  }
+
+  const totalAmount = localStorage.getItem("totalAmount");
+  if (totalAmount) {
+    amountDisplay.textContent = `Php ${parseFloat(totalAmount).toFixed(2)}`;
+  } else {
+    amountDisplay.textContent = "Php 0.00"; 
+  }
+
+  paymentSelect.addEventListener('change', function () {
+    if (this.value === 'e-payment') {
+      modeToPay.style.display = 'block';
+    } else {
+      modeToPay.style.display = 'none';
+    }
+  });
+
+  if (paymentSelect.value !== 'e-payment') {
+    modeToPay.style.display = 'none';
+  }
+</script>
+
 
 </body>
 </html>
