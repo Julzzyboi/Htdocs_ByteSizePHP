@@ -151,11 +151,15 @@ mysqli_query($conn, $sql);
           </li>
         </ul>
       </div>
-      <div class="userAccountNavigationSection">
+      <!-- <div class="userAccountNavigationSection">
             <img src="images/userIcon.png" id="userPopUp" alt="User Icon">
-        </div>
-      <div class="accountDropDown">
+        </div> -->
+      
+        <div class="accountDropDown">
       <p class="welcomeUser">Welcome!</p>
+    </div>
+        
+      <img class="logoSideNav" src="images/bannerLogo.png" alt="ByteSize Logo">
       <div class="logOutSection">
         <a href="logout.php?logout">Log Out</a>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="logout">
@@ -164,9 +168,6 @@ mysqli_query($conn, $sql);
           <path fill="#2e222f" fill-rule="evenodd" d="M8 4C8 3.44772 8.44772 3 9 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H9C8.44772 21 8 20.5523 8 20V17H10V19H20V5H10V7H8V4Z" clip-rule="evenodd" class="color3747d6 svgShape"></path>
         </svg>
       </div>
-    </div>
-        
-      <img class="logoSideNav" src="images/bannerLogo.png" alt="ByteSize Logo">
     </nav>
   </label>
 

@@ -264,6 +264,69 @@ input:checked ~ .sideBar{
 }
 
 
+/* Log Out Drop Down */
+
+.accountDropDown{
+  background-color: #FBECA1;
+  width: 150px;
+  height: 70px;
+
+  position: fixed;
+  z-index: 100;
+  
+  border: 2px solid #2E222F;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 10px;
+  right: 10px;
+ 
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.accountDropDown.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0s 0s;
+}
+
+.accountDropDown p{
+  font-family: Back;
+  font-size: 18px;
+  color: #91DB69;
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
+  text-align: center;
+
+  margin-top: 10px;
+}
+
+.logOutSection{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.logOutSection svg{
+  height: 25px;
+}
+
+.logOutSection a{
+  font-family: Candy;
+  font-size: 14px;
+  color: #FF9FC2;
+  text-shadow: rgb(46, 34, 47) 2px 0px 0px, rgb(46, 34, 47) 1.75517px 0.958851px 0px, rgb(46, 34, 47) 1.0806px 1.68294px 0px, rgb(46, 34, 47) 0.141474px 1.99499px 0px, rgb(46, 34, 47) -0.832294px 1.81859px 0px, rgb(46, 34, 47) -1.60229px 1.19694px 0px, rgb(46, 34, 47) -1.97998px 0.28224px 0px, rgb(46, 34, 47) -1.87291px -0.701566px 0px, rgb(46, 34, 47) -1.30729px -1.5136px 0px, rgb(46, 34, 47) -0.421592px -1.95506px 0px, rgb(46, 34, 47) 0.567324px -1.91785px 0px, rgb(46, 34, 47) 1.41734px -1.41108px 0px, rgb(46, 34, 47) 1.92034px -0.558831px 0px;
+  text-decoration: none;
+}
+
+.logOutSection a:hover{
+  color: #FF4287;
+}
+
 /* OVERVIEW */
 
 
